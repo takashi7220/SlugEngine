@@ -1,0 +1,9 @@
+[submodule "engine/thirdparty/googletest"]
+	path = engine/thirdparty/googletest
+	url = https://github.com/google/googletest.git
+[submodule "engine/thirdparty/mimalloc"]
+	path = engine/thirdparty/mimalloc
+	url = https://github.com/microsoft/mimalloc.git
+[submodule "engine/thirdparty/tinygltf"]
+	path = engine/thirdparty/tinygltf
+	url = https://github.com/syoyo/tinygltf.git
