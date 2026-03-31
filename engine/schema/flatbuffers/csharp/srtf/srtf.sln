@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "srtf", "srtf.csproj", "{53D5B482-66EB-422A-9E1F-0C4E0B7F1203}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53D5B482-66EB-422A-9E1F-0C4E0B7F1203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53D5B482-66EB-422A-9E1F-0C4E0B7F1203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53D5B482-66EB-422A-9E1F-0C4E0B7F1203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53D5B482-66EB-422A-9E1F-0C4E0B7F1203}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C111F3E7-5023-4B0D-9D12-5F5225654B70}
+	EndGlobalSection
+EndGlobal

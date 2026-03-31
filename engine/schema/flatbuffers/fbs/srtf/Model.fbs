@@ -1,0 +1,205 @@
+include "common.fbs";
+namespace slug.fbs.srtf;
+
+enum TopologyType : short
+{
+    PointList,
+    LineList,
+    LineStrip,
+    TriangleList,
+    TriangleStrip,
+    QuadList,
+    QuadStrip
+}
+
+enum SemanticType:short
+{
+    Position,
+    Normal,
+    Texcoord,
+    Tangent,
+    Binormal,
+    Color,
+    BoneIndex,
+    BoneWeight,
+}
+
+enum VertexFormat : short
+{
+    NONE,
+    BYTE1,
+    BYTE2,
+    BYTE3,
+    BYTE4,
+    BYTE4N,
+    UBYTE1,
+    UBYTE2,
+    UBYTE3,
+    UBYTE4,
+    UBYTE8,
+    UBYTE4N,
+    SHORT1,
+    SHORT2,
+    SHORT2N,
+    SHORT3,
+    SHORT4,
+    SHORT4N,
+    USHORT1,
+    USHORT2,
+    USHORT2N,
+    USHORT3,
+    USHORT4,
+    USHORT4N,
+    USHORT8,
+    INT1,
+    INT2,
+    INT3,
+    INT4,
+    UINT1,
+    UINT2,
+    UINT3,
+    UINT4,
+    FLOAT1,
+    FLOAT2,
+    FLOAT3,
+    FLOAT4,
+    R11G11B10Float,
+    R10G10B10A2Unorm,
+}
+
+struct UVLayer
+{
+    name:[ubyte:64];
+    uv:Vector3;
+}
+
+struct TangentLayer
+{
+    name:[ubyte:64];
+    tangent:Vector3;
+}
+
+struct BinormalLayer
+{
+    name:[ubyte:64];
+    binormal:Vector3;
+}
+
+struct ColorLayer
+{
+    name:[ubyte:64];
+    color:Vector4;
+}
+
+struct BoneLayer
+{
+    name:[ubyte:64];
+    id:int;
+    weight:float;
+}
+
+table Vertex
+{
+    position:Vector3;
+    normal:Vector3;
+    uvs:[UVLayer];
+    tangents:[TangentLayer];
+    binormals:[BinormalLayer];
+    colors:[ColorLayer];
+    bones:[BoneLayer];
+}
+
+table Node
+{
+    name:string;
+    parent:int;
+    bindpose:Matrix4x4;
+}
+
+table MaterialSlot
+{
+    slot:string;
+    material:string;
+}
+
+table VertexAccessor
+{
+    semantic_type:SemanticType;
+    semantic_index:SemanticType;
+    foramt:VertexFormat;
+    offset:uint;
+    size:uint;
+}
+
+table indexAccessor
+{
+    foramt:VertexFormat;
+    offset:uint;
+    size:uint;
+}
+
+table OptimizeMeshBuffer
+{
+    name:string;
+    source:[byte];
+}
+
+table OptimizeMesh
+{
+    vertex_accessors:[VertexAccessor];
+    index_accessor:indexAccessor;
+    vertex_count:uint;
+    vertex_byte_size:uint;
+    index_count:uint;
+    index_byte_size:uint;
+    material:uint;
+    node:uint;
+}
+
+table Mesh
+{
+    vertices:[Vertex];
+    indices:[uint];
+    material:uint;
+    node:uint;
+    aabb:AABB;
+}
+
+table SubModel
+{
+    name:string;
+    use_optimize_mesh:bool;
+    meshes:[Mesh];
+    optimize_meshes:[OptimizeMesh];
+    buffer:OptimizeMeshBuffer;
+    nodes:[Node];
+    materials:[MaterialSlot];
+    topology:TopologyType;
+}
+
+struct LodItemSettings
+{
+    draw_pixel_area_ratio:float;
+}
+
+table LodSettings
+{
+    offset_lod_index:int;
+    items:[LodItemSettings];
+}
+
+table LodModel
+{
+    lod_settings:LodSettings;
+    sub_models:[SubModel];
+}
+
+table Model
+{
+    main_model:SubModel;
+    lod_model:LodModel;
+}
+
+
+file_identifier "MODL";
+root_type Model;

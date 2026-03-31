@@ -1,0 +1,24 @@
+set(SOURCE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH}/include ${SOURCE_ROOT_PATH}/src)
+set(INCLUDE_PATH_LIST ${SOURCE_ROOT_PATH}/include/)
+set(PROJECT_NAME reflection_sample)
+
+project(${PROJECT_NAME})
+
+set(COMPILE_TARGET_FILE_LIST "")
+foreach(SOURCE_PATH ${SOURCE_PATH_LIST})
+    file(GLOB_RECURSE SOURCE_CODE_LIST ${SOURCE_PATH}/*.cpp ${SOURCE_PATH}/*.hpp ${SOURCE_PATH}/*.h ${SOURCE_PATH}/*.c)
+    LIST(APPEND COMPILE_TARGET_FILE_LIST ${SOURCE_CODE_LIST} )
+endforeach()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${REPOSITORY_ROOT_PATH}/_workspace/samples/reflection_sample)
+
+add_executable(${PROJECT_NAME} ${COMPILE_TARGET_FILE_LIST})
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER samples/)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH_LIST})
+add_dependencies(${PROJECT_NAME} core )
+target_link_libraries(${PROJECT_NAME} PUBLIC core )
+
+create_source_group(${SOURCE_ROOT_PATH})
+setup_options()

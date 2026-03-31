@@ -1,0 +1,23 @@
+set(SOURCE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH}/include ${SOURCE_ROOT_PATH}/src)
+set(INCLUDE_PATH_LIST ${SOURCE_ROOT_PATH}/include/)
+set(PROJECT_NAME engine_game)
+
+project(${PROJECT_NAME})
+
+set(COMPILE_TARGET_FILE_LIST "")
+foreach(SOURCE_PATH ${SOURCE_PATH_LIST})
+    file(GLOB_RECURSE SOURCE_CODE_LIST ${SOURCE_PATH}/*.cpp ${SOURCE_PATH}/*.hpp ${SOURCE_PATH}/*.h ${SOURCE_PATH}/*.c)
+    LIST(APPEND COMPILE_TARGET_FILE_LIST ${SOURCE_CODE_LIST} )
+endforeach()
+
+add_library(${PROJECT_NAME} STATIC ${COMPILE_TARGET_FILE_LIST})
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH_LIST})
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER libs/engine/)
+
+add_dependencies(${PROJECT_NAME} engine_core)
+target_link_libraries(${PROJECT_NAME} PUBLIC engine_core)
+
+create_source_group(${SOURCE_ROOT_PATH})
+setup_options()

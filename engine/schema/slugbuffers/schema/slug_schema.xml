@@ -1,0 +1,139 @@
+﻿<Schema>
+  <AliasReflections>
+    <Element Type="max_align_t" CanonicalType="double" />
+    <Element Type="nullptr_t" CanonicalType="std::nullptr_t" />
+    <Element Type="_Mbstatet" CanonicalType="_Mbstatet" />
+    <Element Type="streamoff" CanonicalType="long long" />
+    <Element Type="streamsize" CanonicalType="long long" />
+    <Element Type="streampos" CanonicalType="std::fpos&lt;_Mbstatet&gt;" />
+    <Element Type="wstreampos" CanonicalType="std::fpos&lt;_Mbstatet&gt;" />
+    <Element Type="u16streampos" CanonicalType="std::fpos&lt;_Mbstatet&gt;" />
+    <Element Type="u32streampos" CanonicalType="std::fpos&lt;_Mbstatet&gt;" />
+    <Element Type="ios" CanonicalType="std::basic_ios&lt;char&gt;" />
+    <Element Type="streambuf" CanonicalType="std::basic_streambuf&lt;char&gt;" />
+    <Element Type="istream" CanonicalType="std::basic_istream&lt;char&gt;" />
+    <Element Type="ostream" CanonicalType="std::basic_ostream&lt;char&gt;" />
+    <Element Type="iostream" CanonicalType="std::basic_iostream&lt;char&gt;" />
+    <Element Type="stringbuf" CanonicalType="std::basic_stringbuf&lt;char&gt;" />
+    <Element Type="istringstream" CanonicalType="std::basic_istringstream&lt;char&gt;" />
+    <Element Type="ostringstream" CanonicalType="std::basic_ostringstream&lt;char&gt;" />
+    <Element Type="stringstream" CanonicalType="std::basic_stringstream&lt;char&gt;" />
+    <Element Type="filebuf" CanonicalType="std::basic_filebuf&lt;char&gt;" />
+    <Element Type="ifstream" CanonicalType="std::basic_ifstream&lt;char&gt;" />
+    <Element Type="ofstream" CanonicalType="std::basic_ofstream&lt;char&gt;" />
+    <Element Type="fstream" CanonicalType="std::basic_fstream&lt;char&gt;" />
+    <Element Type="wios" CanonicalType="std::basic_ios&lt;wchar_t&gt;" />
+    <Element Type="wstreambuf" CanonicalType="std::basic_streambuf&lt;wchar_t&gt;" />
+    <Element Type="wistream" CanonicalType="std::basic_istream&lt;wchar_t&gt;" />
+    <Element Type="wostream" CanonicalType="std::basic_ostream&lt;wchar_t&gt;" />
+    <Element Type="wiostream" CanonicalType="std::basic_iostream&lt;wchar_t&gt;" />
+    <Element Type="wstringbuf" CanonicalType="std::basic_stringbuf&lt;wchar_t&gt;" />
+    <Element Type="wistringstream" CanonicalType="std::basic_istringstream&lt;wchar_t&gt;" />
+    <Element Type="wostringstream" CanonicalType="std::basic_ostringstream&lt;wchar_t&gt;" />
+    <Element Type="wstringstream" CanonicalType="std::basic_stringstream&lt;wchar_t&gt;" />
+    <Element Type="wfilebuf" CanonicalType="std::basic_filebuf&lt;wchar_t&gt;" />
+    <Element Type="wifstream" CanonicalType="std::basic_ifstream&lt;wchar_t&gt;" />
+    <Element Type="wofstream" CanonicalType="std::basic_ofstream&lt;wchar_t&gt;" />
+    <Element Type="wfstream" CanonicalType="std::basic_fstream&lt;wchar_t&gt;" />
+    <Element Type="new_handler" CanonicalType="void (*)()" />
+    <Element Type="_Atomic_counter_t" CanonicalType="unsigned long" />
+    <Element Type="_Container_base" CanonicalType="std::_Container_base0" />
+    <Element Type="_Iterator_base" CanonicalType="std::_Iterator_base0" />
+    <Element Type="string" CanonicalType="std::basic_string&lt;char&gt;" />
+    <Element Type="wstring" CanonicalType="std::basic_string&lt;wchar_t&gt;" />
+    <Element Type="u16string" CanonicalType="std::basic_string&lt;char16_t&gt;" />
+    <Element Type="u32string" CanonicalType="std::basic_string&lt;char32_t&gt;" />
+    <Element Type="atomic_bool" CanonicalType="std::atomic&lt;bool&gt;" />
+    <Element Type="atomic_char" CanonicalType="std::atomic&lt;char&gt;" />
+    <Element Type="atomic_schar" CanonicalType="std::atomic&lt;signed char&gt;" />
+    <Element Type="atomic_uchar" CanonicalType="std::atomic&lt;unsigned char&gt;" />
+    <Element Type="atomic_short" CanonicalType="std::atomic&lt;short&gt;" />
+    <Element Type="atomic_ushort" CanonicalType="std::atomic&lt;unsigned short&gt;" />
+    <Element Type="atomic_int" CanonicalType="std::atomic&lt;int&gt;" />
+    <Element Type="atomic_uint" CanonicalType="std::atomic&lt;unsigned int&gt;" />
+    <Element Type="atomic_long" CanonicalType="std::atomic&lt;long&gt;" />
+    <Element Type="atomic_ulong" CanonicalType="std::atomic&lt;unsigned long&gt;" />
+    <Element Type="atomic_llong" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_ullong" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_char16_t" CanonicalType="std::atomic&lt;char16_t&gt;" />
+    <Element Type="atomic_char32_t" CanonicalType="std::atomic&lt;char32_t&gt;" />
+    <Element Type="atomic_wchar_t" CanonicalType="std::atomic&lt;wchar_t&gt;" />
+    <Element Type="atomic_int8_t" CanonicalType="std::atomic&lt;signed char&gt;" />
+    <Element Type="atomic_uint8_t" CanonicalType="std::atomic&lt;unsigned char&gt;" />
+    <Element Type="atomic_int16_t" CanonicalType="std::atomic&lt;short&gt;" />
+    <Element Type="atomic_uint16_t" CanonicalType="std::atomic&lt;unsigned short&gt;" />
+    <Element Type="atomic_int32_t" CanonicalType="std::atomic&lt;int&gt;" />
+    <Element Type="atomic_uint32_t" CanonicalType="std::atomic&lt;unsigned int&gt;" />
+    <Element Type="atomic_int64_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_uint64_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_int_least8_t" CanonicalType="std::atomic&lt;signed char&gt;" />
+    <Element Type="atomic_uint_least8_t" CanonicalType="std::atomic&lt;unsigned char&gt;" />
+    <Element Type="atomic_int_least16_t" CanonicalType="std::atomic&lt;short&gt;" />
+    <Element Type="atomic_uint_least16_t" CanonicalType="std::atomic&lt;unsigned short&gt;" />
+    <Element Type="atomic_int_least32_t" CanonicalType="std::atomic&lt;int&gt;" />
+    <Element Type="atomic_uint_least32_t" CanonicalType="std::atomic&lt;unsigned int&gt;" />
+    <Element Type="atomic_int_least64_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_uint_least64_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_int_fast8_t" CanonicalType="std::atomic&lt;signed char&gt;" />
+    <Element Type="atomic_uint_fast8_t" CanonicalType="std::atomic&lt;unsigned char&gt;" />
+    <Element Type="atomic_int_fast16_t" CanonicalType="std::atomic&lt;int&gt;" />
+    <Element Type="atomic_uint_fast16_t" CanonicalType="std::atomic&lt;unsigned int&gt;" />
+    <Element Type="atomic_int_fast32_t" CanonicalType="std::atomic&lt;int&gt;" />
+    <Element Type="atomic_uint_fast32_t" CanonicalType="std::atomic&lt;unsigned int&gt;" />
+    <Element Type="atomic_int_fast64_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_uint_fast64_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_intptr_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_uintptr_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_size_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="atomic_ptrdiff_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_intmax_t" CanonicalType="std::atomic&lt;long long&gt;" />
+    <Element Type="atomic_uintmax_t" CanonicalType="std::atomic&lt;unsigned long long&gt;" />
+    <Element Type="ObjectType" CanonicalType="unsigned int" />
+    <Element Type="LogCategoryPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::core::ILogCategory&gt;" />
+    <Element Type="LoggerControllerPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::core::ILoggerController&gt;" />
+    <Element Type="ValueType" CanonicalType="float" />
+    <Element Type="atto" CanonicalType="std::ratio&lt;1, 1000000000000000000&gt;" />
+    <Element Type="femto" CanonicalType="std::ratio&lt;1, 1000000000000000&gt;" />
+    <Element Type="pico" CanonicalType="std::ratio&lt;1, 1000000000000&gt;" />
+    <Element Type="nano" CanonicalType="std::ratio&lt;1, 1000000000&gt;" />
+    <Element Type="micro" CanonicalType="std::ratio&lt;1, 1000000&gt;" />
+    <Element Type="milli" CanonicalType="std::ratio&lt;1, 1000&gt;" />
+    <Element Type="centi" CanonicalType="std::ratio&lt;1, 100&gt;" />
+    <Element Type="deci" CanonicalType="std::ratio&lt;1, 10&gt;" />
+    <Element Type="deca" CanonicalType="std::ratio&lt;10&gt;" />
+    <Element Type="hecto" CanonicalType="std::ratio&lt;100&gt;" />
+    <Element Type="kilo" CanonicalType="std::ratio&lt;1000&gt;" />
+    <Element Type="mega" CanonicalType="std::ratio&lt;1000000&gt;" />
+    <Element Type="giga" CanonicalType="std::ratio&lt;1000000000&gt;" />
+    <Element Type="tera" CanonicalType="std::ratio&lt;1000000000000&gt;" />
+    <Element Type="peta" CanonicalType="std::ratio&lt;1000000000000000&gt;" />
+    <Element Type="exa" CanonicalType="std::ratio&lt;1000000000000000000&gt;" />
+    <Element Type="nanoseconds" CanonicalType="std::chrono::duration&lt;long long, std::ratio&lt;1, 1000000000&gt;&gt;" />
+    <Element Type="microseconds" CanonicalType="std::chrono::duration&lt;long long, std::ratio&lt;1, 1000000&gt;&gt;" />
+    <Element Type="milliseconds" CanonicalType="std::chrono::duration&lt;long long, std::ratio&lt;1, 1000&gt;&gt;" />
+    <Element Type="_Vbase" CanonicalType="unsigned int" />
+    <Element Type="Mutex" CanonicalType="std::mutex" />
+    <Element Type="Thread" CanonicalType="std::thread" />
+    <Element Type="ConditionVariable" CanonicalType="std::condition_variable" />
+    <Element Type="TaskSystemPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::core::TaskSystem&gt;" />
+    <Element Type="TickObjectPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::engine_core::TickObject&gt;" />
+    <Element Type="GetComponentTypeIDPtr" CanonicalType="slug::engine_core::ComponentTypeID (*)()" />
+    <Element Type="GenerateComponentPtr" CanonicalType="slug::engine_core::ActorComponent *(*)(const slug::engine_core::ComponentTypeID &amp;)" />
+    <Element Type="ActorComponentPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::engine_core::ActorComponent&gt;" />
+    <Element Type="SceneComponentPtr" CanonicalType="slug::core::TReferencePtr&lt;slug::engine_core::SceneComponent&gt;" />
+  </AliasReflections>
+  <EnumReflections />
+  <ClassReflections>
+    <Element Namespace="::slug::engine_core" ClassName="SceneComponent" ClassType="Class" GameObject="false" GameObjectComponent="false" InheritClassName="engine_core::ActorComponent" CanonicalType="slug::engine_core::SceneComponent">
+      <FieldReflections PropertyEditType="EditAnywhere " Category="Default " GroupName="Default " DisplayName="Transform " Tooltip="Setting Transform " Getter="SceneComponent::GetLocalTransform " Setter="SceneComponent::SetLocalTransform">
+        <Element MemberName="m_transform" Type="math::Transform" />
+      </FieldReflections>
+    </Element>
+    <Element Namespace="::slug::engine_core" ParentClass="SceneComponent" ClassName="AttachParam" ClassType="Struct" GameObject="false" GameObjectComponent="false" CanonicalType="slug::engine_core::SceneComponent::AttachParam">
+      <FieldReflections>
+        <Element MemberName="name" Type="core::FixedString&lt;64&gt;" />
+        <Element MemberName="type" Type="AttachType" />
+      </FieldReflections>
+    </Element>
+  </ClassReflections>
+</Schema>

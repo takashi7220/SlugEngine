@@ -1,0 +1,42 @@
+include "common.fbs";
+namespace slug.fbs.srtf;
+
+enum SamplerAddressMode : ubyte
+{
+    Clamp,
+    Wrap,
+    Border,
+    Mirror
+}
+
+enum SamplerReductionType : ubyte
+{
+    Standard,
+    Comparison,
+    Minimum,
+    Maximum
+}
+
+struct Sampler
+{
+    color:Vector4;
+    max_anisotropy:float;
+    mip_bias:float;
+    min_filter:bool;
+    mag_filter:bool;
+    mip_filter:bool;
+    address_u:SamplerAddressMode;
+    address_v:SamplerAddressMode;
+    address_w:SamplerAddressMode;
+    reduction_type:SamplerReductionType;    
+}
+
+table Texture
+{
+    name:string;
+    sampler:Sampler;
+    source:[ubyte];    
+}
+
+file_identifier "TEXT";
+root_type Texture;

@@ -1,0 +1,95 @@
+include "common.fbs";
+namespace slug.fbs.srtf;
+
+enum BlendOptions : ubyte
+{
+    Opaque,
+    Mask,
+    Transparent,
+    Addtive,
+    Modulate,
+}
+
+struct GiSettings
+{
+    diffuse_boost:float;
+    emissive_boost:float;
+}
+
+table ShadingModel
+{
+    name:string;
+    id:uint;
+}
+
+table ShaderItem
+{
+    name:string;
+    code:[ubyte];
+}
+
+table TextureParameter
+{
+    slot_name:string;
+    texture:string;
+}
+
+enum ConstantParameterType : ubyte
+{
+    Bool,
+    Float,
+    FloatArray,
+    Vector2,
+    Vector3,
+    Vector4,
+    Matrix3x3,
+    Matrix4x4
+}
+
+table ConstantBufferLayout
+{
+    parameter_name:string;
+    type:ConstantParameterType;
+}
+
+table ConstantParameter
+{
+    layouts:[ConstantBufferLayout];
+    bool_parameters:[BoolParameter];
+    float_parameters:[FloatParameter];
+    float_array_parameters:[FloatArrayParameter];
+    vector2_parameters:[Vector2Parameter];
+    vector3_parameters:[Vector3Parameter];
+    vector4_parameters:[Vector4Parameter];
+    matrix3x3_parameters:[Matrix3x3Parameter];
+    matrix4x4_parameters:[Matrix4x4Parameter];
+}
+
+table DrawSettings
+{
+    blend:BlendOptions;
+    shading_model:ShadingModel;
+    gi_settings:GiSettings;
+    alpha_threshold:float;
+    sort_priority:int;
+    two_side:bool;
+    alpha_to_coverage:bool;
+}
+
+table Shader
+{
+    draw_settings:DrawSettings;
+    name:string;
+    textuers:[TextureParameter];
+    static_swiches:[BoolParameter];
+    constant_parameter:ConstantParameter;
+    vertex_shaders:[ShaderItem];
+    pixel_shaders:[ShaderItem];
+    geometry_shaders:[ShaderItem];
+    hull_shaders:[ShaderItem];
+    domain_shaders:[ShaderItem];
+    compute_shaders:[ShaderItem];
+}
+
+file_identifier "SHAD";
+root_type Shader;

@@ -1,0 +1,16 @@
+include "Shader.fbs";
+namespace slug.fbs.srtf;
+
+
+table Material
+{
+    shader:string;
+    name:string;
+    draw_settings:DrawSettings;
+    textuers:[TextureParameter];
+    static_swiches:[BoolParameter];
+    constant_parameter:ConstantParameter;
+}
+
+file_identifier "MATE";
+root_type Material;

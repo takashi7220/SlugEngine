@@ -1,0 +1,10 @@
+_workspace/
+_bin/
+bin/
+obj/
+.vs/
+_build/
+_thirdparty/
+_extensions/
+_libs/
+*.csproj.user
