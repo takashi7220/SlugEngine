@@ -1,16 +1,13 @@
 ﻿#pragma once
 
 #if defined(SLUG_USE_STL)
-#include <iostream>
 #include <string>
+#include <string.h>
 #include <cstdlib>
-#include <cwchar>
-#include <clocale>
 #include <string_view>
 #include <sstream>
 #endif
 
-#include "core/TypeConcept.hpp"
 #include "core/memory/Allocator.hpp"
 #include "core/debug/Exception.hpp"
 
@@ -64,6 +61,16 @@ public:
         String str(requireSize, '\0');
         wcstombs_s(&convertedSize, &str[0], requireSize, wstr, requireSize - 1);
         return str;
+    }
+
+    static int32_t Strcmp(const char* v0, const char* v1)
+    {
+        return strcmp(v0, v1);
+    }
+
+    static void Strncpy(char* dst, const char* src, size_t count)
+    {
+        strncpy_s(dst, count, src, count);
     }
 
     template<size_t Size = 512, class... Args>
