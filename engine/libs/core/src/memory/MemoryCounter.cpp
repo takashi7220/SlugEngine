@@ -6,33 +6,88 @@
 namespace slug::core
 {
 
+size_t MemoryLabelTable::IncrementBytes(const char* label, size_t size) noexcept
+{
+    MemoryLabelTable::Entry* e = TryFindOrCreate(label);
+    if (!e)
+    {
+        return 0;
+    }
+    return e->bytes.fetch_add(size, std::memory_order_relaxed);
+}
+
+size_t MemoryLabelTable::DecrementBytes(const char* label, size_t size) noexcept
+{
+    MemoryLabelTable::Entry* e = TryFindOrCreate(label);
+    if (!e)
+    {
+        return 0;
+    }
+    return e->bytes.fetch_sub(size, std::memory_order_relaxed);
+}
+
+size_t MemoryLabelTable::GetBytes(const char* label) noexcept
+{
+    MemoryLabelTable::Entry* e = TryFindOrCreate(label);
+    if (!e)
+    {
+        return 0;
+    }
+    return e->bytes.load(std::memory_order_relaxed);
+}
+
+MemoryLabelTable::Entry& MemoryLabelTable::Slot(uint32_t i)
+{
+    return m_entries[i];
+}
+
+MemoryLabelTable::Entry* MemoryLabelTable::TryFindOrCreate(const char* label)
+{
+    size_t currentSize = m_currentEntryCount.load();
+    for (size_t i = 0; i < currentSize; ++i)
+    {
+        Entry& entry = Slot(static_cast<uint32_t>(i));
+        if (StringUtility::Strcmp(entry.label, label) == 0)
+        {
+            return &entry;
+        }
+    }
+
+    if (m_currentEntryCount.load() < SLUG_MEMORY_LABEL_CAPACITY)
+    {
+        size_t createIndex = m_currentEntryCount.fetch_add(1);
+        Entry& entry = Slot(static_cast<uint32_t>(createIndex));
+        StringUtility::Strncpy(entry.label, label, SLUG_MEMORY_LABLE_STR_LENGTH);
+        return &entry;
+    }
+    return nullptr;
+}
+
 MemoryCounter::MemoryCounter(bool debugPrint)
     : m_debugPrint(debugPrint)
 {
-    size_t count = std::max(std::strlen(s_DefaultLabel), s_LabelSize);
-    strncpy_s(m_item.label, s_DefaultLabel, count);
 }
 
-void MemoryCounter::IncrementMemorySize(size_t size)
+void MemoryCounter::IncrementMemorySize(size_t size, const char* label)
 {
-    const size_t oldSize = m_item.size.fetch_add(size, std::memory_order_relaxed);
-    const size_t newSize = oldSize + size;
-
+    const size_t oldSize = m_memoryLabelTable.IncrementBytes(label, size);
     if (m_debugPrint)
     {
+        const size_t newSize = oldSize + size;
         printf("allocate : %llu + %llu = %llu\n", oldSize, size, newSize);
     }
 }
 
-void MemoryCounter::DecrementMemorySize(size_t size)
+void MemoryCounter::DecrementMemorySize(size_t size, const char* label)
 {
-    if (size == 0) return;
+    if (size == 0)
+    {
+        return;
+    }
 
-    const size_t oldSize = m_item.size.fetch_sub(size, std::memory_order_relaxed);
-
+    const size_t oldSize = m_memoryLabelTable.DecrementBytes(label, size);
     if (oldSize < size)
     {
-        m_item.size.fetch_add(size, std::memory_order_relaxed); // rollback
         SLUG_THROW_EXCEPTION("Error Memory Counter Deallocate");
     }
 
@@ -42,14 +97,13 @@ void MemoryCounter::DecrementMemorySize(size_t size)
     }
 }
 
-size_t MemoryCounter::GetCurrentMemorySize()
+size_t MemoryCounter::GetCurrentMemorySize(const char* label)
 {
-    return m_item.size;
+    return m_memoryLabelTable.GetBytes(label);
 }
 
 void MemoryCounter::Print()
 {
-    printf("[%s] memory size : %llu\n", m_item.label, m_item.size.load());
 }
 
 }

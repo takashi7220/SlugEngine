@@ -11,8 +11,10 @@
 
 #if defined(DEBUG_MODE)
 #define SLUG_MEMORY_LEACK_CHECK_SCOPE(label) slug::core::MemoryLeakCheckScope _memory_leak_check_##label(#label);
+#define SLUG_MEMORY_SYSTEM_LABEL "System"
 #else
 #define SLUG_MEMORY_LEACK_CHECK_SCOPE(label)
+#define SLUG_MEMORY_SYSTEM_LABEL
 #endif
 
 namespace slug::core
@@ -40,25 +42,22 @@ using MemoryLeakCheckCallback = void(*)(size_t leakMemorySize, const char* label
 class MemoryLeakCheckScope final
 {
 public:
-    static constexpr uint32_t labelCapacity = 128;
-    static constexpr uint32_t labelStrLength = 128;
     MemoryLeakCheckScope(const char* label);
-    MemoryLeakCheckScope(const char* label, MemoryLeakCheckCallback callback);
     ~MemoryLeakCheckScope();
 
 private:
     MemoryLeakCheckCallback m_callback;
     size_t m_checkSize;
-    char m_label[128];
+    char m_label[SLUG_MEMORY_LABLE_STR_LENGTH];
 };
 
 class MemoryUtilities
 {
 public:
-    static void* Allocate(size_t size);
-    static void* Allocate(size_t size, size_t align);
-    static void Deallocate(void* p);
-    static void Deallocate(void* p, size_t align);
+    static void* Allocate(size_t size, const char* label = SLUG_MEMORY_SYSTEM_LABEL);
+    static void* Allocate(size_t size, size_t align, const char* label = SLUG_MEMORY_SYSTEM_LABEL);
+    static void Deallocate(void* p, const char* label = SLUG_MEMORY_SYSTEM_LABEL);
+    static void Deallocate(void* p, size_t align, const char* label = SLUG_MEMORY_SYSTEM_LABEL);
 
     static void Memset(void* dst, int32_t value, size_t dstSize);
     static void Memcpy(void* dst, size_t dstSize, const void* src, size_t srcSize);
@@ -66,7 +65,7 @@ public:
     static MemoryProfileInfo GetMemoryProfileInfo();
     static void SetMemoryCounter(MemoryCounter* counter);
     static void SetMemoryLeackCheckCallback(MemoryLeakCheckCallback callback);
-    static size_t GetCurrentMemorySize(const char* label = "");
+    static size_t GetCurrentMemorySize(const char* label);
 
 public:
     template<typename T, typename U>
@@ -92,8 +91,8 @@ public:
     }
 
 private:
-    static void RecordAllocate(void* p);
-    static void RecordDeallocate(void* p);
+    static void RecordAllocate(void* p, const char* label);
+    static void RecordDeallocate(void* p, const char* label);
 };
 
 }

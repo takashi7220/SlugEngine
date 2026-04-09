@@ -15,22 +15,13 @@ MemoryLeakCheckScope::MemoryLeakCheckScope(const char* label)
     , m_label()
     , m_callback(s_MemoryLeakCheckCallback)
 {
-    m_checkSize = MemoryUtilities::GetCurrentMemorySize();
-    strcpy_s<128>(m_label, label);
-}
-
-MemoryLeakCheckScope::MemoryLeakCheckScope(const char* label, MemoryLeakCheckCallback callback)
-    : m_checkSize(0)
-    , m_label()
-    , m_callback(callback)
-{
-    m_checkSize = MemoryUtilities::GetCurrentMemorySize();
-    strcpy_s<128>(m_label, label);
+    m_checkSize = MemoryUtilities::GetCurrentMemorySize(SLUG_MEMORY_SYSTEM_LABEL);
+    StringUtility::Strncpy(m_label, SLUG_MEMORY_SYSTEM_LABEL, SLUG_MEMORY_LABLE_STR_LENGTH);
 }
 
 MemoryLeakCheckScope::~MemoryLeakCheckScope()
 {
-    size_t currentSize = MemoryUtilities::GetCurrentMemorySize();
+    size_t currentSize = MemoryUtilities::GetCurrentMemorySize(m_label);
     if (m_checkSize != currentSize)
     {
         if (m_callback)
@@ -44,29 +35,29 @@ MemoryLeakCheckScope::~MemoryLeakCheckScope()
     }
 }
 
-void* MemoryUtilities::Allocate(size_t size)
+void* MemoryUtilities::Allocate(size_t size, const char* label)
 {
     void* p = mi_new(size);
-    RecordAllocate(p);
+    RecordAllocate(p, label);
     return p;
 }
 
-void* MemoryUtilities::Allocate(size_t size, size_t align)
+void* MemoryUtilities::Allocate(size_t size, size_t align, const char* label)
 {
     void *p = mi_new_aligned(size, align);
-    RecordAllocate(p);
+    RecordAllocate(p, label);
     return p;
 }
 
-void MemoryUtilities::Deallocate(void* p)
+void MemoryUtilities::Deallocate(void* p, const char* label)
 {
-    RecordDeallocate(p);
+    RecordDeallocate(p, label);
     mi_free(p);
 }
 
-void MemoryUtilities::Deallocate(void* p, size_t align)
+void MemoryUtilities::Deallocate(void* p, size_t align, const char* label)
 {
-    RecordDeallocate(p);
+    RecordDeallocate(p, label);
     mi_free_aligned(p, align);
 }
 
@@ -114,29 +105,29 @@ size_t MemoryUtilities::GetCurrentMemorySize(const char* label)
 {
     if (s_MemoryCounter)
     {
-        return s_MemoryCounter->GetCurrentMemorySize();
+        return s_MemoryCounter->GetCurrentMemorySize(label);
     }
     return 0;
 }
 
-void MemoryUtilities::RecordAllocate(void* p)
+void MemoryUtilities::RecordAllocate(void* p, const char* label)
 {
 #if defined(DEBUG_MODE)
     if (s_MemoryCounter)
     {
         size_t size = mi_usable_size(p);
-        s_MemoryCounter->IncrementMemorySize(size);
+        s_MemoryCounter->IncrementMemorySize(size, label);
     }
 #endif
 }
 
-void MemoryUtilities::RecordDeallocate(void* p)
+void MemoryUtilities::RecordDeallocate(void* p, const char* label)
 {
 #if defined(DEBUG_MODE)
     if (s_MemoryCounter)
     {
         size_t size = mi_usable_size(p);
-        s_MemoryCounter->DecrementMemorySize(size);
+        s_MemoryCounter->DecrementMemorySize(size, label);
     }
 #endif
 }

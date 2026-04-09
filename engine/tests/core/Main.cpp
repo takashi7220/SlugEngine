@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
     }
 
     counter.Print();
-    if (counter.GetCurrentMemorySize() != 0)
+    if (counter.GetCurrentMemorySize(SLUG_MEMORY_SYSTEM_LABEL) != 0)
     {
         ret = 1;
     }
