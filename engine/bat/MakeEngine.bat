@@ -22,7 +22,7 @@ if exist %SLUG_ENGINE_WORKSPACE_PATH% (
 
 rem make engine
 pushd %SLUG_ENGINE_ROOT_PATH%
-cmake -B %SLUG_ENGINE_BUILD_PATH% -A x64
+cmake -B %SLUG_ENGINE_BUILD_PATH% -A x64 -G "Visual Studio 18 2026"
 if not %errorlevel%==0 (
      popd
      endlocal
