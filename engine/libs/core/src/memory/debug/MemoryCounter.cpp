@@ -1,4 +1,5 @@
-﻿#include "core/memory/MemoryCounter.hpp"
+﻿#if defined(DEBUG_MODE)
+#include "core/memory/debug/MemoryCounter.hpp"
 #include "core/debug/Assert.hpp"
 #include "core/thread/Thread.hpp"
 #include <string>
@@ -6,7 +7,7 @@
 namespace slug::core
 {
 
-size_t MemoryLabelTable::IncrementBytes(const char* label, size_t size) noexcept
+size_t MemoryLabelTable::IncrementBytes(MemoryLabel label, size_t size) noexcept
 {
     MemoryLabelTable::Entry* e = TryFindOrCreate(label);
     if (!e)
@@ -16,7 +17,7 @@ size_t MemoryLabelTable::IncrementBytes(const char* label, size_t size) noexcept
     return e->bytes.fetch_add(size, std::memory_order_relaxed);
 }
 
-size_t MemoryLabelTable::DecrementBytes(const char* label, size_t size) noexcept
+size_t MemoryLabelTable::DecrementBytes(MemoryLabel label, size_t size) noexcept
 {
     MemoryLabelTable::Entry* e = TryFindOrCreate(label);
     if (!e)
@@ -26,7 +27,7 @@ size_t MemoryLabelTable::DecrementBytes(const char* label, size_t size) noexcept
     return e->bytes.fetch_sub(size, std::memory_order_relaxed);
 }
 
-size_t MemoryLabelTable::GetBytes(const char* label) noexcept
+size_t MemoryLabelTable::GetBytes(MemoryLabel label) noexcept
 {
     MemoryLabelTable::Entry* e = TryFindOrCreate(label);
     if (!e)
@@ -36,18 +37,28 @@ size_t MemoryLabelTable::GetBytes(const char* label) noexcept
     return e->bytes.load(std::memory_order_relaxed);
 }
 
+size_t MemoryLabelTable::GetTotalBytes() noexcept
+{
+    size_t totalSize = 0;
+    for (size_t i = 0; i < m_currentEntryCount.load(); i++)
+    {
+        totalSize += m_entries[i].bytes.load();
+    }
+    return totalSize;
+}
+
 MemoryLabelTable::Entry& MemoryLabelTable::Slot(uint32_t i)
 {
     return m_entries[i];
 }
 
-MemoryLabelTable::Entry* MemoryLabelTable::TryFindOrCreate(const char* label)
+MemoryLabelTable::Entry* MemoryLabelTable::TryFindOrCreate(MemoryLabel label)
 {
     size_t currentSize = m_currentEntryCount.load();
     for (size_t i = 0; i < currentSize; ++i)
     {
         Entry& entry = Slot(static_cast<uint32_t>(i));
-        if (StringUtility::Strcmp(entry.label, label) == 0)
+        if (entry.label == label)
         {
             return &entry;
         }
@@ -57,7 +68,7 @@ MemoryLabelTable::Entry* MemoryLabelTable::TryFindOrCreate(const char* label)
     {
         size_t createIndex = m_currentEntryCount.fetch_add(1);
         Entry& entry = Slot(static_cast<uint32_t>(createIndex));
-        StringUtility::Strncpy(entry.label, label, SLUG_MEMORY_LABLE_STR_LENGTH);
+        entry.label = label;
         return &entry;
     }
     return nullptr;
@@ -68,7 +79,7 @@ MemoryCounter::MemoryCounter(bool debugPrint)
 {
 }
 
-void MemoryCounter::IncrementMemorySize(size_t size, const char* label)
+void MemoryCounter::IncrementMemorySize(size_t size, MemoryLabel label)
 {
     const size_t oldSize = m_memoryLabelTable.IncrementBytes(label, size);
     if (m_debugPrint)
@@ -78,7 +89,7 @@ void MemoryCounter::IncrementMemorySize(size_t size, const char* label)
     }
 }
 
-void MemoryCounter::DecrementMemorySize(size_t size, const char* label)
+void MemoryCounter::DecrementMemorySize(size_t size, MemoryLabel label)
 {
     if (size == 0)
     {
@@ -97,13 +108,15 @@ void MemoryCounter::DecrementMemorySize(size_t size, const char* label)
     }
 }
 
-size_t MemoryCounter::GetCurrentMemorySize(const char* label)
+size_t MemoryCounter::GetCurrentMemorySize(MemoryLabel label)
 {
     return m_memoryLabelTable.GetBytes(label);
 }
 
-void MemoryCounter::Print()
+size_t MemoryCounter::GetCurrentTotalMemorySize()
 {
+    return m_memoryLabelTable.GetTotalBytes();
 }
 
 }
+#endif

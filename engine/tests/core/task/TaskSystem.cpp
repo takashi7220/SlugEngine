@@ -3,11 +3,10 @@
 #include "core/container/Vector.hpp"
 #include "core/container/String.hpp"
 
-
 using namespace slug::core;
 TEST(TaskSystem, BasicLaunch)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(BasicLaunch)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = std::max(2u, std::thread::hardware_concurrency()) });
         std::atomic<int> flag { 0 };
@@ -23,7 +22,7 @@ TEST(TaskSystem, BasicLaunch)
 
 TEST(TaskSystem, DependenciesChain)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(test)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = 4 });
         TVector<String> order = {};
@@ -53,7 +52,7 @@ TEST(TaskSystem, DependenciesChain)
 
 TEST(TaskSystem, FanInDependencies)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(FanInDependencies)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = 4 });
         std::atomic<int> done { 0 };
@@ -78,7 +77,7 @@ TEST(TaskSystem, FanInDependencies)
 
 TEST(TaskSystem, ParallelForCorrectness)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ParallelForCorrectness)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = 8 });
         const size_t N = 100'000;
@@ -97,7 +96,7 @@ TEST(TaskSystem, ParallelForCorrectness)
 
 TEST(TaskSystem, FinishedPrereqRegistration)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(FinishedPrereqRegistration)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = 4 });
         auto A = sys.Launch([]
@@ -113,7 +112,7 @@ TEST(TaskSystem, FinishedPrereqRegistration)
 
 TEST(TaskSystem, ExceptionDoesNotCrashWait)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ExceptionDoesNotCrashWait)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = 4 });
         auto H = sys.Launch([]
@@ -157,7 +156,7 @@ TEST(TaskSystem, LargeDAGChainAndJoin)
 
 TEST(TaskSystem, ParallelForStress)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ParallelForStress)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TaskSystem sys({ .workerCount = std::max(2u, std::thread::hardware_concurrency()) });
         const size_t N = 500'000;

@@ -31,7 +31,7 @@ struct ReferencePtrFixture : ::testing::Test
 
 TEST_F(ReferencePtrFixture, DefaultConstructIsNull)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(DefaultConstructIsNull)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> p;
         EXPECT_EQ(p.get(), nullptr);
@@ -40,7 +40,7 @@ TEST_F(ReferencePtrFixture, DefaultConstructIsNull)
 
 TEST_F(ReferencePtrFixture, NullptrConstructAndAssign)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(NullptrConstructAndAssign)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> p(nullptr);
         EXPECT_EQ(p.get(), nullptr);
@@ -51,7 +51,7 @@ TEST_F(ReferencePtrFixture, NullptrConstructAndAssign)
 
 TEST_F(ReferencePtrFixture, ConstructFromRawAndDestroyOnScopeExit)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ConstructFromRawAndDestroyOnScopeExit)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto raw = new TestObject(42);
 
@@ -71,7 +71,8 @@ TEST_F(ReferencePtrFixture, ConstructFromRawAndDestroyOnScopeExit)
 
 TEST_F(ReferencePtrFixture, MoveSemantics)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(MoveSemantics)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
+
     {
         TReferencePtr<TestObject> p = MakeReference<TestObject>();
         ASSERT_NE(p.get(), nullptr);
@@ -93,7 +94,7 @@ TEST_F(ReferencePtrFixture, MoveSemantics)
 
 TEST_F(ReferencePtrFixture, CopySemanticsShareReference)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(CopySemanticsShareReference)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> p = MakeReference<TestObject>();
         ASSERT_NE(p.get(), nullptr);
@@ -114,7 +115,7 @@ TEST_F(ReferencePtrFixture, CopySemanticsShareReference)
 
 TEST_F(ReferencePtrFixture, SwapExchangesPointers)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(SwapExchangesPointers)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> a = MakeReference<TestObject>();
         TReferencePtr<TestObject> b = MakeReference<TestObject>();
@@ -134,7 +135,7 @@ TEST_F(ReferencePtrFixture, SwapExchangesPointers)
 // attach / detach：AddRef/Release のバランス確認
 TEST_F(ReferencePtrFixture, AttachAndDetach)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(AttachAndDetach)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         // 手動管理で attach する場合の挙動
         auto* raw = new TestObject(7);
@@ -156,7 +157,7 @@ TEST_F(ReferencePtrFixture, AttachAndDetach)
 // create：attach ベースのファクトリ
 TEST_F(ReferencePtrFixture, CreateUsesAttachSemantics)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(CreateUsesAttachSemantics)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* raw = new TestObject(3);
         TReferencePtr<TestObject> p = raw;
@@ -174,7 +175,7 @@ TEST_F(ReferencePtrFixture, CreateUsesAttachSemantics)
 // reset（引数なし）：内部 Release が呼ばれ、破棄をトリガ
 TEST_F(ReferencePtrFixture, ResetNoArgReleasesAndReturnsRefcount)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ResetNoArgReleasesAndReturnsRefcount)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> p = MakeReference<TestObject>();
         ASSERT_NE(p.get(), nullptr);
@@ -190,7 +191,7 @@ TEST_F(ReferencePtrFixture, ResetNoArgReleasesAndReturnsRefcount)
 // reset（引数あり）：入れ替え（古い方を Release、新しい方を保有）
 TEST_F(ReferencePtrFixture, ResetWithNewPointer)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ResetWithNewPointer)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* a = new TestObject(1);
         auto* b = new TestObject(2);
@@ -212,7 +213,7 @@ TEST_F(ReferencePtrFixture, ResetWithNewPointer)
 // get_address_of / release_and_get_address_of：アドレス取得の基本契約
 TEST_F(ReferencePtrFixture, AddressHelpers)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(AddressHelpers)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TReferencePtr<TestObject> p = MakeReference<TestObject>();
         ASSERT_NE(p.get(), nullptr);

@@ -43,7 +43,7 @@ std::atomic<int> TestObject::destructed_count { 0 };
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, DefaultAndNullConstruction)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(DefaultAndNullConstruction)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TWeakReferencePtr<TestObject> w0;
         EXPECT_TRUE(w0.expired());
@@ -64,7 +64,7 @@ TEST(TWeakReferencePtrTest, DefaultAndNullConstruction)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, ConstructFromStrongAndLock)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ConstructFromStrongAndLock)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TestObject::ResetCounters();
         {
@@ -97,7 +97,7 @@ TEST(TWeakReferencePtrTest, ConstructFromStrongAndLock)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, ExpiredAfterStrongReleased)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ExpiredAfterStrongReleased)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         TestObject::ResetCounters();
         TWeakReferencePtr<TestObject> weak;
@@ -127,7 +127,7 @@ TEST(TWeakReferencePtrTest, ExpiredAfterStrongReleased)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, CopyConstructionAndAssignment)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(CopyConstructionAndAssignment)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* raw = new TestObject();
         TReferencePtr<TestObject> strong(raw); // strong:1
@@ -158,7 +158,7 @@ TEST(TWeakReferencePtrTest, CopyConstructionAndAssignment)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, MoveConstructionAndAssignment)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(MoveConstructionAndAssignment)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* raw = new TestObject();
         TReferencePtr<TestObject> strong(raw);
@@ -188,7 +188,7 @@ TEST(TWeakReferencePtrTest, MoveConstructionAndAssignment)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, Swap)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(TWeakReferencePtrTest)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* a = new TestObject();
         auto* b = new TestObject();
@@ -219,7 +219,7 @@ TEST(TWeakReferencePtrTest, Swap)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, AssignNullptrReleasesWeak)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(AssignNullptrReleasesWeak)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
 
         TestObject::ResetCounters();
@@ -251,7 +251,7 @@ TEST(TWeakReferencePtrTest, AssignNullptrReleasesWeak)
 //------------------------------------------------------------------------------
 TEST(TWeakReferencePtrTest, ConstructWeakFromRawPointer)
 {
-    SLUG_MEMORY_LEACK_CHECK_SCOPE(ConstructWeakFromRawPointer)
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
     {
         auto* raw = new TestObject();
         // 強参照なしに弱参照だけを作ると strong==0 のため expired
