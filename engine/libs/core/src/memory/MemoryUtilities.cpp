@@ -11,36 +11,54 @@ namespace slug::core
 
 void* MemoryUtilities::Allocate(size_t size)
 {
-    void* p = mi_new(size);
+    size_t totalSize = size + sizeof(MemoryHeader);
+    void* raw = mi_new(totalSize);
+    MemoryHeader* header = static_cast<MemoryHeader*>(raw);
+    header->size = size;
+    header->label = MemoryLabel(MemoryLabelType::MemoryLabelType_Debug);
 #if defined(DEBUG_MODE)
-    MemoryDebugUtilities::RecordAllocate(p, MemoryLabel(MemoryLabelType::MemoryLabelType_System));
+    MemoryDebugUtilities::RecordAllocate(raw, header->label);
 #endif
-    return p;
+    return reinterpret_cast<void*>(header + 1);
 }
 
 void* MemoryUtilities::Allocate(size_t size, size_t align)
 {
-    void *p = mi_new_aligned(size, align);
+    size_t totalSize = size + sizeof(MemoryHeader);
+    void* raw = mi_new_aligned(totalSize, align);
+    MemoryHeader* header = static_cast<MemoryHeader*>(raw);
+    header->size = size;
+    header->label = MemoryLabel(MemoryLabelType::MemoryLabelType_Debug);
 #if defined(DEBUG_MODE)
-    MemoryDebugUtilities::RecordAllocate(p, MemoryLabel(MemoryLabelType::MemoryLabelType_System));
+    MemoryDebugUtilities::RecordAllocate(raw, header->label);
 #endif
-    return p;
+    return reinterpret_cast<void*>(header + 1);
 }
 
 void MemoryUtilities::Deallocate(void* p)
 {
+    if (!p)
+    {
+        return;
+    }
+    MemoryHeader* header = reinterpret_cast<MemoryHeader*>(p) - 1;
 #if defined(DEBUG_MODE)
-    MemoryDebugUtilities::RecordDeallocate(p, MemoryLabel(MemoryLabelType::MemoryLabelType_System));
+    MemoryDebugUtilities::RecordDeallocate(p, header->label);
 #endif
-    mi_free(p);
+    mi_free(header);
 }
 
 void MemoryUtilities::Deallocate(void* p, size_t align)
 {
+    if (!p)
+    {
+        return;
+    }
+    MemoryHeader* header = reinterpret_cast<MemoryHeader*>(p) - 1;
 #if defined(DEBUG_MODE)
-    MemoryDebugUtilities::RecordDeallocate(p, MemoryLabel(MemoryLabelType::MemoryLabelType_System));
+    MemoryDebugUtilities::RecordDeallocate(p, header->label);
 #endif
-    mi_free_aligned(p, align);
+    mi_free_aligned(header, align);
 }
 
 void MemoryUtilities::Memset(void* dst, int32_t value, size_t dstSize)
