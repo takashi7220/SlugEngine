@@ -28,6 +28,34 @@ struct MemoryProfileInfo
 };
 
 using MemoryLeakCheckCallback = void(*)(size_t leakMemorySize, MemoryLabel label);
+
+class MemoryLabelScope final
+{
+public:
+    explicit MemoryLabelScope(MemoryLabelId newLabel)
+        : m_prevLabel(m_currentLabel)
+    {
+        m_currentLabel = newLabel;
+    }
+
+    ~MemoryLabelScope()
+    {
+        m_currentLabel = m_prevLabel;
+    }
+
+    MemoryLabelScope(const MemoryLabelScope&) = delete;
+    MemoryLabelScope& operator=(const MemoryLabelScope&) = delete;
+
+    static MemoryLabelId Current()
+    {
+        return m_currentLabel;
+    }
+
+private:
+    MemoryLabelId m_prevLabel;
+    static thread_local MemoryLabelId m_currentLabel;
+};
+
 class MemoryLeakCheckScope final
 {
 public:
@@ -38,6 +66,8 @@ private:
     size_t m_checkSize;
     MemoryLabel m_label;
 };
+
+
 class MemoryDebugUtilities
 {
 public:

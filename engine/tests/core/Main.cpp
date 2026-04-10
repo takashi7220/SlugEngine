@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
             mi_option_enable(mi_option_verbose);
             mi_option_enable(mi_option_show_errors);
             {
+                SLUG_MEMORY_LABEL_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug);
                 SLUG_MEMORY_LEACK_CHECK_SCOPE(slug::core::MemoryLabelType::MemoryLabelType_Debug)
                 ::testing::InitGoogleTest(&argc, argv);
                 ret = RUN_ALL_TESTS();

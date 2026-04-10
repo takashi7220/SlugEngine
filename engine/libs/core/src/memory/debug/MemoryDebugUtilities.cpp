@@ -45,6 +45,8 @@ MemoryLeakCheckScope::~MemoryLeakCheckScope()
     }
 }
 
+thread_local MemoryLabelId MemoryLabelScope::m_currentLabel = 0;
+
 
 MemoryProfileInfo MemoryDebugUtilities::GetMemoryProfileInfo()
 {

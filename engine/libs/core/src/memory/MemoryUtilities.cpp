@@ -15,7 +15,7 @@ void* MemoryUtilities::Allocate(size_t size)
     void* raw = mi_new(totalSize);
     MemoryHeader* header = static_cast<MemoryHeader*>(raw);
     header->size = size;
-    header->label = MemoryLabel(MemoryLabelType::MemoryLabelType_Debug);
+    header->label = MemoryLabel(MemoryLabelScope::Current());
 #if defined(DEBUG_MODE)
     MemoryDebugUtilities::RecordAllocate(raw, header->label);
 #endif
@@ -28,7 +28,7 @@ void* MemoryUtilities::Allocate(size_t size, size_t align)
     void* raw = mi_new_aligned(totalSize, align);
     MemoryHeader* header = static_cast<MemoryHeader*>(raw);
     header->size = size;
-    header->label = MemoryLabel(MemoryLabelType::MemoryLabelType_Debug);
+    header->label = MemoryLabel(MemoryLabelScope::Current());
 #if defined(DEBUG_MODE)
     MemoryDebugUtilities::RecordAllocate(raw, header->label);
 #endif

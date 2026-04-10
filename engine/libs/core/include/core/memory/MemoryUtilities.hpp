@@ -14,9 +14,11 @@
 #define SLUG_SAFE_DESTROY(v)         if( v ){ ( v )->destroy(); v = nullptr; }
 
 #if defined(DEBUG_MODE)
+#define SLUG_MEMORY_LABEL_SCOPE(label) slug::core::MemoryLabelScope _memory_label_scope_(label);
 #define SLUG_MEMORY_LEACK_CHECK_SCOPE(label) slug::core::MemoryLeakCheckScope _memory_leak_check_(label);
 #define SLUG_MEMORY_LABEL_REGISTER(label, name) 
 #else
+#define SLUG_MEMORY_LABEL_SCOPE(label)
 #define SLUG_MEMORY_LEACK_CHECK_SCOPE(label)
 #define SLUG_MEMORY_LABEL_REGISTER(label, name) 
 #endif
