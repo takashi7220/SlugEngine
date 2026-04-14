@@ -277,7 +277,7 @@ public:
 
     TReferencePtr& operator=(TReferencePtr&& other) noexcept
     {
-        if (this != &other)
+        if (this->m_ptr != other.m_ptr)
         {
             InternalRelease();
             m_ptr = other.m_ptr;
@@ -301,6 +301,16 @@ public:
     SLUG_NODISCARD T* get() const noexcept
     {
         return m_ptr;
+    }
+
+    SLUG_NODISCARD T** operator&() noexcept
+    {
+        return get_address_of();
+    }
+
+    SLUG_NODISCARD T* const* operator&() const noexcept
+    {
+        return get_address_of();
     }
 
     operator T* () const noexcept
