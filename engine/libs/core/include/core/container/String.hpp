@@ -30,6 +30,18 @@ using WStringStream = std::wstringstream;
 #else
 #endif
 
+template<typename T>
+struct is_string : std::false_type
+{
+};
+template<>
+struct is_string<core::String> : std::true_type
+{
+};
+template<typename T>
+inline constexpr bool is_string_v = is_string<T>::value;
+
+
 class StringUtility
 {
 public:
