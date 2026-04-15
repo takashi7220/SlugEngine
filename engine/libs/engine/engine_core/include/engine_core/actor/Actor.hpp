@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "core/container/List.hpp"
-#include "engine_core/tick/TickObject.hpp"
+#include "core/tick/TickObject.hpp"
 #include "engine_core/actor/ActorComponent.hpp"
 #include "engine_core/actor/SceneComponent.hpp"
 #include "engine_core/actor/ActorUtility.hpp"
@@ -42,50 +42,24 @@ static Actor* Create(const engine_core::ActorTypeID& actorTypeID)               
     return core::MemoryUtilities::CheckedCast<engine_core::Actor*, type*>(actor);                       \
 }                                                                                                       \
 
-#define SLUG_DERIVED_ACTOR_MEMBER(type, baseType)                                                       \
-static engine_core::ActorTypeID GetStaticActorTypeId()                                                  \
-{                                                                                                       \
-    return engine_core::ActorTypeID(#type);                                                             \
-}                                                                                                       \
-static void GatherAncestorTypes(core::TVector<engine_core::ActorTypeID>& types)                         \
-{                                                                                                       \
-    types.push_back(baseType::GetStaticActorTypeId());                                                  \
-    baseType::GatherAncestorTypes(types);                                                               \
-}                                                                                                       \
-static core::TVector<engine_core::ActorTypeID> GetStaticAncestorActorTypeIds()                          \
-{                                                                                                       \
-    core::TVector<engine_core::ActorTypeID> ret;                                                        \
-    type::GatherAncestorTypes(ret);                                                                     \
-    return ret;                                                                                         \
-}                                                                                                       \
-static Actor* Create(const engine_core::ActorTypeID& actorTypeID)                                       \
-{                                                                                                       \
-    type* actor(new type());                                                                            \
-    actor->SetActorTypeID(type::GetStaticActorTypeId());                                                \
-    actor->SetAncestorActorTypeIDs(type::GetStaticAncestorActorTypeIds());                              \
-    actor->SetName(type::GetStaticActorTypeId().GetName());                                             \
-    actor->Initialize();                                                                                \
-    return core::MemoryUtilities::CheckedCast<engine_core::Actor*, type*>(actor);                       \
-}                                                                                                       \
-
 
 namespace slug::engine_core
 {
 
-class Actor;
-using ActorPtr = core::TReferencePtr<Actor>;
-
 class Level;
 class IWorld;
+class Actor;
 
-class Actor : public TickObject, public core::SObject, public core::ReflectionClass
+using ActorPtr = core::TReferencePtr<Actor>;
+
+class Actor : public core::TickObject, public core::SObject, public core::ReflectionClass
 {
 public:
     Actor();
 
     virtual void Initialize() = 0;
     virtual void Start() = 0;
-    virtual void Tick(const TickParam& tickParam) override;
+    virtual void Tick(const core::TickParam& tickParam) override;
     virtual void End() = 0;
 
     // parent actor
@@ -122,10 +96,6 @@ public:
     // actor type id
     void SetActorTypeID(const ActorTypeID type);
     ActorTypeID GetActorTypeID();
-
-    // ancestor actor type ids
-    void SetAncestorActorTypeIDs(const core::TVector<ActorTypeID>& ids);
-    const core::TVector<ActorTypeID>& GetAncestorActorTypeIDs();
 
 public:
     template<ActorComponentType T>

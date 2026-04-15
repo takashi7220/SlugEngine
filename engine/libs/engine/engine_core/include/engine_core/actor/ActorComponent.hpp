@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include "engine_core/tick/TickObject.hpp"
 #include "engine_core/actor/ActorComponentUtility.hpp"
+#include "engine/tick/TickObject.hpp"
 #include "core/reflection/ReflectionClass.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "core/container/List.hpp"
@@ -75,18 +75,19 @@ namespace engine_core
 
 class Actor;
 class ActorComponent;
+
 using ActorComponentPtr = core::TReferencePtr<ActorComponent>;
 
 template<typename T>
 concept ActorComponentType = std::derived_from<T, ActorComponent>;
 
-class ActorComponent : public TickObject, public core::SObject, public core::ReflectionClass
+class ActorComponent : public core::TickObject, public core::SObject, public core::ReflectionClass
 {
 public:
     ActorComponent();
     virtual void Initialize() = 0;
     virtual void Start() = 0;
-    virtual void Tick(const TickParam& tickParam) override;
+    virtual void Tick(const core::TickParam& tickParam) override;
     virtual void End() = 0;
 
 public:

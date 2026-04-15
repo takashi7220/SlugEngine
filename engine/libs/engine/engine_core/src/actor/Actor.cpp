@@ -9,7 +9,7 @@ Actor::Actor()
 {
 }
 
-void Actor::Tick(const TickParam& tickParam)
+void Actor::Tick(const core::TickParam& tickParam)
 {
 
 }
