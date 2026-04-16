@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "core/window/IWindow.hpp"
 #include "core/container/Vector.hpp"
 #include "core/container/UnorderedMap.hpp"

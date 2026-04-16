@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/Define.hpp"
 #include <type_traits>

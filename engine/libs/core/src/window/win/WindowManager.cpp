@@ -1,4 +1,4 @@
-#if defined(PLATFORM_WINDOWS)
+﻿#if defined(PLATFORM_WINDOWS)
 #include <windows.h>
 #include <shellapi.h>
 

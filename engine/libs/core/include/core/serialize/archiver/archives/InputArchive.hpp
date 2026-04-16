@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/utility/NameValuePair.hpp"
 #include "core/utility/BaseClassWrapper.hpp"

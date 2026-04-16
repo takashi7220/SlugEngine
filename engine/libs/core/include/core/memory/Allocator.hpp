@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "core/memory/MemoryUtilities.hpp"
 #include "core/debug/Exception.hpp"
 #include "core/NumericLimits.hpp"

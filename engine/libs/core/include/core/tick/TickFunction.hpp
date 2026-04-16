@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/uuid/UUID.hpp"
 #include "core/container/Vector.hpp"

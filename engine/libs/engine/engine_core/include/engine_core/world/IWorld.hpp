@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/object/SObject.hpp"
 

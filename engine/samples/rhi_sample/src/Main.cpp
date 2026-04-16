@@ -1,4 +1,4 @@
-#include "render/GraphicsContext.hpp"
+﻿#include "render/GraphicsContext.hpp"
 #include "render/Window.hpp"
 
 int main()

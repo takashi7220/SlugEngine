@@ -1,4 +1,4 @@
-#include "core/reflection/Type.hpp"
+﻿#include "core/reflection/Type.hpp"
 #include "core/reflection/Property.hpp"
 #include "core/reflection/Constructor.hpp"
 #include "core/reflection/Instance.hpp"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/memory/WeakReferencePtr.hpp"
 #include "core/container/String.hpp"

@@ -1,4 +1,4 @@
-#include "engine_graphics/component/MeshComponent.hpp"
+﻿#include "engine_graphics/component/MeshComponent.hpp"
 
 namespace slug::engine_graphics
 {

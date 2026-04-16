@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/utility/Hash.hpp"
 #include "engine_core/asset/AssetBase.hpp"

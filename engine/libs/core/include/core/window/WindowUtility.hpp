@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/window/IWindowManager.hpp"
 #include "core/service/ServiceProvider.hpp"

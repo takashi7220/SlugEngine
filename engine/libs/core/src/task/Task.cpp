@@ -1,4 +1,4 @@
-#include "core/task/Task.hpp"
+﻿#include "core/task/Task.hpp"
 #include "core/task/TaskSystem.hpp"
 
 #include <utility>

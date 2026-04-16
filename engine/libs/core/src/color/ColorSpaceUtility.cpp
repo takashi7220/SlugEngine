@@ -1,4 +1,4 @@
-#include "core/color/ColorSpaceUtility.hpp"
+﻿#include "core/color/ColorSpaceUtility.hpp"
 
 namespace slug::core
 {

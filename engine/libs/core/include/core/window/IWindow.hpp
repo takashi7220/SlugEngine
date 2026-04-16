@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <optional>
 #include "math/Vector2.hpp"
 #include "core/object/SObject.hpp"

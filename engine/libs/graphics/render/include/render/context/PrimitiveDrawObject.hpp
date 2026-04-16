@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 #include "core/container/Queue.hpp"

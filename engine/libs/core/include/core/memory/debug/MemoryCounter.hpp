@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #if defined(DEBUG_MODE)
 #include "core/thread/Atomic.hpp"

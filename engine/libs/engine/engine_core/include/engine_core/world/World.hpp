@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "engine_core/world/IWorld.hpp"
 #include "engine_core/level/Level.hpp"
 

@@ -1,4 +1,4 @@
-#include "core/task/WorkQueue.hpp"
+﻿#include "core/task/WorkQueue.hpp"
 
 namespace slug::core
 {

@@ -1,4 +1,4 @@
-#include "engine_framework/ApplicationBase.hpp"
+﻿#include "engine_framework/ApplicationBase.hpp"
 #include "core/task/TaskSystem.hpp"
 #include "core/window/IWindowManager.hpp"
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/serialize/archiver/archives/InputArchive.hpp"
 #include "core/memory/MemoryUtilities.hpp"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "render/pass/IRenderPass.hpp"
 #include "render/material/Material.hpp"

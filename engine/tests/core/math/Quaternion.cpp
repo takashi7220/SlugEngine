@@ -1,4 +1,4 @@
-// tests/test_Quaternion.cpp
+﻿// tests/test_Quaternion.cpp
 #include <gtest/gtest.h>
 #include <cmath>
 #include "math/TypeConcept.hpp"

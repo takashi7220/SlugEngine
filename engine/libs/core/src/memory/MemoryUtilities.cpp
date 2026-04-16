@@ -1,4 +1,4 @@
-#include "core/memory/MemoryUtilities.hpp"
+﻿#include "core/memory/MemoryUtilities.hpp"
 #include <mimalloc.h>
 #include <memory>
 

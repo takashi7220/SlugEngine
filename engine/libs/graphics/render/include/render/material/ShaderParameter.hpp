@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "render/material/DrawSettings.hpp"
 #include "render/texture/Texture.hpp"

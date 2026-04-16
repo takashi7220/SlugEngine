@@ -1,4 +1,4 @@
-#include "core/tick/TickFunction.hpp"
+﻿#include "core/tick/TickFunction.hpp"
 #include "core/tick/TickObject.hpp"
 #include "core/tick/TickManager.hpp"
 #include "core/debug/Assert.hpp"
