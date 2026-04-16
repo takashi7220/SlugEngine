@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/debug/Assert.hpp"

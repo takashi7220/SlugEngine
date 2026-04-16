@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "math/MatrixBase.hpp"
 #include "math/Vector3.hpp"
@@ -250,5 +250,4 @@ struct Matrix3x3
     }
 };
 
-} // namespace math
-} // namespace slug
+}

@@ -1,4 +1,4 @@
-#include "image/ImageUtility.hpp"
+﻿#include "image/ImageUtility.hpp"
 #include "image/DDS.hpp"
 #include <algorithm>
 

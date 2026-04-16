@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include "core/debug/Logger.hpp"
@@ -75,8 +75,6 @@ public:
 
 };
 
-}
-}
 }
 
 #else

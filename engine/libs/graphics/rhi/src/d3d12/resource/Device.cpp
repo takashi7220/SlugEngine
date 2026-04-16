@@ -1,4 +1,4 @@
-#include "core/memory/UniquePtr.hpp"
+﻿#include "core/memory/UniquePtr.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "rhi/common/Resource.hpp"
 #include "rhi/common/Utility.hpp"
