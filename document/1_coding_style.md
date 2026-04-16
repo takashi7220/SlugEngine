@@ -225,30 +225,34 @@ libs/core/
 
 ### 4.1 宣言スタイル
 
-**C++17 スコープ付き namespace** を推奨する。
+**C++17 スコープ付き namespace** を使用する。ネスト形式は使用しない。
 
 ```cpp
 namespace slug::core
 {
     class MyClass { };
 }
-```
 
-旧来のネスト形式も許容する（既存コードの混在あり）。
-
-```cpp
-namespace slug
+namespace slug::rhi::d3d12
 {
-namespace core
-{
-    class MyClass { };
-}
+    class Device { };
 }
 ```
 
 ### 4.2 インデント
 
-namespace のスコープ内はインデント **しない**（ネスト形式）か、1段インデント（C++17 形式）を統一する。
+namespace のスコープ内はインデント **しない**。
+
+```cpp
+namespace slug::core
+{
+
+class MyClass
+{
+};
+
+}
+```
 
 ### 4.3 閉じ括弧コメント
 
