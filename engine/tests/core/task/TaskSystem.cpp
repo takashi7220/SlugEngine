@@ -1,4 +1,4 @@
-﻿#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "core/task/TaskSystem.hpp"
 #include "core/container/Vector.hpp"
 #include "core/container/String.hpp"

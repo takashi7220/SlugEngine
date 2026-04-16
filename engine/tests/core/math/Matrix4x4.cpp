@@ -1,4 +1,4 @@
-﻿// tests/test_matrix4x4.cpp
+// tests/test_matrix4x4.cpp
 #include <gtest/gtest.h>
 #include <type_traits>
 #include "math/MatrixBase.hpp"

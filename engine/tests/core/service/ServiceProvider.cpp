@@ -1,4 +1,4 @@
-﻿#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "core/service/ServiceProvider.hpp"
 
 using namespace slug::core;

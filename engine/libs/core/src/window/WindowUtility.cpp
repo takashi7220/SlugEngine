@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/window/WindowUtility.hpp"
 #include "core/window/null/WindowManager.hpp"

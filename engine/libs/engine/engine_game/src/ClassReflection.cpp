@@ -1,4 +1,4 @@
-﻿#include <rttr/registration.h>
+#include <rttr/registration.h>
 
 using namespace rttr;
 

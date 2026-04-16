@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "core/container/List.hpp"
 #include "core/tick/TickObject.hpp"
 #include "engine_core/actor/ActorComponent.hpp"

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "engine_core/actor/SceneComponent.hpp"
 #include "engine_graphics/ClassReflection.hpp"
 #include "render/context/PrimitiveDrawObject.hpp"

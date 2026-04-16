@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdio>
 #include "core/memory/MemoryLabel.hpp"

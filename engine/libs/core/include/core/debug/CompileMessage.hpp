@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #define SLUG_STRINGIZE_DETAIL(x) #x
 #define SLUG_STRINGIZE(x) SLUG_STRINGIZE_DETAIL(x)

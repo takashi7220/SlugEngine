@@ -1,4 +1,4 @@
-﻿#include "rhi/d3d12/resource/BindlessLayout.hpp"
+#include "rhi/d3d12/resource/BindlessLayout.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"
 
 namespace slug::rhi::d3d12

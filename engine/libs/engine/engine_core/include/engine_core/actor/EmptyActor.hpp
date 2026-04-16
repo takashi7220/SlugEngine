@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/actor/Actor.hpp"
 

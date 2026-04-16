@@ -1,4 +1,4 @@
-﻿#include "render/resource/ResourceService.hpp"
+#include "render/resource/ResourceService.hpp"
 
 namespace slug::render
 {

@@ -1,4 +1,4 @@
-﻿#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "core/debug/Logger.hpp"
 #include <mimalloc.h>
 #include <mimalloc-new-delete.h>

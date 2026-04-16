@@ -1,4 +1,4 @@
-﻿#if defined(PLATFORM_WINDOWS)
+#if defined(PLATFORM_WINDOWS)
 #include "core/window/win/MonitorUtility.hpp"
 #include <windows.h>
 #include <shellscalingapi.h>

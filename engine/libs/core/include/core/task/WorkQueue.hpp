@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/task/Task.hpp"
 #include "core/container/Queue.hpp"

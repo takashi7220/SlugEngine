@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/window/IWindow.hpp"
 #include <Windows.h>

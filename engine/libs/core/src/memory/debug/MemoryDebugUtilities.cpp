@@ -1,4 +1,4 @@
-﻿#if defined(DEBUG_MODE)
+#if defined(DEBUG_MODE)
 #include "core/memory/debug/MemoryDebugUtilities.hpp"
 #include "core/container/String.hpp"
 #include "core/debug/Exception.hpp"

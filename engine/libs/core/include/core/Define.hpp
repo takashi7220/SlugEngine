@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if false
 #define SLUG_ENABLE_CPP14 __cplusplus >= 201402L

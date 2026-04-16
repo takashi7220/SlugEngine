@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/service/ServiceProvider.hpp"
 #include "core/tick/TickFunction.hpp"

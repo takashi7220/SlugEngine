@@ -1,4 +1,4 @@
-﻿#include "render_test/Application.hpp"
+#include "render_test/Application.hpp"
 
 int main(int argc, const char* argv)
 {

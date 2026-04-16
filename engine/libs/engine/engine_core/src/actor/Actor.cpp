@@ -1,4 +1,4 @@
-﻿#include "engine_core/actor/Actor.hpp"
+#include "engine_core/actor/Actor.hpp"
 #include "engine_core/actor/SceneComponent.hpp"
 #include "engine_core/level/Level.hpp"
 #include "engine_core/world/IWorld.hpp"

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "render/resource/BufferPool.hpp"
 #include "render/resource/TexturePool.hpp"

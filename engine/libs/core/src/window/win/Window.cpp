@@ -1,4 +1,4 @@
-﻿#if defined(PLATFORM_WINDOWS)
+#if defined(PLATFORM_WINDOWS)
 #include "core/window/win/Window.hpp"
 #include "core/window/win/MonitorUtility.hpp"
 #include "core/container/Vector.hpp"

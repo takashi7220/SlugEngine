@@ -1,4 +1,4 @@
-﻿#if defined(DEBUG_MODE)
+#if defined(DEBUG_MODE)
 #include "core/memory/debug/MemoryCounter.hpp"
 #include "core/debug/Assert.hpp"
 #include "core/thread/Thread.hpp"

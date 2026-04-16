@@ -1,4 +1,4 @@
-﻿#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include "core/container/String.hpp"
 
 using namespace slug::core;

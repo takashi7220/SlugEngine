@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <unordered_map>

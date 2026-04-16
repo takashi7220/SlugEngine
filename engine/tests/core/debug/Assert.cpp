@@ -1,4 +1,4 @@
-﻿#include "core/debug/Assert.hpp"
+#include "core/debug/Assert.hpp"
 #include <gtest/gtest.h>
 
 using namespace slug;

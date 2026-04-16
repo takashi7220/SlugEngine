@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 #include "core/task/Task.hpp"

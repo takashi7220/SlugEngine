@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 #include "render/context/IDrawObjectCuller.hpp"

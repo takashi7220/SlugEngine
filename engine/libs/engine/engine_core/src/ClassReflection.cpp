@@ -1,4 +1,4 @@
-﻿#include "engine_core/ClassReflection.hpp"
+#include "engine_core/ClassReflection.hpp"
 #include "engine_core/actor/SceneComponent.hpp"
 
 namespace slug::engine_core

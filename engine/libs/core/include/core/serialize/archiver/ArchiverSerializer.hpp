@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/serialize/common/SerializeTraits.hpp"
 #include "core/serialize/common/SerializeUtility.hpp"

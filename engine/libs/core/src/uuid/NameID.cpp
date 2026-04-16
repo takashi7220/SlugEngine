@@ -1,4 +1,4 @@
-﻿#include "core/uuid/NameID.hpp"
+#include "core/uuid/NameID.hpp"
 #include "core/container/Vector.hpp"
 #include "core/debug/Assert.hpp"
 namespace slug::core

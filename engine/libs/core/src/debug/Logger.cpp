@@ -1,4 +1,4 @@
-﻿#include "core/debug/Logger.hpp"
+#include "core/debug/Logger.hpp"
 
 namespace slug::core
 {

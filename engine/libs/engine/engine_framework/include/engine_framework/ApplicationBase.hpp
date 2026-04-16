@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/task/TaskSystem.hpp"
 #include "core/service/ServiceProvider.hpp"

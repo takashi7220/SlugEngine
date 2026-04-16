@@ -1,4 +1,4 @@
-﻿#include "engine_core/actor/EmptyActor.hpp"
+#include "engine_core/actor/EmptyActor.hpp"
 
 namespace slug::engine_core
 {

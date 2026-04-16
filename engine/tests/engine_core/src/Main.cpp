@@ -1,4 +1,4 @@
-﻿#include <typeinfo>
+#include <typeinfo>
 
 int main(int argc, char* argv)
 {

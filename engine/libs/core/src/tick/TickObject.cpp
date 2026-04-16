@@ -1,4 +1,4 @@
-﻿#include "core/tick/TickObject.hpp"
+#include "core/tick/TickObject.hpp"
 #include "core/tick/TickManager.hpp"
 
 namespace slug::core

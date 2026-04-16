@@ -1,4 +1,4 @@
-﻿#include <rttr/registration>
+#include <rttr/registration>
 #include <iostream>
 struct MyStruct
 {

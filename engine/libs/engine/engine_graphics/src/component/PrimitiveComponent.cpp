@@ -1,4 +1,4 @@
-﻿#include "engine_graphics/component/PrimitiveComponent.hpp"
+#include "engine_graphics/component/PrimitiveComponent.hpp"
 #include "render/utility/Utility.hpp"
 namespace slug::engine_graphics
 {

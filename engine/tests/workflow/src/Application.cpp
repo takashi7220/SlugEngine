@@ -1,4 +1,4 @@
-﻿#include "core/debug/CompileMessage.hpp"
+#include "core/debug/CompileMessage.hpp"
 #include "core/window/WindowUtility.hpp"
 #include "core/debug/Logger.hpp"
 
