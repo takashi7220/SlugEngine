@@ -11,5 +11,6 @@
 #include "core/serialize/archiver/types/SerializePrimitive.hpp"
 #include "core/serialize/archiver/types/SerializeString.hpp"
 #include "core/serialize/archiver/types/SerializeVector.hpp"
+#include "core/serialize/archiver/types/SerializeUnorderedMap.hpp"
 
 #include "core/serialize/archiver/SerializeDispatch.hpp"

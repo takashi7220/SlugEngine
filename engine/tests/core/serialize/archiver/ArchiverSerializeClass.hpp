@@ -3,6 +3,7 @@
 #include "core/serialize/archiver/ArchiverSerializer.hpp"
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
+#include "core/container/UnorderedMap.hpp"
 
 namespace slug::test::archiver
 {
@@ -168,6 +169,54 @@ struct Entity
     }
 };
 
+struct ItemId
+{
+    int id = 0;
+
+    template<typename Archive>
+    void Serialize(Archive& ar) const
+    {
+        ar.Field("id", id);
+    }
+
+    template<typename Archive>
+    void Deserialize(Archive& ar)
+    {
+        ar.Field("id", id);
+    }
+
+    bool operator==(const ItemId& rhs) const
+    {
+        return id == rhs.id;
+    }
+};
+
+struct ItemTable
+{
+    core::TUnorderedMap<int, core::String> items;
+
+    template<typename Archive>
+    void Serialize(Archive& ar) const
+    {
+        ar.BeginObject();
+        ar.Field("items", items);
+        ar.EndObject();
+    }
+
+    template<typename Archive>
+    void Deserialize(Archive& ar)
+    {
+        ar.BeginObject();
+        ar.Field("items", items);
+        ar.EndObject();
+    }
+
+    bool operator==(const ItemTable& rhs) const
+    {
+        return items == rhs.items;
+    }
+};
+
 struct Character : Entity
 {
     core::String name;
@@ -205,3 +254,12 @@ struct Character : Entity
     }
 };
 }
+
+template<>
+struct std::hash<slug::test::archiver::ItemId>
+{
+    size_t operator()(const slug::test::archiver::ItemId& key) const noexcept
+    {
+        return std::hash<int>{}(key.id);
+    }
+};

@@ -73,6 +73,97 @@ TEST(ArchiverSerializerTest, BinaryRoundTrip_InheritanceBaseClass)
     EXPECT_EQ(src, dst);
 }
 
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_IntToInt)
+{
+    TUnorderedMap<int, int> src = { { 1, 10 }, { 2, 20 }, { 3, 30 } };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_StringToInt)
+{
+    TUnorderedMap<String, int> src = { { "hp", 100 }, { "mp", 50 }, { "atk", 30 } };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_IntToString)
+{
+    TUnorderedMap<int, String> src = { { 1, "sword" }, { 2, "shield" }, { 3, "bow" } };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_Empty)
+{
+    TUnorderedMap<int, int> src;
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_TRUE(dst.empty());
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_StructValue)
+{
+    TUnorderedMap<String, Weapon> src;
+    src["main"] = Weapon { "Sword", 120 };
+    src["sub"]  = Weapon { "Dagger", 45 };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_NestedInStruct)
+{
+    ItemTable src;
+    src.items = { { 101, "Potion" }, { 202, "Ether" }, { 303, "Elixir" } };
+
+    const ItemTable dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_SingleEntry)
+{
+    TUnorderedMap<String, int> src = { { "only", 99 } };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(dst.size(), 1u);
+    EXPECT_EQ(dst.at("only"), 99);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_StructKeyToInt)
+{
+    TUnorderedMap<ItemId, int, std::hash<ItemId>> src;
+    src[ItemId { 1 }] = 100;
+    src[ItemId { 2 }] = 200;
+    src[ItemId { 3 }] = 300;
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
+TEST(ArchiverSerializerTest, BinaryRoundTrip_UnorderedMap_StructKeyToStructValue)
+{
+    TUnorderedMap<ItemId, Weapon, std::hash<ItemId>> src;
+    src[ItemId { 10 }] = Weapon { "Sword", 120 };
+    src[ItemId { 20 }] = Weapon { "Dagger", 45 };
+    src[ItemId { 30 }] = Weapon { "Staff", 80 };
+
+    const auto dst = round_trip_binary(src);
+
+    EXPECT_EQ(src, dst);
+}
+
 TEST(ArchiverSerializerTest, BinaryInput_ThrowsOnBufferOverrun)
 {
     TVector<uint8_t> invalidBuffer = { 0x01, 0x02 };
