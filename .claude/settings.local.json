@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"python --version\")",
+      "Bash(python -c \"import chardet; print\\('ok'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python convert_to_utf8.py)"
+    ]
+  }
+}
