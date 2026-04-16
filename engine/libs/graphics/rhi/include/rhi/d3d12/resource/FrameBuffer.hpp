@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/resource/FrameBuffer.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/D3D12.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class DeviceResources;
@@ -35,6 +31,4 @@ private:
     DeviceResources& m_resources;
 };
 
-}
-}
 }

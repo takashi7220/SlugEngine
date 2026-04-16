@@ -1,9 +1,7 @@
-﻿#pragma once
+#pragma once
 #include "render/GraphicsContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 GraphicsContext* GraphicsContext::Create(GraphicsParameter parameter)
@@ -14,5 +12,4 @@ GraphicsContext* GraphicsContext::Create(GraphicsParameter parameter)
     return context;
 }
 
-}
 }

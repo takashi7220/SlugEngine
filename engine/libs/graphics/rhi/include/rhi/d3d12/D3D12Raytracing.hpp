@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "rhi/ResourceType.hpp"
 #include "rhi/d3d12/interface/IDescriptorHeap.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class D3D12RaytracingGeometryDesc
@@ -73,6 +69,4 @@ public:
     static void FillAsInputDescForPreBuildInfo(D3D12BuildRaytracingAccelerationStructureInputs& outASInputs, const rt::AccelStructDesc& desc);
 };
 
-}
-}
 }

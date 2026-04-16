@@ -1,11 +1,7 @@
-﻿#include "rhi/d3d12/resource/ComputePipeline.hpp"
+#include "rhi/d3d12/resource/ComputePipeline.hpp"
 #include "rhi/common/Resource.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 const ComputePipelineDesc& ComputePipeline::GetDesc() const
@@ -26,6 +22,4 @@ Object ComputePipeline::GetNativeObject(ObjectType objectType)
     }
 }
 
-}
-}
 }

@@ -1,11 +1,9 @@
-﻿#include "render/pipeline/GraphicsPipeline.hpp"
+#include "render/pipeline/GraphicsPipeline.hpp"
 #include "render/utility/Utility.hpp"
 #include "render/context/DrawObject.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 uint64_t CreatePipelineKey(const rhi::GraphicsPipelineDesc& desc)
@@ -244,5 +242,4 @@ PipelineCache GraphicsPipeline::GetCache() const
 }
 
 
-}
 }

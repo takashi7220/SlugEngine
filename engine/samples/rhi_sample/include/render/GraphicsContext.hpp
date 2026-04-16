@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 #include "core/memory/ReferencePtr.hpp"
 #include "render/IGrapchicsDevice.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 enum class GraphicsApiType
@@ -36,5 +34,4 @@ private:
     core::TReferencePtr<IGraphicsDevice> m_device;
 };
 
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/Function.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 class ClosureUtility
@@ -70,5 +68,4 @@ public:
             };
     }
 };
-}
 }

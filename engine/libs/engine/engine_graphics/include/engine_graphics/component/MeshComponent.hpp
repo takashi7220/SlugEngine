@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "engine_graphics/ClassReflection.hpp"
 #include "engine_graphics/component/PrimitiveComponent.hpp"
 #include "engine_graphics/asset/ModelAsset.hpp"
 #include "engine_graphics/asset/MaterialAsset.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class MeshComponent : public PrimitiveComponent
@@ -33,5 +31,4 @@ private:
 
 };
 
-}
 }

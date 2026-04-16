@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/RootSignature.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 class MeshletPipeline : public IMeshletPipeline
 {
@@ -28,6 +24,4 @@ public:
 };
 
 
-}
-}
 }

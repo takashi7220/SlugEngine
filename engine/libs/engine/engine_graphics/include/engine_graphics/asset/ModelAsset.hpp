@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_graphics/asset/GraphicsAssetBase.hpp"
 #include "engine_graphics/asset/MaterialAsset.hpp"
@@ -6,9 +6,7 @@
 #include "render/geometry/Model.hpp"
 
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class ModelAsset : public GraphicsAssetBase
@@ -45,5 +43,4 @@ private:
 };
 
 using ModelAssetPtr = core::TReferencePtr<ModelAsset>;
-}
 }

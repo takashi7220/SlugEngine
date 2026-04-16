@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <filesystem>
 #endif
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
 using Path = std::filesystem::path;   
@@ -39,5 +37,4 @@ using DirectoryIterator = std::filesystem::directory_iterator;
 using RecursiveDirectoryIterator = std::filesystem::recursive_directory_iterator;
 #endif
 
-}
 }

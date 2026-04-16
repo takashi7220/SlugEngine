@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdint>
 #include "core/container/String.hpp"
 #include "core/reflection/ReflectionClass.hpp"
 
-namespace slug
-{
-namespace engine_game
+namespace slug::engine_game
 {
 
 enum class ReflectionMemberType_TransformComponent : uint8_t
@@ -23,5 +21,4 @@ inline core::StringView GetReflectionMemberName_TransformComponent(ReflectionMem
     return ReflectionMemberNames[(size_t)type];
 }
 
-}
 }

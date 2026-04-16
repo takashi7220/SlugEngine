@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/IDescriptorTable.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class DescriptorTable : public IDescriptorTable
@@ -28,6 +24,4 @@ private:
     DeviceResources& m_resources;
 };
 
-}
-}
 }

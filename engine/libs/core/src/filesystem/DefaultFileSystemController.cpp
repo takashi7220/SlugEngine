@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/filesystem/DefaultFileSystemController.hpp"
 #include "core/io/Path.hpp"
@@ -8,9 +8,7 @@
 #include <Windows.h>
 #endif
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 #if defined(PLATFORM_WINDOWS)
 slug::core::String GetCurrentDirctory()
@@ -271,6 +269,5 @@ String DefaultFileSystemController::GetRootPath(core::StringView rootPath)
         currentPath = currentPath.parent_path();
     }
     return GetCurrentDirctory();
-}
 }
 }

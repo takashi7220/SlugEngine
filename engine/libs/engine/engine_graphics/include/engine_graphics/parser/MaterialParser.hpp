@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "render/material/Material.hpp"
 #include "engine_core/asset/AssetUtility.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class ShaderParser
@@ -58,5 +56,4 @@ public:
     static bool Load(const InputParam& input, OutParam& out);
 };
 
-}
 }

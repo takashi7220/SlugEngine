@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "render/pipeline/PipelineInfo.hpp"
 #include "core/Function.hpp"
 #include "render/context/BindingCache.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 class IRenderPass : public core::SObject
 {
@@ -35,5 +33,4 @@ protected:
 };
 using IRenderPassPtr = core::TReferencePtr<IRenderPass>;
 
-}
 }

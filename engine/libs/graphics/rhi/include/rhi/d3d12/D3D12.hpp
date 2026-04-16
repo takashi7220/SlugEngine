@@ -1,12 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/debug/Logger.hpp"
 #include <d3d12.h>
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 
 using DescriptorIndex = uint32_t;
@@ -21,6 +17,4 @@ public:
         return "RHI_D3D12";
     }
 };
-}
-}
 }

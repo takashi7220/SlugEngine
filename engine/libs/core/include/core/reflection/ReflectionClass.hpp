@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 #include "core/container/UnorderedMap.hpp"
@@ -7,9 +7,7 @@
 #include "core/debug/Assert.hpp"
 #include "core/reflection/Reflection.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 class ReflectionClass : public IPorpertyChanged
 {
@@ -77,5 +75,4 @@ public:
 #endif
     }
 };
-}
 }

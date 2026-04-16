@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/D3D12.hpp"
 #include "rhi/d3d12/resource/StaticDescriptorHeap.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 StaticDescriptorHeap::StaticDescriptorHeap(const Context& context)
@@ -217,6 +213,4 @@ HRESULT StaticDescriptorHeap::Grow(uint32_t min_required_size)
 }
 
 
-}
-}
 }

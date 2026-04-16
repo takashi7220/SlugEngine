@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/rt/IPipeline.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/RootSignature.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class RayTracingPipeline : public rt::IPipeline
@@ -42,6 +38,4 @@ private:
     const Context& m_context;
 };
 
-}
-}
 }

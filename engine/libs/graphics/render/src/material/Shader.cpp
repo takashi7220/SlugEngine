@@ -1,11 +1,9 @@
-﻿#include "render/material/Shader.hpp"
+#include "render/material/Shader.hpp"
 #include "render/utility/Utility.hpp"
 #include "render/context/DrawContext.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 bool Shader::AddShader(render::DrawContext& context, const SetupParam& param)
@@ -208,5 +206,4 @@ bool Shader::HasShader(core::StringView name, const core::TVector<ShaderItem>& s
     return false;
 }
 
-}
 }

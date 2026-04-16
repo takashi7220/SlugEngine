@@ -1,8 +1,6 @@
-﻿#include "engine_core/asset/AssetService.hpp"
+#include "engine_core/asset/AssetService.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 void AssetService::Initialize(AssetPoolPtr pool)
 {
@@ -34,5 +32,4 @@ template<DerivedFromAssetBase T> core::TReferencePtr<T> AssetService::GetAsset(c
     return m_pool->GetAsset<T>(id);
 }
 
-}
 }

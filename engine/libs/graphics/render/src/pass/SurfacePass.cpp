@@ -1,13 +1,11 @@
-﻿#include "render/pass/SurfacePass.hpp"
+#include "render/pass/SurfacePass.hpp"
 #include "render/utility/Utility.hpp"
 #include "render/context/BindingCache.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/pipeline/GraphicsPipeline.hpp"
 #include "render/utility/ScopedMarker.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void SurfacePass::Setup(const SetupParam& setup)
@@ -183,5 +181,4 @@ void SurfacePass::SetupGeometry(const GeometroyAttributePtr& geometry, rhi::Grap
     state.indexBuffer = rhi::IndexBufferBinding {geometry->indexAttribute.buffer, geometry->indexAttribute.formatType, 0};
 }
 
-}
 }

@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdint>
 #include <type_traits>
 #include <concepts>
 
-namespace slug 
-{
-namespace math
+namespace slug::math
 {
 
 template<typename T>
@@ -27,5 +25,4 @@ template<typename T>
 concept FloatingType = std::is_same_v<T, float> ||
                        std::is_same_v<T, double> ||
                        std::is_same_v<T, long double>;
-}
 }

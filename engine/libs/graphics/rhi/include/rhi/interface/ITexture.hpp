@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct TextureDesc
 {
@@ -202,5 +200,4 @@ public:
 
 using StagingTexturePtr = core::TReferencePtr<IStagingTexture>;
 
-}
 }

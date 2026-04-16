@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/Function.hpp"
 #include "rhi/Rhi.hpp"
@@ -6,9 +6,7 @@
 #include "render/material/ShaderParameter.hpp"
 #include "math/AABB.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 enum class VertexAttributeType : uint8_t
@@ -66,5 +64,4 @@ public:
     static void UpdateObjectShaderParameter(ShaderParameterPtr& shaderParameter, const ObjectConstantParameter& parameter, bool isUpdate = false);
 };
 
-}
 }

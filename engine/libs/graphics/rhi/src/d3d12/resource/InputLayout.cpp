@@ -1,10 +1,6 @@
-﻿#include "rhi/d3d12/resource/InputLayout.hpp"
+#include "rhi/d3d12/resource/InputLayout.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 uint32_t InputLayout::GetNumAttributes() const
@@ -24,6 +20,4 @@ const VertexAttributeDesc* InputLayout::GetAttributeDesc(uint32_t index) const
     }
 }
 
-}
-}
 }

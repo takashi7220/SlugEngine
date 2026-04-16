@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "render/utility/View.hpp"
 #include "render/texture/Texture.hpp"
 #include "rhi/Rhi.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawContext;
@@ -32,5 +30,4 @@ private:
     core::TUnorderedMap<rhi::TextureSubresourceSet, rhi::FrameBufferPtr, rhi::TextureSubresourceSet::Hash> m_framebuffers;
 };
 using FramebufferPtr = core::TReferencePtr<Framebuffer>;
-}
 }

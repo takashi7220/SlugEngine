@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IInputLayout.hpp"
@@ -8,9 +8,7 @@
 #include "rhi/interface/IBuffer.hpp"
 #include "rhi/interface/IBindingSet.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 struct GraphicsPipelineDesc
@@ -91,5 +89,4 @@ struct GraphicsState
 };
 using GraphicsPipelinePtr = core::TReferencePtr<IGraphicsPipeline>;
 
-}
 }

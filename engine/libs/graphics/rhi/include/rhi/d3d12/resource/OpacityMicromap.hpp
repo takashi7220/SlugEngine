@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/rt/IOpacityMicromap.hpp"
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/Buffer.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class OpacityMicromap : public rt::IOpacityMicromap
@@ -31,6 +27,4 @@ private:
     const Context& m_context;
 };
 
-}
-}
 }

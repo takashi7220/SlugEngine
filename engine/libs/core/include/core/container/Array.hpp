@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <array>
@@ -6,9 +6,7 @@
 
 #include "core/TypeConcept.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
 	template<typename T, size_t Size>
@@ -16,5 +14,4 @@ namespace core
 #else
 #endif
 
-}
 }

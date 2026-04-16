@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "core/container/Vector.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "core/thread/Mutex.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 template<typename Key, typename Value, typename Hash = std::hash<Key>, typename Equal = std::equal_to<Key>>
@@ -55,5 +53,4 @@ private:
     core::Mutex m_mutex;
     
 };
-}
 }

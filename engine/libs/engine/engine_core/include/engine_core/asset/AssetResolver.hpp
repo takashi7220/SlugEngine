@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/asset/AssetBase.hpp"
 #include "core/container/Vector.hpp"
 
 
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class AssetResolver
@@ -57,5 +55,4 @@ private:
     core::TVector<AssetBasePtr> m_dependencyAssets;
     core::TVector<AssetBasePtr> m_defaultAssets;
 };
-}
 }

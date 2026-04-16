@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_graphics/asset/GraphicsAssetBase.hpp"
 #include "engine_graphics/asset/ShaderAsset.hpp"
@@ -7,9 +7,7 @@
 #include "render/material/Material.hpp"
 
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 
@@ -42,5 +40,4 @@ private:
 };
 
 using MaterialAssetPtr = core::TReferencePtr<MaterialAsset>;
-}
 }

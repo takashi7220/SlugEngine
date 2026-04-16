@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBindingSet.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 class IDescriptorTable : public IBindingSet 
 {
@@ -14,5 +12,4 @@ public:
 };
 using DescriptorTablePtr = core::TReferencePtr<IDescriptorTable>;
 
-}
 }

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <string>
@@ -11,9 +11,7 @@
 #include "core/memory/Allocator.hpp"
 #include "core/debug/Exception.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
 using String = std::basic_string<char, std::char_traits<char>, TAllocator<char>>;
@@ -242,5 +240,4 @@ private:
     size_t m_size = 0;
 };
 
-}
 }

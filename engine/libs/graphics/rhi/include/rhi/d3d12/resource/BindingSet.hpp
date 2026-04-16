@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 #include "rhi/d3d12/D3D12.hpp"
@@ -6,11 +6,7 @@
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 
 class BindingSet : public IBindingSet
@@ -40,6 +36,4 @@ private:
 	const Context& m_context;
 	DeviceResources& m_resources;
 };
-}
-}
 }

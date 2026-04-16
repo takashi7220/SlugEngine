@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_graphics/asset/GraphicsAssetBase.hpp"
 #include "engine_core/asset/AssetBase.hpp"
 #include "render/texture/Texture.hpp"
 
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class TextureAsset : public GraphicsAssetBase
@@ -28,5 +26,4 @@ private:
 };
 
 using TextureAssetPtr = core::TReferencePtr<TextureAsset>;
-}
 }

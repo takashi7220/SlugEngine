@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <iostream>
 #include "core/debug/Logger.hpp"
@@ -60,11 +60,7 @@
 #define SLUG_STATIC_ASSERT(expression) static_assert(expression)
 #define SLUG_STATIC_ASSERT_MSG(expression, msg) static_assert(expression, msg)
 
-namespace slug
-{
-namespace core
-{
-namespace debug
+namespace slug::core::debug
 {
 
 class AssertUtility

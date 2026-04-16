@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <stdint.h>
 
 #define SLUG_IMAGE_MAX_ARRAY_SIZE 1024
 #define SLUG_IMAGE_MAX_MIP_SIZE 20
 
-namespace slug
-{
-namespace image
+namespace slug::image
 {
 
 enum  class ImageFormat
@@ -196,5 +194,4 @@ public:
     static bool Parse(const InputParam& input, OutParam& param);
 };
 
-}
 }

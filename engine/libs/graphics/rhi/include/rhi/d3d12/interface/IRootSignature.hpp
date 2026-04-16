@@ -1,18 +1,12 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 class IRootSignature : public IResource 
 {
 };
 using RootSignaturePtr = core::TReferencePtr<IRootSignature>;
 
-}
-}
 }

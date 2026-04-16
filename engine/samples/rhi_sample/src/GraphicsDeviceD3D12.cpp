@@ -1,4 +1,4 @@
-﻿#include "core/Function.hpp"
+#include "core/Function.hpp"
 #include "render/IGrapchicsDevice.hpp"
 #include "rhi/Rhi.hpp"
 #include "rhi/d3d12/D3D12.hpp"
@@ -11,9 +11,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib ")
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class GraphicsSwapChainD3D12
@@ -507,5 +505,4 @@ core::TReferencePtr<IGraphicsDevice> GraphicsDeviceGenerator::GenerateD3D12(Grap
     return device;
 }
 
-}
 }

@@ -1,12 +1,10 @@
-﻿#include "render/material/Material.hpp"
+#include "render/material/Material.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "core/utility/Hash.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/utility/Utility.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 namespace
@@ -214,5 +212,4 @@ void Material::GetOverrideConstantParameter(ConstantParameter& constantParameter
     }
 }
 
-}
 }

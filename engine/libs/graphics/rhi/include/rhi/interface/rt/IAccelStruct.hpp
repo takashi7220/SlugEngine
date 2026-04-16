@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBuffer.hpp"
 #include "rhi/interface/rt/IOpacityMicromap.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace rt
+namespace slug::rhi::rt
 {
 
 class IAccelStruct;
@@ -109,6 +105,4 @@ public:
 };
 using AccelStructPtr = core::TReferencePtr<IAccelStruct>;
 
-}
-}
 }

@@ -1,10 +1,8 @@
-﻿#include "engine_graphics/asset/ModelAsset.hpp"
+#include "engine_graphics/asset/ModelAsset.hpp"
 #include "engine_graphics/parser/ModelParser.hpp"
 #include "engine_core/asset/AssetResolver.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 SLUG_GRAPHICS_ASSET_REGISTER(ModelAsset)
@@ -140,5 +138,4 @@ void ModelAsset::UpdateMaterial()
     }
 }
 
-}
 }

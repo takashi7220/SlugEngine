@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 enum class BlendOptions : uint8_t
 {
@@ -63,5 +61,4 @@ struct DrawSettings
     }
 };
 
-}
 }

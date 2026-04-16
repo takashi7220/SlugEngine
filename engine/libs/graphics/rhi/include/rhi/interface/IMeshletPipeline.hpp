@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IShader.hpp"
@@ -7,9 +7,7 @@
 #include "rhi/interface/IBuffer.hpp"
 #include "rhi/interface/IBindingSet.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct MeshletPipelineDesc {
     PrimitiveType primitiveType = PrimitiveType::TriangleList;
@@ -41,5 +39,4 @@ struct MeshletState
     IBuffer* indirectParams = nullptr;
 };
 
-}
 }

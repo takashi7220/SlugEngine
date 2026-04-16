@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Array.hpp"
 #include "core/debug/Assert.hpp"
-namespace slug 
-{
-namespace core
+namespace slug::core
 {
 
 template<typename T, size_t Size>
@@ -161,5 +159,4 @@ private:
     size_t m_current_size = 0;
 };
 
-}
 }

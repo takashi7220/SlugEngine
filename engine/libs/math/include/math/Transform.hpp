@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Vector3.hpp"
 #include "math/Quaternion.hpp"
 #include "math/Matrix4x4.hpp"
 
-namespace slug
-{
-namespace math
+namespace slug::math
 {
 
 struct Transform
@@ -116,5 +114,4 @@ struct Transform
         return ret;
     }
 };
-}
 }

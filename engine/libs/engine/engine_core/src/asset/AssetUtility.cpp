@@ -1,10 +1,8 @@
-﻿#include "engine_core/asset/AssetUtility.hpp"
+#include "engine_core/asset/AssetUtility.hpp"
 #include "engine_core/asset/AssetBase.hpp"
 #include "core/container/UnorderedMap.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 static core::TUnorderedMap<AssetType, GenerateAssetPtr, AssetTypeKeyHash, AssetTypeKeyCompare> ASSET_GENERATOR_TABLE = {};
@@ -40,5 +38,4 @@ AssetBase* AssetUtility::Generate(const AssetHeader& header)
     return nullptr;
 }
 
-}
 }

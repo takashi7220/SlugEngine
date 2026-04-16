@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/asset/AssetBase.hpp"
 #include "engine_graphics/asset/GraphicsAssetLoader.hpp"
@@ -29,9 +29,7 @@ static core::TReferencePtr<engine_graphics::GraphicsAssetBase> Create(const engi
 }                                                                                                                                          \
 
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class GraphicsAssetBase : public engine_core::AssetBase
@@ -48,5 +46,4 @@ using GraphicsAssetBasePtr = core::TReferencePtr<GraphicsAssetBase>;
 template<typename T>
 concept DerivedFromGraphicsAssetBase = std::is_base_of_v<GraphicsAssetBase, T>;
 
-}
 }

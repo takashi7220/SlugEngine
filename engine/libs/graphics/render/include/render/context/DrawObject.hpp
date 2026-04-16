@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 #include "core/container/String.hpp"
 
 #include "render/geometry/Mesh.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawObject : public core::SObject
@@ -72,5 +70,4 @@ private:
 };
 using DrawObjectPtr = core::TReferencePtr<DrawObject>;
 
-}
 }

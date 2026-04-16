@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "render/context/BindingCache.hpp"
 #include "core/pattern/ResourcePool.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct BindingCacheParamHash
@@ -55,5 +53,4 @@ class BindingCachePool : public core::ResourcePool<BindingCacheParam, BindingCac
 };
 using BindingCachePoolPtr = core::TReferencePtr<BindingCachePool>;
 
-}
 }

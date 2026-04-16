@@ -1,4 +1,4 @@
-﻿#include "rhi/interface/IContext.hpp"
+#include "rhi/interface/IContext.hpp"
 #include "core/memory/ReferencePtr.hpp"
 #include "rhi/Rhi.hpp"
 #include "rhi/d3d12/D3D12.hpp"
@@ -12,9 +12,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #pragma comment(lib, "dxguid.lib ")
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 class SwapChainD3D12 : public core::ReferenceObject
 {
@@ -595,5 +593,4 @@ core::TReferencePtr<IContext> ContextGenerator::GenerateD3D12(const IContext::Se
     return device;
 }
 
-}
 }

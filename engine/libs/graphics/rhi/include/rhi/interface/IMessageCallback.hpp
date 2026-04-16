@@ -1,9 +1,7 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 class IMessageCallback 
 {
@@ -19,5 +17,4 @@ public:
     IMessageCallback& operator=(const IMessageCallback&) = delete;
     IMessageCallback& operator=(const IMessageCallback&&) = delete;
 };
-}
 }

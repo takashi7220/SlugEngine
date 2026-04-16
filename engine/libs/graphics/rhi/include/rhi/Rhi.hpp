@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/IDevice.hpp"
 #include "rhi/interface/IHeap.hpp"
@@ -11,9 +11,7 @@
 #include "rhi/interface/IContext.hpp"
 #include "core/debug/Logger.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 
 class RHILogCategory : public slug::core::LogCategoryBase
@@ -24,5 +22,4 @@ public:
         return "Rhi";
     }
 };
-}
 }

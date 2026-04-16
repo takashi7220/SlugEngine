@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/ITexture.hpp"
@@ -7,9 +7,7 @@
 #include "rhi/interface/rt/IAccelStruct.hpp"
 #include "rhi/interface/IBindingLayout.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 struct BindingSetItem 
@@ -282,5 +280,4 @@ public:
 };
 using BindingSetPtr = core::TReferencePtr<IBindingSet>;
 using BindingSetVector = core::TStaticVector<IBindingSet*, MAX_BINDING_LAYOUTS>;
-}
 }

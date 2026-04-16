@@ -1,8 +1,6 @@
-﻿#include "render/material/ConstantParameter.hpp"
+#include "render/material/ConstantParameter.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 bool ConstantParameter::SetParameter(core::StringView name, bool value)
 {
@@ -248,5 +246,4 @@ const ParameterAccessor* ConstantParameter::GetParameterAccessor(core::StringVie
     return nullptr;
 }
 
-}
 }

@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/pack/PackFile.hpp"
 #include "core/pattern/ResourcePool.hpp"
 
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 class PackFilePool : public ResourcePool<PackFilePath, PackFilePtr, PackFilePathKeyHash, PackFilePathKeyCompare>
@@ -16,5 +14,4 @@ public:
 };
 using PackFilePoolPtr = core::TReferencePtr<PackFilePool>;
 
-}
 }

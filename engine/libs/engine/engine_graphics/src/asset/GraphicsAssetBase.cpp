@@ -1,8 +1,6 @@
-﻿#include "engine_graphics/asset/GraphicsAssetBase.hpp"
+#include "engine_graphics/asset/GraphicsAssetBase.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 GraphicsAssetBase::GraphicsAssetBase(const engine_core::AssetHeader& header, render::DrawContext& context)
@@ -13,5 +11,4 @@ GraphicsAssetBase::GraphicsAssetBase(const engine_core::AssetHeader& header, ren
 
 
 
-}
 }

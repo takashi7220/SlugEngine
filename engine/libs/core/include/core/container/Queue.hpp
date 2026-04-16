@@ -1,13 +1,10 @@
-﻿#pragma once
+#pragma once
 #include <queue>
 
 #include "core/container/Deque.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 template<typename T, typename Container = core::TDeque<T>>
 using TQueue = std::queue<T, Container>;
-}
 }

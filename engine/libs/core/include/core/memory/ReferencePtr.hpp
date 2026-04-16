@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdint>
 #include <type_traits>
@@ -7,9 +7,7 @@
 #include "core/thread/Atomic.hpp"
 #include "core/debug/Exception.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 
 using ObjectType = uint32_t;
@@ -395,5 +393,4 @@ TReferencePtr<T> MakeReference(Args&&... args)
     return TReferencePtr<T>(new T(std::forward<Args>(args)...));
 }
 
-}
 }

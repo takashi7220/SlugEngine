@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
@@ -6,9 +6,7 @@
 
 #define RENDER_VERTEX_ATTRIBUTE_COUNT 
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct VertexAttributeItem
@@ -40,5 +38,4 @@ struct GeometroyAttribute : core::ReferenceObject
 };
 
 using GeometroyAttributePtr = core::TReferencePtr<GeometroyAttribute>;
-}
 }

@@ -1,12 +1,8 @@
-﻿#include "rhi/d3d12/resource/ShaderTable.hpp"
+#include "rhi/d3d12/resource/ShaderTable.hpp"
 #include "rhi/d3d12/resource/BindingSet.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 ShaderTable::ShaderTable(const Context& context, RayTracingPipeline* _pipeline)
     : pipeline(_pipeline)
@@ -140,7 +136,5 @@ bool ShaderTable::VerifyExport(const RayTracingPipeline::ExportTableEntry* pExpo
     }
 
     return true;
-}
-}
 }
 }

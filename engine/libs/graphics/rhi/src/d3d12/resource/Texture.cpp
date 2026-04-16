@@ -1,15 +1,11 @@
-﻿
+
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/common/Resource.hpp"
 #include "rhi/common/Utility.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 #include "rhi/d3d12/resource/Texture.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 Texture::Texture(const Context& context, DeviceResources& resources, TextureDesc desc, const D3D12_RESOURCE_DESC& resourceDesc)
     : TextureStateExtension(this->desc)
@@ -466,6 +462,4 @@ DescriptorIndex Texture::GetClearMipLevelUAV(uint32_t mipLevel)
     return descriptorIndex;
 }
 
-}
-}
 }

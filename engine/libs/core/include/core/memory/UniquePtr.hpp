@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #if SLUG_USE_STL
 #include <memory>
 #endif
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 #if SLUG_USE_STL
 template<typename T>
@@ -25,5 +23,4 @@ TUniquePtr<T> MakeUnique(Args&... args)
 }
 
 #endif
-}
 }

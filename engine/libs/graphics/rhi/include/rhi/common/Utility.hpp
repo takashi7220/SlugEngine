@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 
 constexpr uint64_t c_VersionSubmittedFlag = 0x8000000000000000;
@@ -118,5 +116,4 @@ public:
     static bool AreResourceTypesCompatible(ResourceType a, ResourceType b);
 };
 
-}
 }

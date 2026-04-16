@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/asset/AssetHeader.hpp"
 #include "engine_core/asset/AssetUtility.hpp"
@@ -30,9 +30,7 @@ static core::TReferencePtr<engine_core::AssetBase> Create(const engine_core::Ass
     return std::dynamic_pointer_cast<engine_core::AssetBase>(asset);                            \
 }                                                                                               \
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class AssetResolver;
@@ -61,5 +59,4 @@ using AssetBasePtr = core::TReferencePtr<AssetBase>;
 template<typename T>
 concept DerivedFromAssetBase = std::is_base_of_v<AssetBase, T>;
 
-}
 }

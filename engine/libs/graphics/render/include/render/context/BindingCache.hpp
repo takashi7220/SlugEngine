@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 #include "core/container/Vector.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "render/material/Material.hpp"
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 enum class BindingResourceType : uint8_t
@@ -55,5 +53,4 @@ private:
 };
 using BindingCachePtr = core::TReferencePtr<BindingCache>;
 
-}
 }

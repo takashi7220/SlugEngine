@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 
 #include "rhi/Rhi.hpp"
 #include "render/pipeline/PipelineCache.hpp"
 #include "render/pipeline/PipelineInfo.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawContext;
@@ -25,5 +23,4 @@ private:
 };
 using ComputePipelinePtr = core::TReferencePtr<ComputePipeline>;
 
-}
 }

@@ -1,8 +1,6 @@
-﻿#include "render/context/DrawContext.hpp"
+#include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 DrawContext* DrawContext::Create(const SetupParam& param)
@@ -50,5 +48,4 @@ void DrawContext::Present(core::StringView name, uint32_t syncInterval)
     m_context->Present(name, syncInterval);
 }
 
-}
 }

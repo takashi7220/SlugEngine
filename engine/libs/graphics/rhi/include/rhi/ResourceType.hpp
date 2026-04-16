@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/NumericLimits.hpp"
@@ -9,9 +9,7 @@
 #include "core/memory/ReferencePtr.hpp"
 #include "core/color/Color.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 static constexpr uint32_t MAX_RENDER_TARGETS = 8;
 static constexpr uint32_t MAX_VIEWPORTS = 16;
@@ -896,5 +894,4 @@ struct PipelineCache
 };
 
 
-}
 }

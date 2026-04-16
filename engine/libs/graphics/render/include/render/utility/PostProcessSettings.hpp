@@ -1,10 +1,8 @@
-﻿# pragma once
+# pragma once
 
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 
@@ -16,5 +14,4 @@ private:
     
 };
 
-}
 }

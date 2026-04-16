@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Deque.hpp"
 #include "core/container/List.hpp"
@@ -14,11 +14,7 @@
 #include "rhi/d3d12/resource/FrameBuffer.hpp"
 #include "rhi/d3d12/resource/AccelStruct.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class CommandListInstance : public core::ReferenceObject
@@ -255,6 +251,4 @@ private:
 
     core::TUnorderedMap<rt::IShaderTable*, core::TUniquePtr<ShaderTableState>> m_shaderTableStates;
 };
-}
-}
 }

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBindingLayout.hpp"
@@ -21,9 +21,7 @@
 #include "rhi/interface/rt/IOpacityMicromap.hpp"
 #include "rhi/interface/rt/IPipeline.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 class IDevice;
 
@@ -133,5 +131,4 @@ public:
 
 };
 using CommandListPtr = core::TReferencePtr<ICommandList>;
-}
 }

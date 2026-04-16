@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "render/material/ShaderParameter.hpp"
 
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct ShaderItem
@@ -65,5 +63,4 @@ private:
 };
 using ShaderPtr = core::TReferencePtr<Shader>;
 
-}
 }

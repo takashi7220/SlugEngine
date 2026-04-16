@@ -1,13 +1,11 @@
-﻿
+
 #include "engine_core/asset/AssetLoaderBase.hpp"
 #include "engine_core/asset/AssetResolver.hpp"
 #include "engine_core/asset/AssetUtility.hpp"
 #include "core/thread/Future.hpp"
 #include "core/pattern/Closure.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 core::TVector<AssetBasePtr> AssetLoaderBase::Load(core::TaskSystem& taskSystem, const core::PackFile& pack, const AssetPoolPtr& assetPool)
@@ -81,5 +79,4 @@ AssetBasePtr AssetLoaderBase::LoadInternal(const LoadParam& param)
 }
 
 
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/filesystem/IFileSystemController.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 
 class DefaultFileSystemController : public IFileSystemController
@@ -38,5 +36,4 @@ public:
 
     virtual String GetRootPath(core::StringView searchPath = ".root") override;
 };
-}
 }

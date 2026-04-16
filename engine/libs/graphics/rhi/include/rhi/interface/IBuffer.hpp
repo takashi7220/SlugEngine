@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct BufferDesc
 {
@@ -70,5 +68,4 @@ public:
 };
 
 using BufferPtr = core::TReferencePtr<IBuffer>;
-}
 }

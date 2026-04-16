@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/memory/Allocator.hpp"
@@ -6,9 +6,7 @@
 #include "core/debug/Exception.hpp"
 #include <span>
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 template<typename T>
 using TSpan = std::span<T>;
@@ -112,5 +110,4 @@ protected:
     size_t m_size;
 };
 #endif
-}
 }

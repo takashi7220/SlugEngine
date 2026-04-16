@@ -1,12 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/resource/AccelStruct.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 AccelStruct::AccelStruct(const Context& context)
     :m_context(context)
@@ -52,6 +48,4 @@ uint64_t AccelStruct::GetDeviceAddress() const
     return dataBuffer->gpuVirtualAddress;
 }
 
-}
-}
 }

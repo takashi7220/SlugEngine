@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #if SLUG_USE_STL
 #include <mutex>
 #endif
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 using Mutex = std::mutex;
 
@@ -18,5 +16,4 @@ using UniqueLock = std::unique_lock<T>;
 
 template<typename T>
 using ScopedLock = std::scoped_lock<T>;
-}
 }

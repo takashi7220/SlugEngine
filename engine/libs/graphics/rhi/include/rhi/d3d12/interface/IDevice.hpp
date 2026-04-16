@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "rhi/ResourceType.hpp"
@@ -6,11 +6,7 @@
 #include "rhi/d3d12/interface/IDescriptorHeap.hpp"
 #include "rhi/d3d12/interface/IRootSignature.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 enum class DescriptorHeapType 
 {
@@ -43,6 +39,4 @@ struct DeviceDesc
     uint32_t samplerHeapSize = 1024;
     uint32_t maxTimerQueries = 256;
 };
-}
-}
 }

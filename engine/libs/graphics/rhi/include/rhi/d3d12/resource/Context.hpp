@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "rhi/d3d12/D3D12.hpp"
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/Buffer.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 class Context
 {
@@ -24,6 +20,4 @@ public:
     core::TReferencePtr<Buffer> timerQueryResolveBuffer;
 };
 
-}
-}
 }

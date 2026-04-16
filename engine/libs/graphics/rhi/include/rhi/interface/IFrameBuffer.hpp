@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/ITexture.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct FrameBufferAttachment
 {
@@ -123,5 +121,4 @@ public:
 
 using FrameBufferPtr = core::TReferencePtr<IFrameBuffer>;
 
-}
 }

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Vector2.hpp"
 #include "math/Vector3.hpp"
@@ -11,9 +11,7 @@
 #include "core/object/SObject.hpp"
 #include "shader/Define.h"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 enum class ParameterType : uint8_t
 {
@@ -94,5 +92,4 @@ protected:
 
 };
 
-}
 }

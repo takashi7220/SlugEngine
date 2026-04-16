@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "render/context/DrawObject.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct CullingSettings
@@ -24,5 +22,4 @@ private:
 
 using IDrawObjectCullerPtr = core::TReferencePtr<IDrawObjectCuller>;
 
-}
 }

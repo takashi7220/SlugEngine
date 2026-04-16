@@ -1,12 +1,10 @@
-﻿#include "image/ImageUtility.hpp"
+#include "image/ImageUtility.hpp"
 #include "image/DDS.hpp"
 #include <algorithm>
 
 #define SLUG_D3D11_RESOURCE_MISC_TEXTURECUBE 0x4
 
-namespace slug
-{
-namespace image
+namespace slug::image
 {
 
 struct ImageFormatMapping
@@ -670,5 +668,4 @@ bool ImageUtility::Parse(const InputParam& input, OutParam& param)
     return ParseImageInfo(param.imageInfo, input.data, input.size, input.forceSrgb);
 }
 
-}
 }

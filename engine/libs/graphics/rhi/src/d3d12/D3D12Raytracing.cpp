@@ -1,14 +1,10 @@
-﻿#include "core/memory/MemoryUtilities.hpp"
+#include "core/memory/MemoryUtilities.hpp"
 #include "rhi/Rhi.hpp"
 #include "rhi/d3d12/D3D12Raytracing.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/d3d12/resource/Buffer.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 constexpr void D3D12RaytracingGeometryDesc::Validate()
@@ -183,6 +179,4 @@ void D3D12Raytracing::FillAsInputDescForPreBuildInfo(D3D12BuildRaytracingAcceler
     }
 }
 
-}
-}
 }

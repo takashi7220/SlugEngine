@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "render/pass/IRenderPass.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class PostProcessPass : public IRenderPass
@@ -21,5 +19,4 @@ protected:
 };
 using PostProcessPassPtr = core::TReferencePtr<PostProcessPass>;
 
-}
 }

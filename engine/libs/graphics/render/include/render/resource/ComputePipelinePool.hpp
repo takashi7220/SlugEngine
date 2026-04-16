@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/pattern/ResourcePool.hpp"
 #include "render/pipeline/ComputePipeline.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class ComputePipelinePool : public core::ResourcePool<uint64_t, ComputePipelinePtr>
@@ -15,5 +13,4 @@ private:
 };
 using ComputePipelinePoolPtr = core::TReferencePtr<ComputePipelinePool>;
 
-}
 }

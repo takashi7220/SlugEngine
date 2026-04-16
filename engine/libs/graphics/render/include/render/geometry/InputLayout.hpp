@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "render/context/DrawContext.hpp"
 #include "rhi/Rhi.hpp"
 
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 
@@ -24,5 +22,4 @@ private:
 using InputLayoutPtr = core::TReferencePtr<InputLayout>;
 
 
-}
 }

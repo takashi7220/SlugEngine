@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_graphics/asset/GraphicsAssetBase.hpp"
 #include "engine_graphics/asset/TextureAsset.hpp"
@@ -6,9 +6,7 @@
 #include "render/material/Shader.hpp"
 
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class ShaderAsset : public GraphicsAssetBase
@@ -38,5 +36,4 @@ private:
 };
 
 using ShaderAssetPtr = core::TReferencePtr<ShaderAsset>;
-}
 }

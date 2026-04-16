@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/filesystem/IFileSystemController.hpp"
 #include "core/pattern/Singleton.hpp"
 #include <fstream>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 using Ifstream = std::ifstream;
@@ -47,5 +45,4 @@ public:
 private:
     static IFileSystemController* GetController();
 };
-}
 }

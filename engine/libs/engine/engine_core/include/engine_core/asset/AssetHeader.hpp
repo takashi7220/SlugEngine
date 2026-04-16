@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 #include "core/debug/Assert.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 #define RESOURCE_HEADER_SIZE 1168
@@ -27,5 +25,4 @@ struct AssetHeader
 
 SLUG_STATIC_ASSERT(sizeof(AssetHeader) == RESOURCE_HEADER_SIZE);
 
-}
 }

@@ -1,9 +1,7 @@
-﻿#include "engine_core/loader/LoaderService.hpp"
+#include "engine_core/loader/LoaderService.hpp"
 #include "engine_core/asset/AssetLoaderBase.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 LoaderService::LoaderService(core::TaskSystem* taskSystem)
@@ -30,5 +28,4 @@ void LoaderService::LoadPack(core::StringView filePath)
     assetLoader.Load(*m_taskSystem, *packFile, m_assetPool);
 }
 
-}
 }

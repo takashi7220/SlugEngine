@@ -1,9 +1,7 @@
-﻿#pragma once
+#pragma once
 #include "rhi/Rhi.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class ScopedMarker
@@ -23,5 +21,4 @@ private:
     rhi::CommandListPtr m_commandList;
 };
 
-}
 }

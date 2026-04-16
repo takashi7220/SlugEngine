@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/actor/Actor.hpp"
 #include "engine_core/world/IWorld.hpp"
 #include "core/container/List.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class Level;
@@ -45,5 +43,4 @@ private:
     core::TList<LevelPtr> m_childLevels;
     core::TList<ActorPtr> m_actors;
 };
-}
 }

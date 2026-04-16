@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBuffer.hpp"
 
-namespace slug 
-{
-namespace rhi
-{
-namespace rt 
+namespace slug::rhi::rt
 {
 struct OpacityMicromapDesc 
 {
@@ -29,6 +25,4 @@ public:
     virtual uint64_t GetDeviceAddress() const = 0;
 };
 using OpacityMicromapPtr = core::TReferencePtr<IOpacityMicromap>;
-}
-}
 }

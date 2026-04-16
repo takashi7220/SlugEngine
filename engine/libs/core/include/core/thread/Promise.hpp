@@ -1,14 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <future>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 template<typename T>
 using TPromise = std::promise<T>;
 
-}
 }

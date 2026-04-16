@@ -1,11 +1,9 @@
-﻿#include "render/pass/ComputePass.hpp"
+#include "render/pass/ComputePass.hpp"
 #include "render/utility/ScopedMarker.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/pipeline/GraphicsPipeline.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void ComputePass::Setup(const SetupParam& setup)
@@ -43,5 +41,4 @@ void ComputePass::SetupComputePipeline(DrawContext& context, const PipelineInfo:
     state.pipeline = ComputePipeline::Create(context, computeProcessSettings, bindingLayout)->GetPipeline();
 }
 
-}
 }

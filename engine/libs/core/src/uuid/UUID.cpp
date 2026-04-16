@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/uuid/UUID.hpp"
 #include <random>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 UUID::InternalID UUID::GenerateInternal()
 {
@@ -23,6 +21,5 @@ UUID::InternalID UUID::GenerateInternal()
     id.value[1] |= 0x8000000000000000ULL;
 
     return id;
-}
 }
 }

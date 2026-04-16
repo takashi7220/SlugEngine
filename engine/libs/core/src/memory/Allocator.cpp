@@ -1,8 +1,5 @@
-﻿#include "core/memory/Allocator.hpp"
+#include "core/memory/Allocator.hpp"
 
-namespace slug
+namespace slug::core
 {
-namespace core
-{
-}
 }

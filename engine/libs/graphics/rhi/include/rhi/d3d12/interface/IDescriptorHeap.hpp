@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBuffer.hpp"
 #include "rhi/interface/ICommandList.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 using DescriptorIndex = uint32_t;
 
@@ -34,6 +30,4 @@ public:
     IDescriptorHeap& operator=(const IDescriptorHeap&&) = delete;
 };
 
-}
-}
 }

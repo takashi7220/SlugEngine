@@ -1,11 +1,9 @@
-﻿#include "render/pass/PostprocessPass.hpp"
+#include "render/pass/PostprocessPass.hpp"
 #include "render/utility/ScopedMarker.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/pipeline/GraphicsPipeline.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void PostProcessPass::Setup(const SetupParam& setup)
@@ -48,5 +46,4 @@ void PostProcessPass::SetupGraphicsPipeline(DrawContext& context, const Pipeline
     state.pipeline = pipeline->GetPipeline();
 }
 
-}
 }

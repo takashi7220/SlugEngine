@@ -1,8 +1,6 @@
-﻿#include "render/geometry/InputLayout.hpp"
+#include "render/geometry/InputLayout.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 InputLayout* InputLayout::Create(DrawContext& context, const core::TVector<rhi::VertexBufferBinding> bindings, const rhi::ShaderPtr vertexShader)
@@ -31,5 +29,4 @@ const rhi::InputLayoutPtr& InputLayout::GetInputLayout()
     return m_inputLayout;
 }
 
-}
 }

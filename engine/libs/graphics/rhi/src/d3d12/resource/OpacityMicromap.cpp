@@ -1,10 +1,6 @@
-﻿#include "rhi/d3d12/resource/OpacityMicromap.hpp"
+#include "rhi/d3d12/resource/OpacityMicromap.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 OpacityMicromap::OpacityMicromap(const Context& context)
@@ -36,6 +32,4 @@ uint64_t OpacityMicromap::GetDeviceAddress() const
     return dataBuffer->gpuVirtualAddress;
 }
 
-}
-}
 }

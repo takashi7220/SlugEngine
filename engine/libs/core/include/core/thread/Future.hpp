@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include <future>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 template<typename T>
@@ -14,5 +12,4 @@ template<typename T>
 using TSharedFuture = std::shared_future<T>;
 
 
-}
 }

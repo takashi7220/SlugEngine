@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 
 #include "engine_core/asset/AssetHeader.hpp"
 #include "core/utility/Hash.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 struct AssetType
@@ -118,5 +116,4 @@ public:
     static AssetBase* Generate(const AssetHeader& header);
 };
 
-}
 }

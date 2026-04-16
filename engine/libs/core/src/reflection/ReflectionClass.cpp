@@ -1,10 +1,8 @@
-﻿#include "core/reflection/ReflectionClass.hpp"
+#include "core/reflection/ReflectionClass.hpp"
 #include "core/pattern/Closure.hpp"
 #include "core/reflection/Reflection.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 ReflectionClass::ReflectionClass()
@@ -16,5 +14,4 @@ void ReflectionClass::OnPropertyChanged(const PropertyChangedEventArgs&)
 {
 }
 
-}
 }

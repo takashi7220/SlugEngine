@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 #include "math/Vector3.hpp"
@@ -6,9 +6,7 @@
 #include "math/Matrix3x3.hpp"
 #include "core/color/Spectrum.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 
 enum class ColorSpaceType
@@ -325,5 +323,4 @@ public:
     static bool Convert(ValueType& dstR, ValueType& dstG, ValueType& dstB, ColorSpaceType dstType, ValueType srcR, ValueType srcG, ValueType srcB, ColorSpaceType srcType);
 
 };
-}
 }

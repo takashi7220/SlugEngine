@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/StaticVector.hpp"
 #include "core/memory/ReferencePtr.hpp"
@@ -8,11 +8,7 @@
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include <d3d12.h>
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 
 class RootSignature : public IRootSignature
@@ -31,6 +27,4 @@ private:
     DeviceResources& m_resources;
 };
 
-}
-}
 }

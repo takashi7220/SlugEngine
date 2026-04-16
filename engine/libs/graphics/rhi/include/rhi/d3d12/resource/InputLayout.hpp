@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/IInputLayout.hpp"
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class InputLayout : public IInputLayout
@@ -23,6 +19,4 @@ public:
     core::TUnorderedMap<uint32_t, uint64_t> elementStrides;
 };
 
-}
-}
 }

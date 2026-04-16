@@ -1,9 +1,7 @@
-﻿#include "engine_graphics/asset/GraphicsAssetLoader.hpp"
+#include "engine_graphics/asset/GraphicsAssetLoader.hpp"
 #include "engine_graphics/asset/GraphicsAssetBase.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 GraphicsAssetLoader::GraphicsAssetLoader(render::DrawContext& context)
@@ -52,5 +50,4 @@ core::TReferencePtr<GraphicsAssetBase> GraphicsAssetUtility::Generate(const engi
     return nullptr;
 }
 
-}
 }

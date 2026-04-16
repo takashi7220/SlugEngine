@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "render/material/Material.hpp"
 #include "render/utility/PostProcessSettings.hpp"
 #include "math/AABB.hpp"
 #include "rhi/Rhi.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawContext;
@@ -79,5 +77,4 @@ private:
 };
 using ViewPtr = core::TReferencePtr<View>;
 
-}
 }

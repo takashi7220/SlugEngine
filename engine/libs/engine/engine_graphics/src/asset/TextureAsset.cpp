@@ -1,9 +1,7 @@
-﻿#include "engine_graphics/asset/TextureAsset.hpp"
+#include "engine_graphics/asset/TextureAsset.hpp"
 #include "engine_graphics/parser/TextureParser.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 SLUG_GRAPHICS_ASSET_REGISTER(TextureAsset)
@@ -54,5 +52,4 @@ const render::TexturePtr& TextureAsset::GetTexture()
     return m_texture;
 }
 
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 struct SamplerDesc
@@ -29,5 +27,4 @@ public:
 
 using SamplerPtr = core::TReferencePtr<ISampler>;
 
-}
 }

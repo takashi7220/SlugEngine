@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 
 #include "core/container/String.hpp"
 #include "rhi/interface/IDevice.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 enum class GPUType
@@ -65,5 +63,4 @@ public:
     static IContextPtr GenerateD3D12(const IContext::SetupParam& param);
 };
 
-}
 }

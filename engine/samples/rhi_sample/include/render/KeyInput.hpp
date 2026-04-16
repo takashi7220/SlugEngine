@@ -1,8 +1,6 @@
-﻿#pragma once
+#pragma once
 
-namespace slug
-{
-namespace engine
+namespace slug::engine
 {
 
 enum class KeyType
@@ -15,5 +13,4 @@ class KeyInput
 
 };
 
-}
 }

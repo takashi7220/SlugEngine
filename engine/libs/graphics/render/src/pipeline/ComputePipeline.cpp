@@ -1,9 +1,7 @@
-﻿#include "render/pipeline/ComputePipeline.hpp"
+#include "render/pipeline/ComputePipeline.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 uint64_t CreatePipelineKey(const rhi::ComputePipelineDesc& desc)
@@ -60,5 +58,4 @@ const rhi::ComputePipelinePtr& ComputePipeline::GetPipeline() const
     return m_pipeline;
 }
 
-}
 }

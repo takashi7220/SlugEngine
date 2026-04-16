@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 #include "rhi/d3d12/D3D12.hpp"
 #include "rhi/d3d12/resource/BindingLayout.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 class BindlessLayout : public IBindingLayout
 {
@@ -27,6 +23,4 @@ public:
     core::TStaticVector<D3D12_DESCRIPTOR_RANGE1, 32> descriptorRanges;
     D3D12_ROOT_PARAMETER1 rootParameter {};
 };
-}
-}
 }

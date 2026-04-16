@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 
-namespace slug 
-{
-namespace math
+namespace slug::math
 {
 
 struct Vector2
@@ -163,5 +161,4 @@ struct Vector2
         return x * v0.y - v0.x * y;
     }
 };
-}
 }

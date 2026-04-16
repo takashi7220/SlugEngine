@@ -1,13 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/RayTracingPipeline.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class ShaderTableState
@@ -57,6 +53,4 @@ private:
 
 
 
-}
-}
 }

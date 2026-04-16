@@ -1,10 +1,6 @@
-﻿#include "rhi/d3d12/resource/Shader.hpp"
+#include "rhi/d3d12/resource/Shader.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 const ShaderDesc& Shader::GetDesc() const
@@ -62,6 +58,4 @@ void ShaderLibraryEntry::GetByteCode(const void** pp_bytecode, size_t* p_size) c
     library->GetByteCode(pp_bytecode, p_size);
 }
 
-}
-}
 }

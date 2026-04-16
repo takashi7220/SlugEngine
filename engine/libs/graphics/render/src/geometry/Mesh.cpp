@@ -1,9 +1,7 @@
-﻿#include "render/geometry/Mesh.hpp"
+#include "render/geometry/Mesh.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 Mesh* Mesh::Create(DrawContext& context, const SetupParameter& param)
@@ -174,5 +172,4 @@ void Mesh::SetupGeometryAttribute(const SetupParameter& param)
     m_geometryAttribute->indexAttribute.formatType = static_cast<rhi::FormatType>(param.indexAccessor.format);
 }
 
-}
 }

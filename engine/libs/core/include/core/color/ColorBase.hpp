@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/debug/Assert.hpp"
 #include "math/Vector3.hpp"
 #include "core/color/ColorSpaceUtility.hpp"
-namespace slug
-{
-namespace core 
+namespace slug::core
 {
 
 struct ColorBase
@@ -227,5 +225,4 @@ public:
     }
 };
 
-}
 }

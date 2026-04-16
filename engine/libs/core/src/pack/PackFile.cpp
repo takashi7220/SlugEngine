@@ -1,10 +1,8 @@
-﻿#include "core/pack/PackFile.hpp"
+#include "core/pack/PackFile.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "core/debug/Assert.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 PackFile::PackFile(core::StringView path)
@@ -73,5 +71,4 @@ void PackFile::BuildPackItems()
     }
 }
 
-}
 }

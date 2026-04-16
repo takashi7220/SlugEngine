@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBuffer.hpp"
 #include "rhi/interface/ICommandList.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 class ICommandList : public rhi::ICommandList {
 public:
@@ -22,6 +18,4 @@ public:
 };
 using CommandListPtr = core::TReferencePtr<ICommandList>;
 
-}
-}
 }

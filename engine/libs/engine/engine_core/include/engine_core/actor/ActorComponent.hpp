@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/actor/ActorComponentUtility.hpp"
 #include "engine/tick/TickObject.hpp"
@@ -68,9 +68,7 @@ static ActorComponent* Create(const engine_core::ComponentTypeID& componentTypeI
     return core::MemoryUtilities::CheckedCast<engine_core::ActorComponent*, type*>(component);                      \
 }                                                                                                                   \
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class Actor;
@@ -107,5 +105,4 @@ protected:
     Actor* m_actor = nullptr;
 };
 
-}
 }

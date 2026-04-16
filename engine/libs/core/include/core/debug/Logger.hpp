@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/pattern/Singleton.hpp"
@@ -6,9 +6,7 @@
 #include "core/container/String.hpp"
 #include "core/memory/ReferencePtr.hpp"
 
-namespace slug
-{
-namespace core 
+namespace slug::core
 {
 
 enum class LogType  : uint8_t
@@ -101,5 +99,4 @@ public:
         Logger::Write(type, &category, str);
     }
 };
-}
 }

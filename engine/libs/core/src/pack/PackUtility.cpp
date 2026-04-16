@@ -1,11 +1,9 @@
-﻿#include "core/pack/PackUtility.hpp"
+#include "core/pack/PackUtility.hpp"
 #include "core/filesystem/FileSystem.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "core/debug/Assert.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 struct PackItemMeta
@@ -189,5 +187,4 @@ size_t PackFileUtility::CalcTotalMemorySize(BuildPackItems& items)
     return totalSize;
 }
 
-}
 }

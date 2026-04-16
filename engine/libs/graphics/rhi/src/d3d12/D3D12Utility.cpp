@@ -1,13 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/common/Utility.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 static const DxgiFormatMapping DXGI_FORMAT_MAPPING[] = 
@@ -1158,6 +1154,4 @@ uint32_t D3D12Utility::CalcSubresource(uint32_t mipSlice, uint32_t arraySlice, u
     return mipSlice + (arraySlice * mipLevels) + (planeSlice * mipLevels * arraySize);
 }
 
-}
-}
 }

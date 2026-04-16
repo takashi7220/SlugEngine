@@ -1,4 +1,4 @@
-﻿#if !defined(SLUG_SHADER_COMPILE)
+#if !defined(SLUG_SHADER_COMPILE)
 
 #pragma once
 #include "shader/Define.h"
@@ -8,9 +8,7 @@
 
 
 #if !defined(SLUG_SHADER_COMPILE)
-namespace slug
-{
-namespace shader
+namespace slug::shader
 {
 #endif //!defined(SLUG_SHADER_COMPILE)
 

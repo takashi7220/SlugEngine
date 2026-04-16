@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "render/material/Shader.hpp"
 
 #include "rhi/Rhi.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawContext;
@@ -40,5 +38,4 @@ private:
 using MaterialPtr = core::TReferencePtr<Material>;
 
 
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 
-namespace slug
-{
-namespace math
+namespace slug::math
 {
 
 class MatrixMethod
@@ -21,5 +19,4 @@ public:
         y = i % row;
     }
 };
-}
 }

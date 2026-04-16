@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi 
+namespace slug::rhi
 {
 
 struct BindingLayoutDesc
@@ -31,5 +29,4 @@ public:
 };
 using BindingLayoutPtr = core::TReferencePtr<IBindingLayout>;
 using BindingLayoutVector = core::TStaticVector<BindingLayoutPtr, MAX_BINDING_LAYOUTS>;
-}
 }

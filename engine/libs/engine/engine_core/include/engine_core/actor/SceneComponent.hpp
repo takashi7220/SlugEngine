@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/actor/ActorComponent.hpp"
 #include "engine_core/ClassReflection.hpp"
 #include "math/Transform.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class SceneComponent;
@@ -117,5 +115,4 @@ private:
     bool m_rootFlag;
 };
 
-}
 }

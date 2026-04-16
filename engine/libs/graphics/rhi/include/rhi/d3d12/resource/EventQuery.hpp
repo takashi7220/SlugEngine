@@ -1,10 +1,6 @@
-﻿#pragma once
+#pragma once
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class EventQuery : public IEventQuery
@@ -16,6 +12,4 @@ public:
     bool resolved = false;
 };
 
-}
-}
 }

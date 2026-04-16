@@ -1,11 +1,9 @@
-﻿#include "render/context/DrawContext.hpp"
+#include "render/context/DrawContext.hpp"
 #include "render/utility/View.hpp"
 #include "render/utility/Utility.hpp"
 #include "shader/Constants.h"
 #include "rhi/common/Utility.hpp"
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 View* View::Create(DrawContext& context, core::StringView name)
@@ -189,5 +187,4 @@ void View::UpdateViewProjectionMatrix()
     m_invViewProjectionMatrix = m_viewProjectionMatrix.Inverse();
 }
 
-}
 }

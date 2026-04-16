@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <vector>
@@ -6,9 +6,7 @@
 
 #include "core/container/Span.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 #if defined(SLUG_USE_STL)
@@ -29,5 +27,4 @@ template<typename T>
 inline constexpr bool is_vector_v = is_vector<T>::value;
 
 
-}
 }

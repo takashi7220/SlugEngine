@@ -1,8 +1,6 @@
-﻿#include "engine_core/asset/AssetBase.hpp"
+#include "engine_core/asset/AssetBase.hpp"
 #include "engine_core/asset/AssetResolver.hpp"
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 AssetBase::AssetBase(const AssetHeader& header)
@@ -26,5 +24,4 @@ const AssetPath& AssetBase::GetPath() const
     return m_id.path;
 }
 
-}
 }

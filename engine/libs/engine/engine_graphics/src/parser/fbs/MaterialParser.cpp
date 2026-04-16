@@ -1,12 +1,10 @@
-﻿#include "engine_graphics/parser/MaterialParser.hpp"
+#include "engine_graphics/parser/MaterialParser.hpp"
 #include "engine_graphics//asset/TextureAsset.hpp"
 #include "engine_graphics/asset/ShaderAsset.hpp"
 #include <srtf/Shader_fbs.h>
 #include <srtf/Materials_fbs.h>
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 struct BlendOptionsMapping
@@ -245,5 +243,4 @@ bool MaterialParser::Load(const InputParam& input, OutParam& out)
     return true;
 }
 
-}
 }

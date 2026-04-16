@@ -1,11 +1,7 @@
-﻿#include "rhi/d3d12/resource/GraphicsPipeline.hpp"
+#include "rhi/d3d12/resource/GraphicsPipeline.hpp"
 #include "rhi/common/Resource.hpp"
 #include "core/memory/MemoryUtilities.hpp"
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 const GraphicsPipelineDesc& GraphicsPipeline::GetDesc() const
@@ -42,6 +38,4 @@ Object GraphicsPipeline::GetNativeObject(ObjectType objectType)
     }
 }
 
-}
-}
 }

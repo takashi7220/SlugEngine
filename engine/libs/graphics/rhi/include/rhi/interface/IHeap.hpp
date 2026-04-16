@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 struct HeapDesc
@@ -22,5 +20,4 @@ public:
 
 using HeapPtr = core::TReferencePtr<IHeap>;
 
-}
 }

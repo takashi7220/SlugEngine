@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/Function.hpp"
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
 #include "core/pattern/Closure.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 struct PropertyChangedEventArgs
@@ -54,5 +52,4 @@ private:
     }
 };
 
-}
 }

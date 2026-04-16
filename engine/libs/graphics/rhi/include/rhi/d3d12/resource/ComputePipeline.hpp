@@ -1,15 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/IComputePipiline.hpp"
 #include "rhi/ResourceType.hpp"
 #include "rhi/d3d12/resource/RootSignature.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class ComputePipeline : public IComputePipeline
@@ -24,6 +20,4 @@ public:
     core::TReferencePtr<ID3D12PipelineState> pipelineState;
 };
 
-}
-}
 }

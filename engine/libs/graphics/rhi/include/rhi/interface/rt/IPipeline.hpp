@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "rhi/ResourceType.hpp"
@@ -9,11 +9,7 @@
 #include "rhi/interface/IBindingLayout.hpp"
 #include "rhi/interface/IBindingSet.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace rt
+namespace slug::rhi::rt
 {
 struct PipelineShaderDesc 
 {
@@ -79,6 +75,4 @@ struct DispatchRaysArguments
     uint32_t depth = 1;
 };
 
-}
-}
 }

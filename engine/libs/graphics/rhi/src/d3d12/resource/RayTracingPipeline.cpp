@@ -1,12 +1,8 @@
-﻿#include "rhi/d3d12/resource/ShaderTable.hpp"
+#include "rhi/d3d12/resource/ShaderTable.hpp"
 #include "rhi/d3d12/resource/RayTracingPipeline.hpp"
 #include "rhi/common/Utility.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 RayTracingPipeline::RayTracingPipeline(const Context& context)
     :m_context(context)
@@ -41,6 +37,4 @@ rt::ShaderTablePtr RayTracingPipeline::CreateShaderTable()
     return rt::ShaderTablePtr::create(new ShaderTable(m_context, this));
 }
 
-}
-}
 }

@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Bitset.hpp"
 #include "core/container/String.hpp"
 #include "core/TypeConcept.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 class EnumBitSetUtility
@@ -137,5 +135,4 @@ public:
 private:
     BitsetType m_bits;
 };
-}
 }

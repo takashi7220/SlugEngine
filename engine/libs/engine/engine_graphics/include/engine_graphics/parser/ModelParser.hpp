@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "render/geometry/Model.hpp"
 #include "render/context/DrawContext.hpp"
 #include "engine_core/asset/AssetUtility.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class ModelParser
@@ -33,5 +31,4 @@ public:
     static bool Parse(const InputParam& input, OutParam& out);
 };
 
-}
 }

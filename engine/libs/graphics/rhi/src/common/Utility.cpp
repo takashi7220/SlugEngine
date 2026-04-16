@@ -1,8 +1,6 @@
-﻿#include "rhi/common/Utility.hpp"
+#include "rhi/common/Utility.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 
 struct ConvertFormatInfo
@@ -585,5 +583,4 @@ bool Utility::AreResourceTypesCompatible(ResourceType a, ResourceType b)
     return false;
 }
 
-}
 }

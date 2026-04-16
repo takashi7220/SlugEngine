@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/interface/IDevice.hpp"
 #include "rhi/common/StateTracking.hpp"
@@ -6,11 +6,7 @@
 #include "rhi/d3d12/resource/CommandList.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 
-namespace slug 
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class Device final : public rhi::d3d12::IDevice
@@ -170,6 +166,4 @@ private:
     D3D12_FEATURE_DATA_D3D12_OPTIONS7 m_options7 = {};
 };
 
-}
-}
 }

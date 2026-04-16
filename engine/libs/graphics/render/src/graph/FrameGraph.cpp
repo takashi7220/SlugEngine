@@ -1,13 +1,11 @@
-﻿#include "render/context/DrawContext.hpp"
+#include "render/context/DrawContext.hpp"
 #include "render/graph/FrameGraph.hpp"
 #include "render/pass/SurfacePass.hpp"
 #include "render/pass/PostprocessPass.hpp"
 #include "render/pass/ComputePass.hpp"
 #include "render/texture/Framebuffer.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void FrameGraph::AddPass(DrawContext& context, const SurfacePassParam& param)
@@ -124,5 +122,4 @@ void FrameGraph::SetupRenderTarget(DrawContext& context, PipelineInfo& pipelineI
     }
 }
 
-}
 }

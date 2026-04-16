@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include <Windows.h>
 #include <windowsx.h>
 #include "render/Window.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "core/container/Vector.hpp"
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class WindowsWindow final: public IWindow
@@ -164,6 +162,5 @@ core::TReferencePtr<IWindow> WindowUtility::CreateWindowsWindow(WindowParam para
     core::TReferencePtr<IWindow> window = core::MakeReference<WindowsWindow>();
     window->Create(param);
     return window;
-}
 }
 }

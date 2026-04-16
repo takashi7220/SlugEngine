@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "core/container/String.hpp"
 #include "core/memory/ReferencePtr.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 
 class FileBlob : public ReferenceObject
@@ -74,5 +72,4 @@ public:
 
     virtual String GetRootPath(core::StringView searchPath = ".root") = 0;
 };
-}
 }

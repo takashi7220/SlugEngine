@@ -1,12 +1,10 @@
-﻿#include "engine_graphics/parser/ModelParser.hpp"
+#include "engine_graphics/parser/ModelParser.hpp"
 #include "engine_graphics/asset/MaterialAsset.hpp"
 #include "engine_core/asset/AssetUtility.hpp"
 #include "render/utility/Utility.hpp"
 #include <srtf/Model_fbs.h>
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 struct VertexFormatMapping
@@ -197,5 +195,4 @@ bool ModelParser::Parse(const InputParam& input, OutParam& out)
     return true;
 }
 
-}
 }

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 
 #include "render/material/Material.hpp"
@@ -6,9 +6,7 @@
 #include "math/AABB.hpp"
 
 
-namespace slug
-{
-namespace render 
+namespace slug::render
 {
 
 using BoundingBox = math::AABB;

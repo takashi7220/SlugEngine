@@ -1,12 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 
-namespace slug 
-{
-namespace rhi
-{
-namespace object_types 
+namespace slug::rhi::object_types
 {
 constexpr core::ObjectType SharedHandle = 0x00000001;
 
@@ -54,6 +50,4 @@ constexpr core::ObjectType VK_DescriptorSet = 0x00030011;
 constexpr core::ObjectType VK_PipelineLayout = 0x00030012;
 constexpr core::ObjectType VK_Pipeline = 0x00030013;
 constexpr core::ObjectType VK_Micromap = 0x00030014;
-}
-}
 }

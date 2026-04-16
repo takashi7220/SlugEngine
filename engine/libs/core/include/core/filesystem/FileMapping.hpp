@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 #include "core/memory/UniquePtr.hpp"
 #include "core/container/String.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 class FileMappingObject : public ReferenceObject
@@ -27,5 +25,4 @@ private:
 };
 using FileMappingObjectPtr = core::TReferencePtr<FileMappingObject>;
 
-}
 }

@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/d3d12/resource/BindingLayout.hpp"
 #include "rhi/common/Utility.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 BindingLayout::BindingLayout(const BindingLayoutDesc& _desc)
     : desc(_desc)
@@ -186,7 +182,5 @@ BindingLayout::BindingLayout(const BindingLayoutDesc& _desc)
 
         rootParameterSrvEtc = RootParameterIndex(rootParameters.size() - 1);
     }
-}
-}
 }
 }

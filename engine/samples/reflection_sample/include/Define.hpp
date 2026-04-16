@@ -1,4 +1,4 @@
-﻿#include "core/reflection/Attribute.hpp"
+#include "core/reflection/Attribute.hpp"
 #include "math/Vector2.hpp"
 #include "math/Vector3.hpp"
 #include "math/Vector4.hpp"
@@ -6,9 +6,7 @@
 #include "math/Matrix4x4.hpp"
 #include "math/Quaternion.hpp"
 
-namespace slug
-{
-namespace reflection_sample
+namespace slug::reflection_sample
 {
 
 /// @SLUG_GENERATE_REFLECTION
@@ -127,4 +125,3 @@ private:
     /// @DisplayName(スケール) @Description(スケールです。) @EditCondition(flag) @Max(1.0) @Min(-1.0) @Step(0.1) @Brawsable(false) @Default(0.0f,0.0f,0.0f)
     slug::math::Vector3 scale = { 1.0f, 1.0f, 1.0f };
 };
-}

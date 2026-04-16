@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 #include "math/Vector2.hpp"
 
-namespace slug
-{
-namespace math
+namespace slug::math
 {
 
 struct Matrix2x2

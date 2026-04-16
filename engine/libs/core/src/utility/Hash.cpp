@@ -1,9 +1,7 @@
-﻿#include "core/utility/Hash.hpp"
+#include "core/utility/Hash.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "core/memory/MemoryUtilities.hpp"
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 uint64_t HashUtility::ConvertStringToHash64(core::StringView str)
@@ -24,5 +22,4 @@ void HashUtility::HashCombine(std::size_t& seed, std::size_t value)
     seed ^= value + 0x9e3779b97f4a7c15ull + (seed << 12) + (seed >> 4);
 }
 
-}
 }

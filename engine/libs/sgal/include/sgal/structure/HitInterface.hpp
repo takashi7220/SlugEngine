@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "math/AABB.hpp"
 #include "core/memory/SObject.hpp"
 
-namespace slug
-{
-namespace sgal
+namespace slug::sgal
 {
 
 class HitInterface : core::SObject
@@ -93,5 +91,4 @@ private:
     math::AABB m_aabb;
 };
 
-}
 }

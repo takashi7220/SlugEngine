@@ -1,10 +1,8 @@
-﻿#include "engine_graphics/asset/ShaderAsset.hpp"
+#include "engine_graphics/asset/ShaderAsset.hpp"
 #include "engine_graphics/parser/MaterialParser.hpp"
 #include "engine_core/asset/AssetResolver.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 SLUG_GRAPHICS_ASSET_REGISTER(ShaderAsset)
@@ -69,5 +67,4 @@ const render::ShaderPtr& ShaderAsset::GetShader()
     return m_shader;
 }
 
-}
 }

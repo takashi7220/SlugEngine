@@ -1,8 +1,6 @@
-﻿#include "engine_core/asset/AssetPool.hpp"
+#include "engine_core/asset/AssetPool.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 void AssetPool::AddAsset(AssetBasePtr asset)
 {
@@ -71,6 +69,5 @@ core::TReferencePtr<T> AssetPool::GetAsset(const AssetID& id) const
     core::LockGuard<core::Mutex> lock(m_mutex);
     AssetBasePtr assetBase = this->GetAsset(id);
     return std::dynamic_pointer_cast<T>(assetBase);
-}
 }
 }

@@ -1,12 +1,8 @@
-﻿#include "rhi/d3d12/D3D12Utility.hpp"
+#include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 #include "rhi/d3d12/resource/Sampler.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 Sampler::Sampler(const Context& context, const SamplerDesc& desc)
     : m_context(context)
@@ -53,6 +49,4 @@ const SamplerDesc& Sampler::GetDesc() const
     return m_desc;
 }
 
-}
-}
 }

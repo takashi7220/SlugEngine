@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "core/container/UnorderedMap.hpp"
@@ -7,9 +7,7 @@
 #include "rhi/interface/ITexture.hpp"
 #include "rhi/interface/IMessageCallback.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 
 struct BufferStateExtension
@@ -111,5 +109,4 @@ private:
     core::TVector<TextureBarrier> m_textureBarriers;
     core::TVector<BufferBarrier> m_bufferBarriers;
 };
-}
 }

@@ -1,4 +1,4 @@
-﻿#if !defined(SLUG_SHADER_COMPILE)
+#if !defined(SLUG_SHADER_COMPILE)
 
 #pragma once
 
@@ -39,9 +39,7 @@
 #define SLUG_SHADER_MATRIX4x4(name) { #name, ParameterType::Float4x4, 1, sizeof(math::Matrix4x4)},
 #define SLUG_CBUFFER(name, id) ShaderParameter name[] = 
 
-namespace slug
-{
-namespace shader
+namespace slug::shader
 {
 
 enum class ParameterType : uint8_t

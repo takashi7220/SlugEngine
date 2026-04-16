@@ -1,10 +1,7 @@
-﻿#pragma once
+#pragma once
 #include <thread>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 using Thread = std::thread;
-}
 }

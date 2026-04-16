@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/Vector.hpp"
 #include "core/thread/Mutex.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 class BitsetAllocator 
 {
@@ -76,5 +74,4 @@ private:
     core::Mutex m_mutex;
 };
 
-}
 }

@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/SObject.hpp"
 #include "core/memory/SharedPtr.hpp"
 #include "core/container/String.hpp"
 #include "core/Function.hpp"
 #include "core/pattern/Closure.hpp"
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct WindowMessage
@@ -44,5 +42,4 @@ class WindowUtility
 public:
     static core::TReferencePtr<IWindow> CreateWindowsWindow(WindowParam param);
 };
-}
 }

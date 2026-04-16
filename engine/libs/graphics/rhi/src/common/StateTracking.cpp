@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/Rhi.hpp"
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 CommandListResourceStateTracker::CommandListResourceStateTracker()
 {}
@@ -419,5 +417,4 @@ uint32_t CommandListResourceStateTracker::CalcSubresource(MipLevel mipLevel, Arr
     return mipLevel + arraySlice * desc.mipLevels;
 }
 
-}
 }

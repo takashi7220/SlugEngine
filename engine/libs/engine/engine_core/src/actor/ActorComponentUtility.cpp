@@ -1,10 +1,8 @@
-﻿#include "engine_core/actor/ActorComponentUtility.hpp"
+#include "engine_core/actor/ActorComponentUtility.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "core/debug/Assert.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 static core::TUnorderedMap<ComponentTypeID, GenerateComponentPtr, ComponentTypeIDKeyHash, ComponentTypeIDKeyCompare> COMPONENT_GENERATOR_TABLE = {};
@@ -38,5 +36,4 @@ ActorComponent* ActorComponentUtility::Generate(const ComponentTypeID& Component
     return nullptr;
 }
 
-}
 }

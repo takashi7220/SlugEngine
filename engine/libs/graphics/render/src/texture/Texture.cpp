@@ -1,10 +1,8 @@
-﻿#include "render/texture/Texture.hpp"
+#include "render/texture/Texture.hpp"
 #include "core/utility/Hash.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 Texture* Texture::Create(DrawContext& context, const SetupParameter& param)
@@ -131,5 +129,4 @@ rhi::SamplerPtr Texture::CreateSampler(DrawContext& context, const SamplerInfo& 
     return sampler;
 }
 
-}
 }

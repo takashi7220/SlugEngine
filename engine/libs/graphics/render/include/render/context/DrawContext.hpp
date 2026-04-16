@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 #include "render/resource/ResourceService.hpp"
 #include "render/graph/FrameGraph.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 
@@ -43,5 +41,4 @@ private:
 };
 using DrawContextPtr = core::TReferencePtr<DrawContext>;
 
-}
 }

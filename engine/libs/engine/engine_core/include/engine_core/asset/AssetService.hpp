@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/asset/AssetPool.hpp"
 #include "core/service/ServiceProvider.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 class AssetService : public core::IService
@@ -27,5 +25,4 @@ private:
     AssetPoolPtr m_pool;
 };
 
-}
 }

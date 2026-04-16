@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/uuid/UUID.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "math/Math.hpp"
 #include "core/memory/ReferencePtr.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 class SObject : public core::ReferenceObject
 {
@@ -33,5 +31,4 @@ private:
     core::UUID m_uuid;
     core::FixedString<64> m_name;
 };
-}
 }

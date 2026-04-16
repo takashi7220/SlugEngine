@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct PipelineCache
@@ -14,5 +12,4 @@ struct PipelineCache
     core::FixedString<32> name;
 };
 
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct VertexAttributeDesc
 {
@@ -26,5 +24,4 @@ public:
 
 using InputLayoutPtr = core::TReferencePtr<IInputLayout>;
 
-}
 }

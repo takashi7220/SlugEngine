@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/ResourceType.hpp"
 #include "rhi/interface/IBindingLayout.hpp"
@@ -6,9 +6,7 @@
 #include "rhi/interface/IBindingSet.hpp"
 
 
-namespace slug
-{
-namespace rhi
+namespace slug::rhi
 {
 struct ComputePipelineDesc
 {
@@ -57,5 +55,4 @@ struct ComputeState
 };
 
 
-}
 }

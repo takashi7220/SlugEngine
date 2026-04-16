@@ -1,9 +1,7 @@
-﻿#include "render/texture/Framebuffer.hpp"
+#include "render/texture/Framebuffer.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 rhi::IFrameBuffer* Framebuffer::GetFramebuffer(DrawContext& context, const rhi::TextureSubresourceSet& subresources)
 {
@@ -80,5 +78,4 @@ void Framebuffer::Clear(rhi::ICommandList* commandList, bool clearColor, bool cl
     }
 }
 
-}
 }

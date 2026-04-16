@@ -1,8 +1,6 @@
-﻿#include "sgal/structure/octree/Octree.hpp"
+#include "sgal/structure/octree/Octree.hpp"
 
-namespace slug
-{
-namespace sgal
+namespace slug::sgal
 {
 
 void OctreeBase::Node::Subdivide()
@@ -35,6 +33,5 @@ void OctreeBase::Node::Subdivide()
 core::TUniquePtr<OctreeBase::Node>& OctreeBase::GetTopNode()
 {
     return m_topNode;
-}
 }
 }

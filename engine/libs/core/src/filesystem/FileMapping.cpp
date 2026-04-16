@@ -1,12 +1,10 @@
-﻿#include "core/filesystem/FileMapping.hpp"
+#include "core/filesystem/FileMapping.hpp"
 
 #if PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 #if PLATFORM_WINDOWS
@@ -97,5 +95,4 @@ size_t FileMappingObject::GetSize()
     return m_impl->size;
 }
 
-}
 }

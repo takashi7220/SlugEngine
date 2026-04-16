@@ -1,14 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/ITexture.hpp"
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 struct TextureBindingKey : public TextureSubresourceSet
@@ -79,6 +75,4 @@ private:
     TextureBindingKeyHashMap<DescriptorIndex> m_customUavs;
     core::TVector<DescriptorIndex> m_clearMipLevelUavs;
 };
-}
-}
 }

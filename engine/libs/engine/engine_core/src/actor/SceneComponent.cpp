@@ -1,11 +1,9 @@
-﻿#include "engine_core/actor/SceneComponent.hpp"
+#include "engine_core/actor/SceneComponent.hpp"
 #include "engine_core/actor/ActorComponentUtility.hpp"
 #include "engine_core/actor/Actor.hpp"
 #include "core/pattern/Closure.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 SLUG_COMPONENT_REGISTER(SceneComponent)
@@ -271,5 +269,4 @@ core::TVector<SceneComponentPtr>& SceneComponent::GetChildren()
     return m_chidren;
 }
 
-}
 }

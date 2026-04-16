@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "core/container/Vector.hpp"
@@ -6,11 +6,7 @@
 #include "rhi/d3d12/D3D12.hpp"
 #include "rhi/interface/IBindingLayout.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 class BindingLayout : public IBindingLayout
 {
@@ -38,6 +34,4 @@ public:
     core::TStaticVector<core::TPair<RootParameterIndex, D3D12_ROOT_DESCRIPTOR1>, MAX_VOLATILE_CONSTANT_BUFFERS_PER_LAYOUT> rootParametersVolatileCb;
     core::TStaticVector<D3D12_ROOT_PARAMETER1, 32> rootParameters;
 };
-}
-}
 }

@@ -1,10 +1,6 @@
-﻿#include "rhi/d3d12/resource/FrameBuffer.hpp"
+#include "rhi/d3d12/resource/FrameBuffer.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 FrameBuffer::FrameBuffer(DeviceResources& resources)
     : m_resources(resources)
@@ -40,6 +36,4 @@ FrameBufferInfoEx& FrameBuffer::GetFrameBufferInfo()
 }
 
 
-}
-}
 }

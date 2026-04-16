@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "math/AABB.hpp"
 #include "core/memory/UniquePtr.hpp"
@@ -6,9 +6,7 @@
 #include "core/container/Queue.hpp"
 #include "core/container/Vector.hpp"
 #include "sgal/structure/octree/OctreeFlat.hpp"
-namespace slug
-{
-namespace sgal
+namespace slug::sgal
 {
 
 class OctreeBase
@@ -211,5 +209,4 @@ private:
     core::TVector<U> m_datas;
 };
 
-}
 }

@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/filesystem/FileSystem.hpp"
 #include "core/filesystem/DefaultFileSystemController.hpp"
 #include "core/memory/UniquePtr.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 static TUniquePtr<IFileSystemController> FILE_SYSTEM_CONTROLLER = nullptr;
@@ -113,6 +111,5 @@ IFileSystemController* FileSystem::GetController()
         FILE_SYSTEM_CONTROLLER.reset(new DefaultFileSystemController());
     }
     return FILE_SYSTEM_CONTROLLER.get();
-}
 }
 }

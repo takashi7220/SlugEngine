@@ -1,13 +1,9 @@
-﻿#pragma once
+#pragma once
 #include "rhi/interface/ISampler.hpp"
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 class Sampler : public ISampler
 {
@@ -21,6 +17,4 @@ private:
     D3D12_SAMPLER_DESC m_d3d12desc;
 };
 
-}
-}
 }

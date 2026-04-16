@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "engine_core/asset/AssetLoaderBase.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class GraphicsAssetLoader : public engine_core::AssetLoaderBase
@@ -29,5 +27,4 @@ public:
     static bool HasGenerator(const engine_core::AssetHeader& header);
     static core::TReferencePtr<GraphicsAssetBase> Generate(const engine_core::AssetHeader& header, render::DrawContext& context);
 };
-}
 }

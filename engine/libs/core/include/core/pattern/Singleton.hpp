@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdint>
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 template<typename T>
 class TSingleton 
@@ -46,5 +44,4 @@ private:
 
 template <typename T> 
 T* TSingleton<T>::m_ptr = nullptr;
-}
 }

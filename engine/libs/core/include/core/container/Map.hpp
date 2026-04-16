@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <map>
@@ -8,9 +8,7 @@
 #include "core/memory/Allocator.hpp"
 #include "core/container/Pair.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 template<typename T>
 struct Tless {
@@ -24,5 +22,4 @@ struct Tless {
     using TMap = std::map<Key, Value, Tless<Key>, TAllocator<TPair<Key, Value>>>;
 #else
 #endif
-}
 }

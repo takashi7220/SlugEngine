@@ -1,4 +1,4 @@
-﻿#include "rhi/d3d12/resource/Buffer.hpp"
+#include "rhi/d3d12/resource/Buffer.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/common/Resource.hpp"
 #include "rhi/common/Utility.hpp"
@@ -8,11 +8,7 @@
 #include "rhi/d3d12/resource/Context.hpp"
 
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 Buffer::Buffer(const Context& context, DeviceResources& resources, BufferDesc desc) 
@@ -211,6 +207,4 @@ void Buffer::CreateNullUAV(size_t descriptor, FormatType format, const Context& 
     context.device->CreateUnorderedAccessView(nullptr, nullptr, &viewDesc, { descriptor });
 }
 
-}
-}
 }

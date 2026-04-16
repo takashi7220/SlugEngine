@@ -1,13 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/ITimerQuery.hpp"
 #include "rhi/d3d12/resource/DeviceResources.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 class TimerQuery : public ITimerQuery
@@ -29,6 +25,4 @@ private:
     DeviceResources& m_resources;
 };
 
-}
-}
 }

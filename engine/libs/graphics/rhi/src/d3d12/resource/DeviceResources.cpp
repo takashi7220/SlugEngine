@@ -1,13 +1,9 @@
-﻿#include "rhi/d3d12/resource/DeviceResources.hpp"
+#include "rhi/d3d12/resource/DeviceResources.hpp"
 #include "rhi/d3d12/resource/Device.hpp"
 #include "rhi/d3d12/resource/RootSignature.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 DeviceResources::DeviceResources(const Context& context, const DeviceDesc& desc)
     : renderTargetViewHeap(context)
@@ -49,7 +45,5 @@ uint32_t DeviceResources::GetFormatPlaneCount(DXGI_FORMAT format)
     }
 
     return planeCount;
-}
-}
 }
 }

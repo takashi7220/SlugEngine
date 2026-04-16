@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/interface/ICommandList.hpp"
 
-namespace slug 
-{
-namespace rhi
+namespace slug::rhi
 {
 class IDevice : public IResource 
 {
@@ -98,5 +96,4 @@ public:
 
 };
 using DevicePtr = core::TReferencePtr<IDevice>;
-}
 }

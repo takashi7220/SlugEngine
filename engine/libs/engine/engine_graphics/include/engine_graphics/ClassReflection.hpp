@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include <cstdint>
 #include "core/container/String.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 enum class ReflectionMemberType_PrimitiveComponent : uint8_t
@@ -34,5 +32,4 @@ inline core::StringView GetReflectionMemberName_MeshComponent(ReflectionMemberTy
 }
 
 
-}
 }

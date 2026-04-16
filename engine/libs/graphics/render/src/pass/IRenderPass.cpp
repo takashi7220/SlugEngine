@@ -1,10 +1,8 @@
-﻿#include "render/pass/IRenderPass.hpp"
+#include "render/pass/IRenderPass.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/context/BindingCache.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void IRenderPass::Initialize(const InitializeParam& param)
@@ -12,5 +10,4 @@ void IRenderPass::Initialize(const InitializeParam& param)
     m_param = param;
 }
 
-}
 }

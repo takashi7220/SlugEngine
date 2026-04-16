@@ -1,11 +1,7 @@
-﻿
+
 #include "rhi/d3d12/resource/DescriptorTable.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 DescriptorTable::DescriptorTable(DeviceResources& resources)
@@ -33,6 +29,4 @@ uint32_t DescriptorTable::GetCapacity() const
     return capacity;
 }
 
-}
-}
 }

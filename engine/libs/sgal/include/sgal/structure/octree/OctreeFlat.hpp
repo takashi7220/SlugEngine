@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "math/AABB.hpp"
 #include "core/container/Vector.hpp"
 #include "core/Function.hpp"
 #include "sgal/structure/HitInterface.hpp"
 
-namespace slug
-{
-namespace sgal
+namespace slug::sgal
 {
 
 class OctreeFlatBase
@@ -90,5 +88,4 @@ private:
 
 };
 
-}
 }

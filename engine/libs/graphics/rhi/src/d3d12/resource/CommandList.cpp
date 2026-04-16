@@ -1,4 +1,4 @@
-﻿
+
 #include "core/memory/MemoryUtilities.hpp"
 #include "rhi/common/Utility.hpp"
 #include "rhi/common/Resource.hpp"
@@ -15,11 +15,7 @@
 #include "rhi/d3d12/resource/DescriptorTable.hpp"
 #include <pix_win.h>
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 Queue::Queue(const Context& context, ID3D12CommandQueue* queue)
     : queue(queue)
@@ -2534,6 +2530,4 @@ void CommandList::BuildTopLevelAccelStructInternal(AccelStruct* as, D3D12_GPU_VI
     m_activeCommandList->commandList4->BuildRaytracingAccelerationStructure(&buildDesc, 0, nullptr);
 }
 
-}
-}
 }

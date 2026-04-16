@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "render/material/Material.hpp"
 #include "render/pipeline/PipelineInfo.hpp"
@@ -7,9 +7,7 @@
 
 
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class DrawContext;
@@ -54,5 +52,4 @@ private:
 using GraphicsPipelinePtr = core::TReferencePtr<GraphicsPipeline>;
 
 
-}
 }

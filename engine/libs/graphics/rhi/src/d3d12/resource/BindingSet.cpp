@@ -1,4 +1,4 @@
-﻿#include "core/memory/MemoryUtilities.hpp"
+#include "core/memory/MemoryUtilities.hpp"
 #include "rhi/d3d12/resource/BindingSet.hpp"
 #include "rhi/d3d12/resource/Buffer.hpp"
 #include "rhi/d3d12/resource/Sampler.hpp"
@@ -7,11 +7,7 @@
 #include "rhi/common/Utility.hpp"
 #include "rhi/common/StateTracking.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 BindingSet::BindingSet(const Context& context, DeviceResources& resources)
@@ -308,6 +304,4 @@ void BindingSet::CreateDescriptors()
     }
 }
 
-}
-}
 }

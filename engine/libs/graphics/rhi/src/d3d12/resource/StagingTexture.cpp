@@ -1,12 +1,8 @@
-﻿#include "rhi/d3d12/D3D12Utility.hpp"
+#include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/d3d12/resource/StagingTexture.hpp"
 #include "rhi/common/Resource.hpp"
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 StagingTexture::SliceRegion StagingTexture::GetSliceRegion(ID3D12Device* device, const TextureSlice& slice)
@@ -69,6 +65,4 @@ Object StagingTexture::GetNativeObject(ObjectType objectType)
     }
 }
 
-}
-}
 }

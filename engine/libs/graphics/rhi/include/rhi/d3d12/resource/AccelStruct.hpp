@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <d3d12.h>
 #include "core/thread/Mutex.hpp"
@@ -7,11 +7,7 @@
 #include "rhi/d3d12/resource/Buffer.hpp"
 #include "rhi/d3d12/resource/Context.hpp"
 
-namespace slug 
-{
-namespace rhi 
-{
-namespace d3d12 
+namespace slug::rhi::d3d12
 {
 
 class AccelStruct : public rt::IAccelStruct
@@ -39,6 +35,4 @@ private:
 
 };
 
-}
-}
 }

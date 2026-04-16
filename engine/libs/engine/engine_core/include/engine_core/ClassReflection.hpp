@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "core/reflection/ReflectionClass.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 class SceneComponent_ReflectionClass
 {
@@ -17,5 +15,4 @@ public:
     static core::StringView GetMemberName(MemberType type);
     static core::PropertyDescriptor GetDescriptor(MemberType type);
 };
-}
 }

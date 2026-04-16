@@ -1,12 +1,8 @@
-﻿#pragma once
+#pragma once
 
 
 
-namespace slug
-{
-namespace engine
-{
-namespace loader
+namespace slug::engine::loader
 {
 
 class LoadItem
@@ -14,6 +10,4 @@ class LoadItem
 
 };
 using LoadItemPtr = core::TReferencePtr<LoadItem>;
-}
-}
 }

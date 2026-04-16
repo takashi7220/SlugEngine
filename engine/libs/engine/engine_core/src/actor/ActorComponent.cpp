@@ -1,10 +1,8 @@
-﻿#include "engine_core/actor/ActorComponent.hpp"
+#include "engine_core/actor/ActorComponent.hpp"
 #include "engine_core/actor/Actor.hpp"
 
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 ActorComponent::ActorComponent()
@@ -47,5 +45,4 @@ Actor* ActorComponent::GetActor()
     return m_actor;
 }
 
-}
 }

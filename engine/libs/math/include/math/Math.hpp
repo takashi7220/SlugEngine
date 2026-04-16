@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <cmath>
 #include <cfloat>
@@ -6,9 +6,7 @@
 #include "math/TypeConcept.hpp"
 
 
-namespace slug 
-{
-namespace math
+namespace slug::math
 {
 static constexpr float SLUG_F32_MIN = FLT_MIN;
 static constexpr double SLUG_F64_MIN = DBL_MIN;
@@ -167,5 +165,4 @@ inline bool TEqual(T v0, T v1)
 }
 
 
-}
 }

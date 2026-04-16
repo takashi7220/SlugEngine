@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "core/task/TaskSystem.hpp"
 #include "core/container/String.hpp"
@@ -6,9 +6,7 @@
 #include "core/pack/PackFile.hpp"
 #include "engine_core/asset/AssetPool.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 class AssetLoaderBase
 {
@@ -27,5 +25,4 @@ private:
 
 };
 
-}
 }

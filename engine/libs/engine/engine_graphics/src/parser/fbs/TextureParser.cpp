@@ -1,10 +1,8 @@
-﻿#include "engine_graphics/parser/TextureParser.hpp"
+#include "engine_graphics/parser/TextureParser.hpp"
 #include <srtf/Texture_fbs.h>
 #include <image/ImageUtility.hpp>
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 struct SamplerAddressModeMapping
@@ -94,5 +92,4 @@ bool TextureParser::Parse(InputParam& input, OutParam& out)
     return true;
 }
 
-}
 }

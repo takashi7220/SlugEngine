@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <stack>
@@ -7,9 +7,7 @@
 #include "core/TypeConcept.hpp"
 #include "core/allocator/TAllocator.hpp"
 #include "core/container/TDeque.hpp"
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
     template<typename T>
@@ -17,5 +15,4 @@ namespace core
 #else
 #endif
 
-}
 }

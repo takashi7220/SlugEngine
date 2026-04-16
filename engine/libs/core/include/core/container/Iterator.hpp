@@ -1,8 +1,6 @@
-﻿#pragma once
+#pragma once
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 template<typename T>
 class TIterator
@@ -36,5 +34,4 @@ public:
 private:
     T* m_ptr;
 };
-}
 }

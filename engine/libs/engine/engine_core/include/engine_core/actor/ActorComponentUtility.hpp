@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 #include "core/utility/Hash.hpp"
 #include "core/uuid/NameID.hpp"
 
-namespace slug
-{
-namespace engine_core
+namespace slug::engine_core
 {
 
 struct ComponentTypeID
@@ -57,5 +55,4 @@ public:
     static bool HasGenerator(const ComponentTypeID& componentTypeId);
     static ActorComponent* Generate(const ComponentTypeID& componentTypeId);
 };
-}
 }

@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 
-namespace slug 
-{
-namespace math 
+namespace slug::math
 {
 
 struct Vector3
@@ -170,5 +168,4 @@ struct Vector3
     }
 };
 
-}
 }

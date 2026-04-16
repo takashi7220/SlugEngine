@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <utility>
@@ -7,9 +7,7 @@
 #include "core/TypeConcept.hpp"
 #include "core/memory/Allocator.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
     template<typename T0, typename T1>
@@ -23,5 +21,4 @@ namespace core
 #else
 #endif
 
-}
 }

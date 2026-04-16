@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "rhi/Rhi.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 using Color = rhi::Color;
@@ -161,5 +159,4 @@ enum class ShaderType
     Compute = rhi::ShaderType::Compute,
 };
 
-}
 }

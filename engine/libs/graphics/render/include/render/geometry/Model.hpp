@@ -1,12 +1,10 @@
-﻿#pragma once
+#pragma once
 #include "render/geometry/Mesh.hpp"
 #include "core/object/SObject.hpp"
 #include "math/Transform.hpp"
 #include "render/utility/View.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct LodItemSettings
@@ -77,5 +75,4 @@ public:
 };
 using ModelPtr = core::TReferencePtr<Model>;
 
-}
 }

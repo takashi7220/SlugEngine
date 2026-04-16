@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/utility/Hash.hpp"
 
 #include "rhi/Rhi.hpp"
 #include "render/ResourceType.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 struct TextureSubresourceInfo
@@ -148,5 +146,4 @@ private:
 };
 using TexturePtr = core::TReferencePtr<Texture>;
 
-}
 }

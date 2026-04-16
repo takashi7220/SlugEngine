@@ -1,13 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
 #include "core/filesystem/FileSystem.hpp"
 #include "core/filesystem/FileMapping.hpp"
 #include "core/utility/Hash.hpp"
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 
 using PackFilePath = core::FixedString<1024>;
@@ -60,5 +58,4 @@ private:
 };
 using PackFilePtr = core::TReferencePtr<PackFile>;
 
-}
 }

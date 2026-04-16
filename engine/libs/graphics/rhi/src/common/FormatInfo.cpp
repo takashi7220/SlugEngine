@@ -1,8 +1,6 @@
-﻿#include "rhi/Rhi.hpp"
+#include "rhi/Rhi.hpp"
 
-namespace slug 
-{
-namespace rhi 
+namespace slug::rhi
 {
 static const FormatInfo c_format_info[] = {
         { FormatType::UNKNOWN,           "UNKNOWN",           0,   0, FormatKind::Integer,      false, false, false, false, false, false, false, false },
@@ -88,6 +86,5 @@ const FormatInfo& GetFormatInfo(FormatType format)
     const FormatInfo& info = c_format_info[uint32_t(format)];
     SLUG_ASSERT(info.format == format);
     return info;
-}
 }
 }

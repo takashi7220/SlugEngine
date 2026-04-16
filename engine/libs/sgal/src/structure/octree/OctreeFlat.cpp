@@ -1,9 +1,7 @@
-﻿#include "sgal/structure/octree/OctreeFlat.hpp"
+#include "sgal/structure/octree/OctreeFlat.hpp"
 #include "core/container/Queue.hpp"
 
-namespace slug
-{
-namespace sgal
+namespace slug::sgal
 {
 
 
@@ -137,5 +135,4 @@ void OctreeFlatBase::TraverseInternal(HitInterface* hit, TraverseCallback callba
     }
 }
 
-}
 }

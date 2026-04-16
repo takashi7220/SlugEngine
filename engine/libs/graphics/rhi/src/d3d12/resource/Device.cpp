@@ -1,4 +1,4 @@
-﻿#include "core/memory/UniquePtr.hpp"
+#include "core/memory/UniquePtr.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "rhi/common/Resource.hpp"
 #include "rhi/common/Utility.hpp"
@@ -22,11 +22,7 @@
 
 constexpr uint32_t MAX_COMMANDLIST_TO_EXECUTE = 64;
 
-namespace slug
-{
-namespace rhi
-{
-namespace d3d12
+namespace slug::rhi::d3d12
 {
 
 rhi::DevicePtr Device::Create(const DeviceDesc& desc)
@@ -2076,6 +2072,4 @@ void Device::RunGarbageCollection()
     }
 }
 
-}
-}
 }

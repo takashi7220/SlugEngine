@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "math/TypeConcept.hpp"
 #include "math/Vector3.hpp"
@@ -6,9 +6,7 @@
 #include "math/Matrix3x3.hpp"
 #include "math/Matrix4x4.hpp"
 
-namespace slug
-{
-namespace math
+namespace slug::math
 {
 
 struct Quaternion
@@ -312,5 +310,4 @@ struct Quaternion
         return q;
     }
 };
-}
 }

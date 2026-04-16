@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/memory/ReferencePtr.hpp"
 #include "render/Window.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 enum class GPUType
@@ -44,5 +42,4 @@ public:
     static core::TReferencePtr<IGraphicsDevice> GenerateD3D12(GraphicsDeviceParameter param);
 };
 
-}
 }

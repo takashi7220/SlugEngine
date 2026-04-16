@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #if defined(SLUG_USE_STL)
 #include <list>
@@ -6,14 +6,11 @@
 
 #include "core/container/Span.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 #if defined(SLUG_USE_STL)
 template<typename T>
 using TList = std::list<T, TAllocator<T>>;
 #else
 #endif
-}
 }

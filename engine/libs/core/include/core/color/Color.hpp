@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "core/TypeConcept.hpp"
 #include "core/color/ColorBase.hpp"
 
-namespace slug
-{
-namespace core
+namespace slug::core
 {
 struct Color : public ColorBase 
 {
@@ -129,5 +127,4 @@ struct Color : public ColorBase
     }
 
 };
-}
 }

@@ -1,11 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "render/context/DrawContext.hpp"
 #include "render/texture/Texture.hpp"
 
-namespace slug
-{
-namespace engine_graphics
+namespace slug::engine_graphics
 {
 
 class TextureParser
@@ -27,5 +25,4 @@ public:
 
 };
 
-}
 }

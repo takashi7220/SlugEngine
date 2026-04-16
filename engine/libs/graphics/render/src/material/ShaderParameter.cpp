@@ -1,11 +1,9 @@
-﻿#include "render/material/ShaderParameter.hpp"
+#include "render/material/ShaderParameter.hpp"
 #include "core/memory/MemoryUtilities.hpp"
 #include "render/context/DrawContext.hpp"
 #include "render/utility/Utility.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 void ShaderParameter::Reflesh(DrawContext& context)
@@ -215,5 +213,4 @@ void ShaderParameter::UpdateBindingResource(DrawContext& context, const Constant
     m_needUpdateBuffer = false;
 }
 
-}
 }

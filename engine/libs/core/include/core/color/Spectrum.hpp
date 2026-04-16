@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "math/Math.hpp"
 
-namespace slug 
-{
-namespace core 
+namespace slug::core
 {
 
 struct Spectrum 
@@ -186,5 +184,4 @@ struct Spectrum
     }
 };
 
-}
 }

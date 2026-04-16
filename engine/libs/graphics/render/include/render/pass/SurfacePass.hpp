@@ -1,10 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "render/pass/IRenderPass.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 class SurfacePass : public IRenderPass
@@ -30,5 +28,4 @@ private:
 private:
 };
 using SurfacePassPtr = core::TReferencePtr<SurfacePass>;
-}
 }

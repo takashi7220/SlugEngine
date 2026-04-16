@@ -1,10 +1,8 @@
-﻿#include "render/context/BindingCache.hpp"
+#include "render/context/BindingCache.hpp"
 #include "render/utility/Utility.hpp"
 #include "render/context/DrawContext.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 BindingCache* BindingCache::Create(DrawContext& context, BindingCacheParam& param)
@@ -132,5 +130,4 @@ void BindingCache::Clear()
     }
 }
 
-}
 }

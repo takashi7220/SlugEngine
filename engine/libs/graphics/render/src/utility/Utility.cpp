@@ -1,10 +1,8 @@
-﻿
+
 #include "shader/Define.h"
 #include "render/utility/Utility.hpp"
 
-namespace slug
-{
-namespace render
+namespace slug::render
 {
 
 static core::TFunctionObject<uint32_t(core::StringView)> CalcSlotIndexCallback = nullptr;
@@ -170,5 +168,4 @@ void ConstantBufferUtility::UpdateObjectShaderParameter(ShaderParameterPtr& shad
     }
 }
 
-}
 }
