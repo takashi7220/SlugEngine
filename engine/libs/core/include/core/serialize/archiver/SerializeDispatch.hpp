@@ -1,5 +1,12 @@
 ﻿#pragma once
 
+#include "core/serialize/archiver/types/SerializePrimitive.hpp"
+#include "core/serialize/archiver/types/SerializeVector.hpp"
+#include "core/serialize/archiver/types/SerializeString.hpp"
+
+#include "core/serialize/archiver/types/SerializePrimitive.hpp"
+#include "core/serialize/archiver/types/SerializeString.hpp"
+#include "core/serialize/archiver/types/SerializeVector.hpp"
 #include "core/serialize/archiver/archives/InputArchive.hpp"
 #include "core/serialize/archiver/archives/OutputArchive.hpp"
 
@@ -22,8 +29,8 @@ void DispatchSerialize(Archive& ar, const T& value)
             has_member_serialize<Archive, T>::value ||
             has_non_member_serialize<Archive, T>::value ||
             is_arithmetic_or_enum_v<T> ||
-            is_string_v<T> ||
-            is_vector_v<T>,
+            !is_string_v<T> ||
+            !is_vector_v<T>,
             "Type is not serializable for output archive."
         );
 
@@ -48,8 +55,8 @@ void DispatchDeserialize(Archive& ar, T& value)
             has_member_deserialize<Archive, T>::value ||
             has_non_member_deserialize<Archive, T>::value ||
             is_arithmetic_or_enum_v<T> ||
-            is_string_v<T> ||
-            is_vector_v<T>,
+            !is_string_v<T> ||
+            !is_vector_v<T>,
             "Type is not serializable for input archive."
         );
 

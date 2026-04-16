@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "core/utility/NameValuePair.hpp"
+#include "core/utility/BaseClassWrapper.hpp"
 #include "core/serialize/common/SerializeTraits.hpp"
 #include "core/serialize/common/SerializeUtility.hpp"
 
@@ -17,26 +18,27 @@ template<typename Derived>
 class InputArchive : public InputArchiveTag
 {
 public:
-    template<typename... Args>
-    void operator()(Args&&... args)
-    {
-        (Process(std::forward<Args>(args)), ...);
-    }
-
     template<typename T>
-    void Process(T& value)
+    void Value(T& value)
     {
         Derived& self = static_cast<Derived&>(*this);
         DispatchDeserialize(self, value);
     }
 
     template<typename T>
-    void Process(NameValuePair<T> nvp)
+    void Field(core::StringView name, T& value)
     {
         Derived& self = static_cast<Derived&>(*this);
-        self.BeginNamedValue(nvp.name);
-        DispatchDeserialize(self, nvp.value);
-        self.EndNamedValue();
+        self.BeginField(name);
+        DispatchDeserialize(self, value);
+        self.EndField();
+    }
+
+    template<typename Base>
+    void BaseClass(BaseClassWrapper<Base> wrapper)
+    {
+        Derived& self = static_cast<Derived&>(*this);
+        DispatchDeserialize(self, static_cast<Base&>(wrapper.get()));
     }
 
     virtual void BeginObject() = 0;
@@ -45,22 +47,10 @@ public:
     virtual void BeginField(core::StringView name) = 0;
     virtual void EndField() = 0;
 
-    virtual void BeginArray(size_t size) = 0;
+    virtual size_t BeginArray() = 0;
     virtual void EndArray() = 0;
 
     virtual void BeginArrayElement() = 0;
     virtual void EndArrayElement() = 0;
-
-    virtual bool ReadBool() = 0;
-
-    template<typename T>
-    virtual T ReadInteger() = 0;
-
-    template<typename T>
-    virtual T ReadFloating() = 0;
-
-    virtual core::StringView ReadString() = 0;
-
-
 };
 }

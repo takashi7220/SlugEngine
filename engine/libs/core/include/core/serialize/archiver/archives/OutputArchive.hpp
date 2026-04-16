@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "core/utility/NameValuePair.hpp"
+#include "core/utility/BaseClassWrapper.hpp"
 #include "core/serialize/common/SerializeTraits.hpp"
 #include "core/serialize/common/SerializeUtility.hpp"
 
@@ -17,26 +18,27 @@ template<typename Derived>
 class OutputArchive : public OutputArchiverTag
 {
 public:
-    template<typename... Args>
-    void operator()(Args&&... args)
+    template<typename T>
+    void Value(const T& value)
     {
-        (Process(std::forward<Args>(args)), ...);
+        Derived& self = static_cast<Derived&>(*this);
+        DispatchSerialize(self, value);
     }
 
     template<typename T>
-    void Process(const T& value)
+    void Field(core::StringView name, const T& value)
     {
         Derived& self = static_cast<Derived&>(*this);
-        DispatchSerialize(self, value)
+        self.BeginField(name);
+        DispatchSerialize(self, value);
+        self.EndField();
     }
 
-    template<typename T>
-    void Process(NameValuePair<T> nvp)
+    template<typename Base>
+    void BaseClass(ConstBaseClassWrapper<Base> wrapper)
     {
         Derived& self = static_cast<Derived&>(*this);
-        self.BeginNamedValue(nvp.name);
-        DispatchSerialize(self, static_cast<const T&>(nvp.value));
-        self.EndNamedValue();
+        DispatchSerialize(self, static_cast<const Base&>(wrapper.get()));
     }
 
     virtual void BeginObject() = 0;
@@ -50,15 +52,5 @@ public:
 
     virtual void BeginArrayElement() = 0;
     virtual void EndArrayElement() = 0;
-
-    virtual void WriteBool(bool value) = 0;
-
-    template<typename T>
-    virtual void WriteInteger(T value) = 0;
-
-    template<typename T>
-    virtual void WriteFloating(T value) = 0;
-
-    virtual void WriteString(core::StringView value) = 0;
 };
 }

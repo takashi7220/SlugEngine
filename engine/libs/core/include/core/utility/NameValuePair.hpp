@@ -23,7 +23,7 @@ struct ConstNameValuePair
     core::StringView name;
     const T& value;
 
-    NameValuePair(core::StringView _name, const T& _value)
+    ConstNameValuePair(core::StringView _name, const T& _value)
         : name(_name)
         , value(_value)
     {
