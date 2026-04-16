@@ -7,7 +7,7 @@ namespace slug::core
 class BinaryOutputArchive : public OutputArchive<BinaryOutputArchive>
 {
 public:
-    explicit BinaryOutputArchive(core::TVector<uint8_t>& outBuffer)
+    explicit BinaryOutputArchive(core::String& outBuffer)
         : m_buffer(outBuffer)
     {
     }
@@ -62,16 +62,8 @@ public:
     {
     }
 private:
-    template<typename T>
-    void WriteBytes(const T& value)
-    {
-    }
-
-    void WriteBytes(const void* data, size_t size)
-    {
-    }
 
 private:
-    core::TVector<uint8_t>& m_buffer;
+    core::String& m_buffer;
 };
 }
