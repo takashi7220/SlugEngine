@@ -34,7 +34,7 @@ public:
 
     virtual size_t BeginArray() override
     {
-        return ReadIntenger<size_t>();
+        return ReadInteger<size_t>();
     }
 
     virtual void EndArray() override
@@ -56,8 +56,8 @@ public:
         return value;
     }
 
-    template<IntengerType T>
-    T ReadIntenger()
+    template<IntegerType T>
+    T ReadInteger()
     {
         T value = 0;
         ReadBytes(value);
@@ -74,7 +74,7 @@ public:
 
     void ReadString(core::String& value)
     {
-        size_t size = ReadIntenger<size_t>();
+        size_t size = ReadInteger<size_t>();
         value.resize(size);
         if (size > 0)
         {

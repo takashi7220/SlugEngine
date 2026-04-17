@@ -16,16 +16,16 @@ void Deserialize(Archive& ar, T& value)
     value = static_cast<T>(ar.ReadBool());
 }
 
-template<IntengerType T, typename Archive>
+template<IntegerType T, typename Archive>
 void Serialize(Archive& ar, const T& value)
 {
-    ar.WriteIntenger(value);
+    ar.WriteInteger(value);
 }
 
-template<IntengerType T, typename Archive>
+template<IntegerType T, typename Archive>
 void Deserialize(Archive& ar, T& value)
 {
-    value = static_cast<T>(ar.template ReadIntenger<T>());
+    value = static_cast<T>(ar.template ReadInteger<T>());
 }
 
 template<FloatType T, typename Archive>

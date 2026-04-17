@@ -51,8 +51,8 @@ public:
     {
     }
 
-    template<IntengerType T>
-    T ReadIntenger()
+    template<IntegerType T>
+    T ReadInteger()
     {
     }
 

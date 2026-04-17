@@ -50,8 +50,8 @@ public:
         WriteBytes(value);
     }
 
-    template<IntengerType T>
-    void WriteIntenger(T value)
+    template<IntegerType T>
+    void WriteInteger(T value)
     {
         WriteBytes(value);
     }
@@ -64,7 +64,7 @@ public:
 
     void WriteString(core::StringView value)
     {
-        WriteIntenger(value.size());
+        WriteInteger(value.size());
         if (!value.empty())
         {
             WriteBytes(value.data(), value.size());

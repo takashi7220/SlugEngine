@@ -17,7 +17,7 @@ template<typename T>
 concept BoolType = std::same_as<remove_cvref_t<T>, bool>;
 
 template<typename T>
-concept IntengerType = is_arithmetic_or_enum_v<T> && !std::same_as<remove_cvref_t<T>, bool> && !std::is_floating_point_v<remove_cvref_t<T>>;
+concept IntegerType = is_arithmetic_or_enum_v<T> && !std::same_as<remove_cvref_t<T>, bool> && !std::is_floating_point_v<remove_cvref_t<T>>;
 
 template<typename T>
 concept FloatType = std::is_floating_point_v<remove_cvref_t<T>>;

@@ -48,8 +48,8 @@ public:
     {
     }
 
-    template<IntengerType T>
-    void WriteIntenger(T value)
+    template<IntegerType T>
+    void WriteInteger(T value)
     {
     }
 
