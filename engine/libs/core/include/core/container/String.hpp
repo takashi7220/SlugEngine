@@ -43,6 +43,48 @@ inline constexpr bool is_string_v = is_string<T>::value;
 class StringUtility
 {
 public:
+    static String ToString(int32_t value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%d", value);
+        return str;
+    }
+
+    static String ToString(uint32_t value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%u", value);
+        return str;
+    }
+
+    static String ToString(int64_t value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%lld", value);
+        return str;
+    }
+
+    static String ToString(uint64_t value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%lld", value);
+        return str;
+    }
+
+    static String ToString(float value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%f", value);
+        return str;
+    }
+
+    static String ToString(double value)
+    {
+        core::String str = {};
+        Sprintfs(str, "%f", value);
+        return str;
+    }
+
     static WString GetWstring(const char* str)
     {
         size_t requireSize = 0;
