@@ -1,0 +1,5 @@
+add_subdirectory(math)
+add_subdirectory(core)
+add_subdirectory(module)
+add_subdirectory(graphics)
+add_subdirectory(engine)

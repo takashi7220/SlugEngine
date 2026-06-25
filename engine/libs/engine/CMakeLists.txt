@@ -1,0 +1,4 @@
+add_subdirectory(engine_core)
+add_subdirectory(engine_game)
+add_subdirectory(engine_graphics)
+add_subdirectory(engine_framework)

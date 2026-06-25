@@ -1,0 +1,23 @@
+set(SOURCE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH})
+set(PROJECT_NAME glm_benchmark)
+
+project(${PROJECT_NAME})
+
+set(COMPILE_TARGET_FILE_LIST "")
+foreach(SOURCE_PATH ${SOURCE_PATH_LIST})
+    file(GLOB_RECURSE SOURCE_CODE_LIST ${SOURCE_PATH}/*.cpp ${SOURCE_PATH}/*.hpp ${SOURCE_PATH}/*.h ${SOURCE_PATH}/*.c)
+    LIST(APPEND COMPILE_TARGET_FILE_LIST ${SOURCE_CODE_LIST} )
+endforeach()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${TEST_APP_OUTPUT_DIR_PATH})
+
+add_executable(${PROJECT_NAME} ${COMPILE_TARGET_FILE_LIST})
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER tests/benchmark)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH_LIST})
+target_link_libraries(${PROJECT_NAME} PUBLIC slug_benchmark glm)
+
+create_source_group(${SOURCE_ROOT_PATH})
+
+setup_options(${PROJECT_NAME})

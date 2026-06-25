@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\SlugTools.Core\SlugTools.Core.csproj" />
+    <ProjectReference Include="..\SbGeneratorLib\SbGeneratorLib.csproj" />
+  </ItemGroup>
+
+  <!-- Release ビルド専用 -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>../../_bin/SlugBuffers/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <!-- Debug ビルド専用（任意。指定しないとデフォルト bin\Debug\） -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <OutputPath>bin/Debug/</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+</Project>

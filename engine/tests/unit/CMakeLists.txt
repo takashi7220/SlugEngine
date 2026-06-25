@@ -1,0 +1,7 @@
+add_subdirectory(math)
+add_subdirectory(core)
+add_subdirectory(rhi)
+add_subdirectory(sscl)
+add_subdirectory(engine_core)
+add_subdirectory(render_core)
+add_subdirectory(render)
