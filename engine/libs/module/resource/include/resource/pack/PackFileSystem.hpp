@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource/pack/PackLocation.hpp"
+#include "resource/pack/PackAsyncIO.hpp"
 #include "core/thread/Atomic.hpp"
 
 namespace slug::resource
@@ -26,6 +27,8 @@ public:
     bool ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) const;
     bool ReadChunkSync(const ChunkLocation& location, void* dst, uint32_t dstSize) const;
 
+    IOHandle ReadChunkAsync(const ChunkLocation& location, void* dst, uint32_t dstSize, IORequestPriority priority, uint64_t cancelTag, core::TaskSystem* taskSystem, IOResult& result);
+
     uint32_t GetMountedPackCount() const;
 private:
     struct Snapshot : core::ReferenceObject
@@ -43,5 +46,6 @@ private:
 private:
     core::TAtomic<SnapshotPtr> m_snapshot;
     core::TAtomic<PackId> m_nextPackId = 0;
+    PackAsyncIO m_asyncIO;
 };
 }

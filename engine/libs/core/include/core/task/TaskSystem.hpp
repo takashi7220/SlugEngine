@@ -32,6 +32,15 @@ struct TaskHandle
         }
         p->GetFuture().wait();
     }
+
+    bool Completed() const
+    {
+        if (!p.get())
+        {
+            return true;
+        }
+        p->GetFuture().wait_for(std::chrono::seconds(0)) != core::FutureReady;
+    }
 };
 
 struct ParallelForOptions
