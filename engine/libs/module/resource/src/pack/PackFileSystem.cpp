@@ -4,7 +4,41 @@
 
 namespace slug::resource
 {
-#if 0
+namespace
+{
+
+bool IsValidMagic(const char magic[4])
+{
+    return core::StringUtility::IsEqual(magic, s_ExpectedPackMagic);
+}
+
+template<class T>
+bool ReadTable(const core::FileHandlePtr& file, uint64_t offset, uint32_t count, uint32_t recordSize, core::TVector<T>& outTable)
+{
+    if (count == 0)
+    {
+        outTable.clear();
+        return true;
+    }
+
+    if (recordSize != sizeof(T))
+    {
+        return false;
+    }
+
+    uint64_t bytes64 = count * recordSize;
+    if (bytes64 > std::numeric_limits<uint32_t>::max())
+    {
+        return false;
+    }
+
+    outTable.resize(count);
+
+    return file->ReadAt(offset, outTable.data(), static_cast<uint32_t>(bytes64));
+}
+}
+
+
 PackFileSystem::PackFileSystem()
 {
     SnapshotPtr snapshot = core::MakeReference<Snapshot>();
@@ -39,16 +73,42 @@ bool PackFileSystem::Mount(const MountDesc& desc)
     const uint64_t dataSize = pack->dataFile->GetSize();
     BuildIndex(*pack);
 
+    core::TReferencePtr<MountedPack> immutablePack = pack;
     while (true)
     {
-        SnapshotPtr oldSnapshot = m_snapshot.load(core::MemoryOrderAcquire);
+        auto oldSnapshot = m_snapshot.load(core::MemoryOrderAcquire);
+        auto newSnapshot = core::MakeReference<Snapshot>();
+        if (oldSnapshot)
+        {
+            newSnapshot->packs = oldSnapshot->packs;
+        }
+
+        newSnapshot->packs.emplace_back(std::move(immutablePack));
+        SortByPriority(newSnapshot->packs);
+
+        if (m_snapshot.compare_exchange_weak(
+            oldSnapshot,
+            newSnapshot,
+            core::MemoryOrderRelease,
+            core::MemoryOrderAcquire))
+        {
+            return true;
+        }
+
+        immutablePack = pack;
     }
     return true;
 }
 
 void PackFileSystem::Umount(PackId packId)
 {
-    for (auto& pack : m_packs)
+    auto snapshot = m_snapshot.load(std::memory_order_acquire);
+    if (!snapshot)
+    {
+        return;
+    }
+
+    for (auto& pack : snapshot->packs)
     {
         if (pack->id != packId)
         {
@@ -68,26 +128,33 @@ void PackFileSystem::Umount(PackId packId)
         break;
     }
 
-    m_packs.erase(
+    snapshot->packs.erase(
         std::remove_if(
-            m_packs.begin(),
-            m_packs.end(),
+            snapshot->packs.begin(),
+            snapshot->packs.end(),
             [](const auto& pack)
             {
                 return pack->state == MountedPackState::Unmounted;
             }),
-        m_packs.end());
+        snapshot->packs.end());
 }
 
 void PackFileSystem::UnmountAll()
 {
+    auto emptySnapshot = core::MakeReference<Snapshot>();
 
+    m_snapshot.store(emptySnapshot, core::MemoryOrderRelease);
 }
 
 bool PackFileSystem::TryFindAsset(AssetId assetId, AssetLocation& out) const
 {
-    core::ScopedLock lock(m_mutex);
-    for (const auto& pack : m_packs)
+    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    if (!snapshot)
+    {
+        return false;
+    }
+
+    for (const auto& pack : snapshot->packs)
     {
         auto it = pack->assetIndex.find(assetId);
         if (it == pack->assetIndex.end())
@@ -107,8 +174,13 @@ bool PackFileSystem::TryFindAsset(AssetId assetId, AssetLocation& out) const
 
 bool PackFileSystem::TryFindChunk(ChunkId chunkId, ChunkLocation& out) const
 {
-    core::ScopedLock lock(m_mutex);
-    for (const auto& pack : m_packs)
+    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    if (!snapshot)
+    {
+        return false;
+    }
+
+    for (const auto& pack : snapshot->packs)
     {
         auto it = pack->chunkIndex.find(chunkId);
         if (it == pack->chunkIndex.end())
@@ -130,6 +202,47 @@ bool PackFileSystem::TryFindChunk(ChunkId chunkId, ChunkLocation& out) const
     return false;
 }
 
+bool PackFileSystem::TryFindChunkInPack(PackId packId, ChunkId chunkId, ChunkLocation& out) const
+{
+    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    if (!snapshot)
+    {
+        return false;
+    }
+
+    for (const auto& pack : snapshot->packs)
+    {
+        if (!pack || pack->id != packId)
+        {
+            continue;
+        }
+
+        auto it = pack->chunkIndex.find(chunkId);
+        if (it == pack->chunkIndex.end())
+        {
+            return false;
+        }
+
+        const uint32_t index = it->second;
+        if (index >= pack->chunks.size())
+        {
+            return false;
+        }
+
+        const ChunkRecord& record = pack->chunks[index];
+        out.packId = pack->id;
+        out.priority = pack->priority;
+        out.record = &record;
+        out.file = pack->dataFile;
+        out.fileOffset = record.offset;
+        out.compressedSize = record.compressedSize;
+        out.uncompressedSize = record.uncompressedSize;
+        out.compression = record.compression;
+    }
+
+    return false;
+}
+
 bool PackFileSystem::ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) const
 {
     ChunkLocation location;
@@ -138,7 +251,17 @@ bool PackFileSystem::ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) c
         return false;
     }
 
+    return ReadChunkSync(location, dst, dstSize);
+}
+
+bool PackFileSystem::ReadChunkSync(const ChunkLocation& location, void* dst, uint32_t dstSize) const
+{
     if (!location.file || !location.file->IsValid())
+    {
+        return false;
+    }
+
+    if (dst == nullptr)
     {
         return false;
     }
@@ -151,15 +274,32 @@ bool PackFileSystem::ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) c
     return location.file->ReadAt(location.fileOffset, dst, location.compressedSize);
 }
 
+uint32_t PackFileSystem::GetMountedPackCount() const
+{
+    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    if (!snapshot)
+    {
+        return 0;
+    }
+
+    return static_cast<uint32_t>(snapshot->packs.size());
+}
+
 bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
 {
-    auto tocFile = core::FileSystem::Open({.path = path, .async = false, .randomAccess = true,});
+    auto tocFile = core::FileSystem::Open({
+             .path = path,
+             .async = false,
+             .sequential = true,
+             .randomAccess = true,
+         });
+
     if (!tocFile || !tocFile->IsValid())
     {
         return false;
     }
 
-    const uint64_t tocSize = tocFile->GetSize();
+    const uint64_t tocFileSize = tocFile->GetSize();
 
     PackTocHeader header {};
     if (!tocFile->ReadAt(0, &header, sizeof(header)))
@@ -167,39 +307,160 @@ bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
         return false;
     }
 
-    if (!ValidateHeader(header, tocSize))
+    if (!ValidateHeader(header, tocFileSize))
     {
         return false;
     }
 
     out.tocHeader = header;
-    out.assets.resize(header.assetCount);
-    if (!tocFile->ReadAt(header.assetTableOffset, out.assets.data(), header.assetCount * sizeof(AssetRecord)))
+
+    if (!ReadTable(
+        tocFile,
+        header.assetTableOffset,
+        header.assetCount,
+        header.assetRecordSize,
+        out.assets))
     {
         return false;
     }
 
-    out.chunks.resize(header.chunkCount);
-    if (!tocFile->ReadAt(header.chunkTableOffset, out.chunks.data(), header.chunkCount * sizeof(ChunkRecord)))
+    if (!ReadTable(
+        tocFile,
+        header.chunkTableOffset,
+        header.chunkCount,
+        header.chunkRecordSize,
+        out.chunks))
     {
         return false;
     }
 
-    if (header.dependencyCount > 0)
+    if (!ReadTable(
+        tocFile,
+        header.dependencyTableOffset,
+        header.dependencyCount,
+        header.dependencyRecordSize,
+        out.dependencies))
     {
-        out.dependencies.resize(header.dependencyCount);
-
-        if (!tocFile->ReadAt(header.dependencyTableOffset, out.dependencies.data(), header.dependencyCount * sizeof(DependencyRecord)))
-        {
-            return false;
-        }
+        return false;
     }
 
     if (header.stringTableSize > 0)
     {
         out.stringTable.resize(header.stringTableSize);
 
-        if (!tocFile->ReadAt(header.stringTableOffset, out.stringTable.data(), header.stringTableSize))
+        if (!tocFile->ReadAt(
+            header.stringTableOffset,
+            out.stringTable.data(),
+            header.stringTableSize))
+        {
+            return false;
+        }
+    }
+    else
+    {
+        out.stringTable.clear();
+    }
+
+    return true;
+}
+
+bool PackFileSystem::ValidateHeader(const PackTocHeader& header, uint64_t tocFileSize) const
+{
+    if (!IsValidMagic(header.magic))
+    {
+        return false;
+    }
+
+    if (header.version == 0 || header.version > s_PackFormatVersion)
+    {
+        return false;
+    }
+
+    if (header.assetRecordSize != sizeof(AssetRecord))
+    {
+        return false;
+    }
+
+    if (header.chunkRecordSize != sizeof(ChunkRecord))
+    {
+        return false;
+    }
+
+    if (header.dependencyRecordSize != sizeof(DependencyRecord))
+    {
+        return false;
+    }
+
+    if (header.alignment == 0)
+    {
+        return false;
+    }
+
+    if (header.dataFileSize == 0)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool PackFileSystem::BuildIndex(MountedPack& pack)
+{
+    pack.assetIndex.clear();
+    pack.chunkIndex.clear();
+
+    pack.assetIndex.reserve(pack.assets.size());
+    pack.chunkIndex.reserve(pack.chunks.size());
+
+    for (uint32_t i = 0; i < pack.assets.size(); ++i)
+    {
+        const AssetRecord& record = pack.assets[i];
+
+        if (record.assetId == s_InvalidAssetId)
+        {
+            return false;
+        }
+
+        if (record.metadataChunkId == s_InvalidChunkId)
+        {
+            return false;
+        }
+
+        auto [_, inserted] = pack.assetIndex.emplace(record.assetId, i);
+
+        if (!inserted)
+        {
+            return false;
+        }
+    }
+
+    for (uint32_t i = 0; i < pack.chunks.size(); ++i)
+    {
+        const ChunkRecord& record = pack.chunks[i];
+
+        if (record.chunkId == s_InvalidChunkId)
+        {
+            return false;
+        }
+
+        if (record.compressedSize == 0)
+        {
+            return false;
+        }
+
+        if (record.uncompressedSize == 0)
+        {
+            return false;
+        }
+
+        uint64_t chunkEnd = record.offset + record.compressedSize;
+        if (chunkEnd > pack.tocHeader.dataFileSize)
+        {
+            return false;
+        }
+
+        auto [_, inserted] = pack.chunkIndex.emplace(record.chunkId,i);
+        if (!inserted)
         {
             return false;
         }
@@ -208,36 +469,14 @@ bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
     return true;
 }
 
-bool PackFileSystem::ValidateHeader(const PackTocHeader& header, uint64_t tocFileSize) const
-{
-
-}
-
-void PackFileSystem::BuildIndex(MountedPack& pack)
-{
-    pack.assetIndex.reserve(pack.assets.size());
-    pack.chunkIndex.reserve(pack.chunks.size());
-
-    for (uint32_t i = 0; i < pack.assets.size(); ++i)
-    {
-        pack.assetIndex.emplace(pack.assets[i].assetId, i);
-    }
-
-    for (uint32_t i = 0; i < pack.chunks.size(); ++i)
-    {
-        pack.chunkIndex.emplace(pack.chunks[i].chunkId, i);
-    }
-}
-
-void PackFileSystem::SortByPriority()
+void PackFileSystem::SortByPriority(core::TVector<MountedPackPtr>& packs)
 {
     std::sort(
-        m_packs.begin(),
-        m_packs.end(),
+        packs.begin(),
+        packs.end(),
         [](const auto& a, const auto& b)
         {
             return a->priority > b->priority;
         });
 }
-#endif
 }

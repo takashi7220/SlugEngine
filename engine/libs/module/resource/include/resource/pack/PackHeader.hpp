@@ -10,6 +10,9 @@ using ChunkId = uint64_t;
 
 static constexpr uint32_t s_PackFormatVersion = 1;
 static constexpr PackId s_InvalidPackId = 0;
+static constexpr AssetId s_InvalidAssetId = 0;
+static constexpr ChunkId s_InvalidChunkId = 0;
+static constexpr char s_ExpectedPackMagic[4] = { 'S', 'P', 'A', 'C'};
 
 enum class PackFlags : uint32_t
 {
@@ -58,16 +61,6 @@ struct PackTocHeader
     uint8_t reserved[64];
 };
 
-struct PackDataHeader
-{
-    char magic[8];
-    uint32_t version;
-    uint32_t flags;
-    uint64_t dataSize;
-    uint8_t buildId[16];
-    uint8_t reserved[32];
-};
-
 struct AssetRecord
 {
     AssetId assetId;
@@ -96,6 +89,16 @@ struct DependencyRecord
     AssetId dependencyAssetId;
     uint16_t flags;
     uint16_t reserved;
+};
+
+struct PackDataHeader
+{
+    char magic[8];
+    uint32_t version;
+    uint32_t flags;
+    uint64_t dataSize;
+    uint8_t buildId[16];
+    uint8_t reserved[32];
 };
 
 }

@@ -9,6 +9,7 @@ namespace slug::resource
 struct ChunkLocation
 {
     PackId packId = s_InvalidPackId;
+    int32_t priority = 0;
     const ChunkRecord* record = nullptr;
     core::FileHandlePtr file;
     uint64_t fileOffset = 0;

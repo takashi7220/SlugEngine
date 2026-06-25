@@ -2,8 +2,6 @@
 
 #include "resource/pack/PackLocation.hpp"
 #include "core/thread/Atomic.hpp"
-#include "core/thread/Mutex.hpp"
-#include <optional>
 
 namespace slug::resource
 {
@@ -32,19 +30,18 @@ public:
 private:
     struct Snapshot : core::ReferenceObject
     {
-        core::TVector<MountedPackPtr> m_packs = {};
+        core::TVector<MountedPackPtr> packs = {};
     };
     using SnapshotPtr = core::TReferencePtr<Snapshot>;
 
     bool LoadToc(core::StringView path, MountedPack& out);
     bool ValidateHeader(const PackTocHeader& header, uint64_t tocFileSize) const;
 
-    void BuildIndex(MountedPack& pack);
-    void SortByPriority();
+    bool BuildIndex(MountedPack& pack);
+    void SortByPriority(core::TVector<MountedPackPtr>& packs);
 
 private:
     core::TAtomic<SnapshotPtr> m_snapshot;
     core::TAtomic<PackId> m_nextPackId = 0;
-    core::Mutex m_mutex = {};
 };
 }
