@@ -1,15 +1,6 @@
 # SlugEngine — Codex向けプロジェクト情報
 
 詳細なコーディング規約は [document/1_coding_style.md](document/1_coding_style.md)、設計思想は [document/2_project_design.md](document/2_project_design.md) を参照。以下はその要約。
-
----
-
-## 作業運用
-
-- すべてのエージェントは作業開始時に `git worktree` で自身の作業ツリーを作成し、その作業ツリー内でファイルを編集する。
-- 作業完了後は変更内容をコミットし、プルリクエストを発行する。
-- 複数の issue に対応する場合は、issue ごとに変更範囲を分け、それぞれ個別のプルリクエストを作成する。
-
 ---
 
 ## コーディング規約
