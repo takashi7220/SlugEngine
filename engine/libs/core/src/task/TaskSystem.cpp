@@ -68,33 +68,50 @@ void TaskSystem::Wait(const TaskHandle& task)
     task.Wait();
 }
 
+bool TaskSystem::Cancel(const TaskHandle& task)
+{
+    return task.Cancel();
+}
+
 TaskHandle TaskSystem::Launch(Task::Func func, std::span<const TaskHandle> prerequisites)
 {
     TReferencePtr<Task> newTask = TReferencePtr<Task>(NewObject<Task>(func));
-    int32_t pending = static_cast<int32_t>(prerequisites.size());
+    newTask->pending.store(static_cast<int32_t>(prerequisites.size()), core::MemoryOrderRelease);
+    bool shouldCancel = false;
 
     for (auto& h : prerequisites)
     {
         if (!h.p.get())
         {
-            pending--;
+            newTask->pending.fetch_sub(1, core::MemoryOrderAcqRel);
+            continue;
+        }
+
+        if (h.p->IsCanceled())
+        {
+            newTask->pending.fetch_sub(1, core::MemoryOrderAcqRel);
+            shouldCancel = true;
             continue;
         }
 
         if (h.p->IsFinished())
         {
-            pending--;
+            newTask->pending.fetch_sub(1, core::MemoryOrderAcqRel);
             continue;
         }
 
         if (!h.p->TryAddDependent(newTask))
         {
-            pending--;
+            newTask->pending.fetch_sub(1, core::MemoryOrderAcqRel);
+            shouldCancel = shouldCancel || h.p->IsCanceled();
         }
     }
 
-    newTask->pending.store(pending, core::MemoryOrderRelease);
-    if (pending <= 0)
+    if (shouldCancel || newTask->IsCanceled())
+    {
+        newTask->Cancel();
+    }
+    else if (newTask->pending.load(core::MemoryOrderAcquire) <= 0)
     {
         Enqueue(newTask);
     }
@@ -105,6 +122,12 @@ TaskHandle TaskSystem::Launch(Task::Func func, std::span<const TaskHandle> prere
 void TaskSystem::Enqueue(const TReferencePtr<Task>& t)
 {
     if (!t.get())
+    {
+        return;
+    }
+
+    bool expected = false;
+    if (!t->queued.compare_exchange_strong(expected, true, core::MemoryOrderAcqRel))
     {
         return;
     }

@@ -3,6 +3,10 @@
 #include "core/container/Vector.hpp"
 #include "core/container/String.hpp"
 
+#include <atomic>
+#include <stdexcept>
+#include <thread>
+
 using namespace slug::core;
 TEST(TaskSystem, BasicLaunch)
 {
@@ -106,6 +110,148 @@ TEST(TaskSystem, FinishedPrereqRegistration)
         {}, std::span<const TaskHandle>(&A, 1));
         // Should complete immediately (no deadlock)
         EXPECT_NO_THROW(sys.Wait(B));
+    }
+}
+
+TEST(TaskSystem, CancelQueuedTaskSkipsExecution)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> releaseBlocker { false };
+        std::atomic<bool> ran { false };
+
+        auto blocker = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        auto task = sys.Launch([&]
+        {
+            ran.store(true, std::memory_order_release);
+        });
+
+        EXPECT_TRUE(sys.Cancel(task));
+        EXPECT_TRUE(task.Canceled());
+        EXPECT_TRUE(task.Completed());
+        EXPECT_NO_THROW(sys.Wait(task));
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(blocker);
+
+        EXPECT_FALSE(ran.load(std::memory_order_acquire));
+    }
+}
+
+TEST(TaskSystem, CancelPendingTaskPropagatesToDependents)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> releaseBlocker { false };
+        std::atomic<bool> parentRan { false };
+        std::atomic<bool> childRan { false };
+
+        auto blocker = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        auto parent = sys.Launch([&]
+        {
+            parentRan.store(true, std::memory_order_release);
+        }, std::span<const TaskHandle>(&blocker, 1));
+
+        auto child = sys.Launch([&]
+        {
+            childRan.store(true, std::memory_order_release);
+        }, std::span<const TaskHandle>(&parent, 1));
+
+        EXPECT_TRUE(sys.Cancel(parent));
+        EXPECT_TRUE(parent.Canceled());
+        EXPECT_TRUE(child.Canceled());
+        EXPECT_NO_THROW(sys.Wait(parent));
+        EXPECT_NO_THROW(sys.Wait(child));
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(blocker);
+
+        EXPECT_FALSE(parentRan.load(std::memory_order_acquire));
+        EXPECT_FALSE(childRan.load(std::memory_order_acquire));
+    }
+}
+
+TEST(TaskSystem, LaunchWithCanceledPrerequisiteCancelsTask)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> releaseBlocker { false };
+        std::atomic<bool> childRan { false };
+
+        auto blocker = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        auto parent = sys.Launch([]
+        {
+        }, std::span<const TaskHandle>(&blocker, 1));
+
+        EXPECT_TRUE(sys.Cancel(parent));
+
+        auto child = sys.Launch([&]
+        {
+            childRan.store(true, std::memory_order_release);
+        }, std::span<const TaskHandle>(&parent, 1));
+
+        EXPECT_TRUE(child.Canceled());
+        EXPECT_NO_THROW(sys.Wait(child));
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(blocker);
+
+        EXPECT_FALSE(childRan.load(std::memory_order_acquire));
+    }
+}
+
+TEST(TaskSystem, CancelRunningTaskFails)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> entered { false };
+        std::atomic<bool> releaseTask { false };
+
+        auto task = sys.Launch([&]
+        {
+            entered.store(true, std::memory_order_release);
+            while (!releaseTask.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        while (!entered.load(std::memory_order_acquire))
+        {
+            std::this_thread::yield();
+        }
+
+        EXPECT_FALSE(sys.Cancel(task));
+        EXPECT_FALSE(task.Canceled());
+
+        releaseTask.store(true, std::memory_order_release);
+        EXPECT_NO_THROW(sys.Wait(task));
+        EXPECT_TRUE(task.Completed());
     }
 }
 

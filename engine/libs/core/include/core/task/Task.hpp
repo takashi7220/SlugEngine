@@ -26,15 +26,23 @@ public:
     explicit Task(Func _func);
     void Run(TaskSystem& sys);
     bool IsFinished() const noexcept;
+    bool IsCanceled() const noexcept;
+    bool Cancel();
     bool TryAddDependent(const core::TReferencePtr<Task>& task);
     core::TFuture<void> GetFuture();
 
 private:
     friend class TaskSystem;
+    void CancelDependents();
+    void ScheduleDependents(TaskSystem& sys);
+
+private:
     Func func;
     core::TPromise<void> done;
     core::TAtomic<int32_t> pending { 0 };
     core::TAtomic<bool> finished { false };
+    core::TAtomic<bool> canceled { false };
+    core::TAtomic<bool> queued { false };
     core::TAtomic<bool> started { false };
     core::Mutex m_mutex;
     core::TVector<core::TReferencePtr<Task>> dependents;

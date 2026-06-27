@@ -33,13 +33,31 @@ struct TaskHandle
         p->GetFuture().wait();
     }
 
-    bool Completed() const
+    bool Completed() const noexcept
     {
         if (!p.get())
         {
             return true;
         }
-        p->GetFuture().wait_for(std::chrono::seconds(0)) != core::FutureReady;
+        return p->IsFinished();
+    }
+
+    bool Canceled() const noexcept
+    {
+        if (!p.get())
+        {
+            return false;
+        }
+        return p->IsCanceled();
+    }
+
+    bool Cancel() const
+    {
+        if (!p.get())
+        {
+            return false;
+        }
+        return p->Cancel();
     }
 };
 
@@ -78,6 +96,7 @@ public:
     void Initialize();
     void Terminate();
     void Wait(const TaskHandle& task);
+    bool Cancel(const TaskHandle& task);
 
     TaskHandle Launch(Task::Func func, std::span<const TaskHandle> prerequisites = {});
     void Enqueue(const TReferencePtr<Task>& t);

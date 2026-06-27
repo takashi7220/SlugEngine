@@ -1,20 +1,20 @@
 #include "core/task/Task.hpp"
 #include "core/task/TaskSystem.hpp"
 
-#include <utility>
 #include <exception>
+#include <utility>
 
 namespace slug::core
 {
 
 Task::Task()
 {
-
 }
 
 Task::Task(Func f)
     : func(std::move(f))
-{}
+{
+}
 
 core::TFuture<void> Task::GetFuture()
 {
@@ -24,6 +24,11 @@ core::TFuture<void> Task::GetFuture()
 bool Task::IsFinished() const noexcept
 {
     return finished.load(core::MemoryOrderAcquire);
+}
+
+bool Task::IsCanceled() const noexcept
+{
+    return canceled.load(core::MemoryOrderAcquire);
 }
 
 bool Task::TryAddDependent(const TReferencePtr<Task>& task)
@@ -39,35 +44,29 @@ bool Task::TryAddDependent(const TReferencePtr<Task>& task)
     return true;
 }
 
-void Task::Run(TaskSystem& sys)
+bool Task::Cancel()
 {
+    if (IsCanceled())
     {
-        // スタートフラグを立てる、立てるのに失敗 = スタート済なので即時変える。
-        bool expected = false;
-        if (!started.compare_exchange_strong(expected, true, core::MemoryOrderAcqRel))
-        {
-            return;
-        }
+        return true;
     }
 
-    try
+    bool expected = false;
+    if (!started.compare_exchange_strong(expected, true, core::MemoryOrderAcqRel))
     {
-        // funcを実行
-        if (func)
-        {
-            func();
-        }
-        done.set_value();
-    }
-    catch (...)
-    {
-        done.set_exception(std::current_exception());
+        return IsCanceled();
     }
 
-    // 終了フラグをセット
+    canceled.store(true, core::MemoryOrderRelease);
+    done.set_value();
     finished.store(true, core::MemoryOrderRelease);
 
-    // 一時配列に依存タスクを設定
+    CancelDependents();
+    return true;
+}
+
+void Task::CancelDependents()
+{
     core::TVector<TReferencePtr<Task>> tmpDependents;
     {
         core::ScopedLock lk(m_mutex);
@@ -79,21 +78,69 @@ void Task::Run(TaskSystem& sys)
         dependents.clear();
     }
 
-    // 依存タスクの実行を試みる
-    for (auto& dpendent : tmpDependents)
+    for (auto& dependent : tmpDependents)
     {
-        if (!dpendent.get())
+        if (!dependent.get())
         {
             continue;
         }
 
-        // 保留数が0になった時、タスクに積む
-        const int32_t prev = dpendent->pending.fetch_sub(1, core::MemoryOrderAcqRel) - 1;
-        if (prev <= 0)
+        dependent->Cancel();
+    }
+}
+
+void Task::ScheduleDependents(TaskSystem& sys)
+{
+    core::TVector<TReferencePtr<Task>> tmpDependents;
+    {
+        core::ScopedLock lk(m_mutex);
+        tmpDependents.resize(dependents.size());
+        for (size_t i = 0; i < dependents.size(); i++)
         {
-            sys.Enqueue(dpendent);
+            tmpDependents.at(i) = dependents.at(i);
+        }
+        dependents.clear();
+    }
+
+    for (auto& dependent : tmpDependents)
+    {
+        if (!dependent.get() || dependent->IsFinished())
+        {
+            continue;
+        }
+
+        const int32_t left = dependent->pending.fetch_sub(1, core::MemoryOrderAcqRel) - 1;
+        if (left <= 0 && !dependent->IsFinished())
+        {
+            sys.Enqueue(dependent);
         }
     }
+}
+
+void Task::Run(TaskSystem& sys)
+{
+    bool expected = false;
+    if (!started.compare_exchange_strong(expected, true, core::MemoryOrderAcqRel))
+    {
+        sys.OnTaskFinished();
+        return;
+    }
+
+    try
+    {
+        if (func)
+        {
+            func();
+        }
+        done.set_value();
+    }
+    catch (...)
+    {
+        done.set_exception(std::current_exception());
+    }
+
+    finished.store(true, core::MemoryOrderRelease);
+    ScheduleDependents(sys);
 
     sys.OnTaskFinished();
 }
