@@ -3,6 +3,7 @@
 #include "core/container/Vector.hpp"
 #include "core/container/String.hpp"
 
+#include <algorithm>
 #include <atomic>
 #include <stdexcept>
 #include <thread>
@@ -316,5 +317,115 @@ TEST(TaskSystem, ParallelForStress)
         {
             ASSERT_EQ(v[i], (i * 1469598103934665603ull) ^ (i >> 3));
         }
+    }
+}
+
+TEST(TaskSystem, PriorityOrderingHighBeforeLow)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> releaseBlocker { false };
+        TVector<String> order;
+        Mutex m;
+
+        // 唯一のワーカーをブロックしている間に、Low->Normal->High->Criticalの順で積む。
+        auto blocker = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        auto low = sys.Launch([&]
+        {
+            std::scoped_lock lk(m);
+            order.push_back("Low");
+        }, {}, TaskPriority::Low);
+
+        auto normal = sys.Launch([&]
+        {
+            std::scoped_lock lk(m);
+            order.push_back("Normal");
+        }, {}, TaskPriority::Normal);
+
+        auto high = sys.Launch([&]
+        {
+            std::scoped_lock lk(m);
+            order.push_back("High");
+        }, {}, TaskPriority::High);
+
+        auto critical = sys.Launch([&]
+        {
+            std::scoped_lock lk(m);
+            order.push_back("Critical");
+        }, {}, TaskPriority::Critical);
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(critical);
+        sys.Wait(high);
+        sys.Wait(normal);
+        sys.Wait(low);
+
+        ASSERT_EQ(order.size(), 4u);
+        EXPECT_EQ(order[0], "Critical");
+        EXPECT_EQ(order[1], "High");
+        EXPECT_EQ(order[2], "Normal");
+        EXPECT_EQ(order[3], "Low");
+    }
+}
+
+TEST(TaskSystem, PriorityStarvationQuotaPromotesLowPriorityTask)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 1 });
+        std::atomic<bool> releaseBlocker { false };
+        TVector<String> order;
+        Mutex m;
+
+        auto blocker = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        // Criticalを溜め続けてもLowが飢餓しないことを確認する。
+        const size_t criticalCount = static_cast<size_t>(TaskQueueStarvationQuota) * 3;
+
+        auto low = sys.Launch([&]
+        {
+            std::scoped_lock lk(m);
+            order.push_back("Low");
+        }, {}, TaskPriority::Low);
+
+        TVector<TaskHandle> criticals;
+        criticals.reserve(criticalCount);
+        for (size_t i = 0; i < criticalCount; ++i)
+        {
+            criticals.push_back(sys.Launch([&]
+            {
+                std::scoped_lock lk(m);
+                order.push_back("Critical");
+            }, {}, TaskPriority::Critical));
+        }
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(low);
+        for (auto& h : criticals)
+        {
+            sys.Wait(h);
+        }
+
+        ASSERT_EQ(order.size(), criticalCount + 1);
+
+        // Lowはクォータ(TaskQueueStarvationQuota)分のCriticalが処理された直後に割り込み実行される。
+        const auto lowIt = std::find(order.begin(), order.end(), String("Low"));
+        ASSERT_NE(lowIt, order.end());
+        const size_t lowIndex = static_cast<size_t>(std::distance(order.begin(), lowIt));
+        EXPECT_EQ(lowIndex, static_cast<size_t>(TaskQueueStarvationQuota));
     }
 }
