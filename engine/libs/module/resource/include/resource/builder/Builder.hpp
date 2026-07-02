@@ -34,6 +34,7 @@ public:
     bool AddChunk(const BuilderChunkDesc& desc);
     bool AddAsset(const BuilderAssetDesc& desc);
 
+    bool Build(core::TVector<uint8_t>& outToc, core::TVector<uint8_t>& outData) const;
     bool Build(core::StringView tocPath, core::StringView dataPath) const;
 
 private:

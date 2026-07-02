@@ -186,7 +186,7 @@ void Builder::BuildTables(
     }
 }
 
-bool Builder::Build(core::StringView tocPath, core::StringView dataPath) const
+bool Builder::Build(core::TVector<uint8_t>& outToc, core::TVector<uint8_t>& outData) const
 {
     for (const auto& asset : m_assets)
     {
@@ -204,10 +204,9 @@ bool Builder::Build(core::StringView tocPath, core::StringView dataPath) const
         }
     }
 
-    core::TVector<uint8_t> dataBlob;
     core::TVector<ChunkRecord> chunkRecords;
     uint32_t maxAlignment = 1;
-    if (!BuildDataFile(dataBlob, chunkRecords, maxAlignment))
+    if (!BuildDataFile(outData, chunkRecords, maxAlignment))
     {
         return false;
     }
@@ -239,38 +238,50 @@ bool Builder::Build(core::StringView tocPath, core::StringView dataPath) const
     header.stringTableSize = static_cast<uint32_t>(stringTable.size());
     header.reserved0 = 0;
 
-    header.dataFileSize = dataBlob.size();
+    header.dataFileSize = outData.size();
     header.alignment = maxAlignment;
     header.compressionBlockSize = 0;
     std::memset(header.buildId, 0, sizeof(header.buildId));
     std::memset(header.reserved, 0, sizeof(header.reserved));
 
-    core::TVector<uint8_t> tocBuffer;
-    tocBuffer.resize(static_cast<size_t>(header.stringTableOffset) + header.stringTableSize, 0);
+    outToc.clear();
+    outToc.resize(static_cast<size_t>(header.stringTableOffset) + header.stringTableSize, 0);
 
     if (!assetRecords.empty())
     {
-        std::memcpy(tocBuffer.data() + header.assetTableOffset, assetRecords.data(), assetRecords.size() * sizeof(AssetRecord));
+        std::memcpy(outToc.data() + header.assetTableOffset, assetRecords.data(), assetRecords.size() * sizeof(AssetRecord));
     }
     if (!chunkRecords.empty())
     {
-        std::memcpy(tocBuffer.data() + header.chunkTableOffset, chunkRecords.data(), chunkRecords.size() * sizeof(ChunkRecord));
+        std::memcpy(outToc.data() + header.chunkTableOffset, chunkRecords.data(), chunkRecords.size() * sizeof(ChunkRecord));
     }
     if (!dependencyRecords.empty())
     {
-        std::memcpy(tocBuffer.data() + header.dependencyTableOffset, dependencyRecords.data(), dependencyRecords.size() * sizeof(DependencyRecord));
+        std::memcpy(outToc.data() + header.dependencyTableOffset, dependencyRecords.data(), dependencyRecords.size() * sizeof(DependencyRecord));
     }
     if (!stringTable.empty())
     {
-        std::memcpy(tocBuffer.data() + header.stringTableOffset, stringTable.data(), stringTable.size());
+        std::memcpy(outToc.data() + header.stringTableOffset, stringTable.data(), stringTable.size());
     }
 
     // tocHash はヘッダ自身を含めると自己参照になるため、ヘッダ以降のテーブル部分のみを対象に計算する。
     ComputeHash128(
-        core::StringView(reinterpret_cast<const char*>(tocBuffer.data() + headerSize), tocBuffer.size() - headerSize),
+        core::StringView(reinterpret_cast<const char*>(outToc.data() + headerSize), outToc.size() - headerSize),
         header.tocHash);
 
-    std::memcpy(tocBuffer.data(), &header, headerSize);
+    std::memcpy(outToc.data(), &header, headerSize);
+
+    return true;
+}
+
+bool Builder::Build(core::StringView tocPath, core::StringView dataPath) const
+{
+    core::TVector<uint8_t> tocBuffer;
+    core::TVector<uint8_t> dataBlob;
+    if (!Build(tocBuffer, dataBlob))
+    {
+        return false;
+    }
 
     if (!core::FileSystem::Write(tocPath, tocBuffer.size(), tocBuffer.data()))
     {
