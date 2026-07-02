@@ -13,6 +13,7 @@ static constexpr PackId s_InvalidPackId = 0;
 static constexpr AssetId s_InvalidAssetId = 0;
 static constexpr ChunkId s_InvalidChunkId = 0;
 static constexpr char s_ExpectedPackMagic[4] = { 'S', 'P', 'A', 'C'};
+static constexpr char s_ExpectedPackDataMagic[8] = { 'S', 'P', 'A', 'C', 'D', 'A', 'T', 'A' };
 
 enum class PackFlags : uint32_t
 {
@@ -26,7 +27,7 @@ enum class PackFlags : uint32_t
 enum class CompressionType : uint8_t
 {
     None,
-    LZ4,
+    RLE,
 };
 
 struct PackTocHeader

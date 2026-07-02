@@ -33,17 +33,16 @@ struct MemoryProfile
     size_t reserved_current = 0;
 };
 
-class MemoryUtility
+namespace MemoryUtility
 {
-public:
-    static void* Allocate(size_t size);
-    static void* Allocate(size_t size, size_t align);
-    static void Deallocate(void* p);
-    static void Deallocate(void* p, size_t align);
+    void* Allocate(size_t size);
+    void* Allocate(size_t size, size_t align);
+    void Deallocate(void* p);
+    void Deallocate(void* p, size_t align);
 
-    static void Memset(void* dst, int32_t value, size_t dstSize);
-    static void Memcpy(void* dst, size_t dstSize, const void* src, size_t srcSize);
-    static MemoryProfile GetCurrentProfile();
-    static void EnableDebugLayer();
-};
+    void Memset(void* dst, int32_t value, size_t dstSize);
+    void Memcpy(void* dst, size_t dstSize, const void* src, size_t srcSize);
+    MemoryProfile GetCurrentProfile();
+    void EnableDebugLayer();
+}
 }

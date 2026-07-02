@@ -3,6 +3,7 @@
 #include "resource/pack/PackLocation.hpp"
 #include "resource/pack/PackAsyncIO.hpp"
 #include "core/thread/Atomic.hpp"
+#include "core/thread/Mutex.hpp"
 
 namespace slug::resource
 {
@@ -43,8 +44,11 @@ private:
     bool BuildIndex(MountedPack& pack);
     void SortByPriority(core::TVector<MountedPackPtr>& packs);
 
+    SnapshotPtr GetSnapshot() const;
+
 private:
-    core::TAtomic<SnapshotPtr> m_snapshot;
+    mutable core::Mutex m_snapshotMutex;
+    SnapshotPtr m_snapshot;
     core::TAtomic<PackId> m_nextPackId = 0;
     PackAsyncIO m_asyncIO;
 };

@@ -1,6 +1,7 @@
 #include "resource/pack/PackFileSystem.hpp"
 #include "core/filesystem/FileSystem.hpp"
 #include <algorithm>
+#include <limits>
 
 namespace slug::resource
 {
@@ -41,8 +42,8 @@ bool ReadTable(const core::FileHandlePtr& file, uint64_t offset, uint32_t count,
 
 PackFileSystem::PackFileSystem()
 {
-    SnapshotPtr snapshot = core::MakeReference<Snapshot>();
-    m_snapshot.store(snapshot, core::MemoryOrderRelease);
+    core::LockGuard<core::Mutex> lock(m_snapshotMutex);
+    m_snapshot = core::MakeReference<Snapshot>();
 }
 
 PackFileSystem::~PackFileSystem()
@@ -70,85 +71,72 @@ bool PackFileSystem::Mount(const MountDesc& desc)
         return false;
     }
 
-    const uint64_t dataSize = pack->dataFile->GetSize();
-    BuildIndex(*pack);
-
-    core::TReferencePtr<MountedPack> immutablePack = pack;
-    while (true)
+    if (!BuildIndex(*pack))
     {
-        auto oldSnapshot = m_snapshot.load(core::MemoryOrderAcquire);
-        auto newSnapshot = core::MakeReference<Snapshot>();
-        if (oldSnapshot)
-        {
-            newSnapshot->packs = oldSnapshot->packs;
-        }
-
-        newSnapshot->packs.emplace_back(std::move(immutablePack));
-        SortByPriority(newSnapshot->packs);
-
-        if (m_snapshot.compare_exchange_weak(
-            oldSnapshot,
-            newSnapshot,
-            core::MemoryOrderRelease,
-            core::MemoryOrderAcquire))
-        {
-            return true;
-        }
-
-        immutablePack = pack;
+        return false;
     }
+
+    core::LockGuard<core::Mutex> lock(m_snapshotMutex);
+
+    auto newSnapshot = core::MakeReference<Snapshot>();
+    if (m_snapshot)
+    {
+        newSnapshot->packs = m_snapshot->packs;
+    }
+
+    newSnapshot->packs.emplace_back(std::move(pack));
+    SortByPriority(newSnapshot->packs);
+
+    m_snapshot = newSnapshot;
     return true;
 }
 
 void PackFileSystem::Umount(PackId packId)
 {
-    auto snapshot = m_snapshot.load(std::memory_order_acquire);
-    if (!snapshot)
+    core::LockGuard<core::Mutex> lock(m_snapshotMutex);
+    if (!m_snapshot)
     {
         return;
     }
 
-    for (auto& pack : snapshot->packs)
-    {
-        if (pack->id != packId)
-        {
-            continue;
-        }
+    auto newSnapshot = core::MakeReference<Snapshot>();
+    newSnapshot->packs.reserve(m_snapshot->packs.size());
 
-        if (pack->activeReadCount == 0 && pack->referencedResourceCount == 0)
+    for (const auto& pack : m_snapshot->packs)
+    {
+        if (pack->id == packId)
         {
-            pack->dataFile.reset();
-            pack->state = MountedPackState::Unmounted;
-        }
-        else
-        {
+            if (pack->activeReadCount == 0 && pack->referencedResourceCount == 0)
+            {
+                pack->dataFile.reset();
+                pack->state = MountedPackState::Unmounted;
+                continue;
+            }
+
             pack->state = MountedPackState::PendingUnmount;
         }
 
-        break;
+        newSnapshot->packs.push_back(pack);
     }
 
-    snapshot->packs.erase(
-        std::remove_if(
-            snapshot->packs.begin(),
-            snapshot->packs.end(),
-            [](const auto& pack)
-            {
-                return pack->state == MountedPackState::Unmounted;
-            }),
-        snapshot->packs.end());
+    m_snapshot = newSnapshot;
 }
 
 void PackFileSystem::UnmountAll()
 {
-    auto emptySnapshot = core::MakeReference<Snapshot>();
+    core::LockGuard<core::Mutex> lock(m_snapshotMutex);
+    m_snapshot = core::MakeReference<Snapshot>();
+}
 
-    m_snapshot.store(emptySnapshot, core::MemoryOrderRelease);
+PackFileSystem::SnapshotPtr PackFileSystem::GetSnapshot() const
+{
+    core::LockGuard<core::Mutex> lock(m_snapshotMutex);
+    return m_snapshot;
 }
 
 bool PackFileSystem::TryFindAsset(AssetId assetId, AssetLocation& out) const
 {
-    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    auto snapshot = GetSnapshot();
     if (!snapshot)
     {
         return false;
@@ -174,7 +162,7 @@ bool PackFileSystem::TryFindAsset(AssetId assetId, AssetLocation& out) const
 
 bool PackFileSystem::TryFindChunk(ChunkId chunkId, ChunkLocation& out) const
 {
-    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    auto snapshot = GetSnapshot();
     if (!snapshot)
     {
         return false;
@@ -204,7 +192,7 @@ bool PackFileSystem::TryFindChunk(ChunkId chunkId, ChunkLocation& out) const
 
 bool PackFileSystem::TryFindChunkInPack(PackId packId, ChunkId chunkId, ChunkLocation& out) const
 {
-    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    auto snapshot = GetSnapshot();
     if (!snapshot)
     {
         return false;
@@ -238,6 +226,7 @@ bool PackFileSystem::TryFindChunkInPack(PackId packId, ChunkId chunkId, ChunkLoc
         out.compressedSize = record.compressedSize;
         out.uncompressedSize = record.uncompressedSize;
         out.compression = record.compression;
+        return true;
     }
 
     return false;
@@ -245,13 +234,18 @@ bool PackFileSystem::TryFindChunkInPack(PackId packId, ChunkId chunkId, ChunkLoc
 
 bool PackFileSystem::ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) const
 {
+    if (dstSize > std::numeric_limits<uint32_t>::max())
+    {
+        return false;
+    }
+
     ChunkLocation location;
     if (!TryFindChunk(chunkId, location))
     {
         return false;
     }
 
-    return ReadChunkSync(location, dst, dstSize);
+    return ReadChunkSync(location, dst, static_cast<uint32_t>(dstSize));
 }
 
 bool PackFileSystem::ReadChunkSync(const ChunkLocation& location, void* dst, uint32_t dstSize) const
@@ -304,7 +298,7 @@ IOHandle PackFileSystem::ReadChunkAsync(const ChunkLocation& location, void* dst
 
 uint32_t PackFileSystem::GetMountedPackCount() const
 {
-    auto snapshot = m_snapshot.load(core::MemoryOrderAcquire);
+    auto snapshot = GetSnapshot();
     if (!snapshot)
     {
         return 0;

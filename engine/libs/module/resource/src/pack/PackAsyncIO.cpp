@@ -22,6 +22,7 @@ IOHandle PackAsyncIO::ReadAsync(const IORequest& request, core::TaskSystem* task
         {
             result.status = IOStatus::Failed;
             result.bytesRead = 0;
+            return;
         }
 
         result.status = IOStatus::Completed;
