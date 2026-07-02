@@ -7,34 +7,33 @@
 namespace slug::core
 {
 
-class EnumBitSetUtility
+namespace EnumBitSetUtility
 {
-public:
-    static bool Check(uint32_t value, uint32_t flag)
-    {
-        return (value & flag) != 0;
-    }
+inline bool Check(uint32_t value, uint32_t flag)
+{
+    return (value & flag) != 0;
+}
 
-    static bool Equal(uint32_t value, uint32_t flag)
-    {
-        return value == flag;
-    }
+inline bool Equal(uint32_t value, uint32_t flag)
+{
+    return value == flag;
+}
 
-    static bool Set(uint32_t& value, uint32_t flag)
-    {
-        value |= flag;
-    }
+inline void Set(uint32_t& value, uint32_t flag)
+{
+    value |= flag;
+}
 
-    static bool Clear(uint32_t& value, uint32_t flag)
-    {
-        value &= ~flag;
-    }
+inline void Clear(uint32_t& value, uint32_t flag)
+{
+    value &= ~flag;
+}
 
-    static void Toggle(uint32_t& value, uint32_t flag)
-    {
-        value ^= flag;
-    }
-};
+inline void Toggle(uint32_t& value, uint32_t flag)
+{
+    value ^= flag;
+}
+}
 
 template<typename T>
 concept EnumWithCount = std::is_enum_v<T> && requires 
