@@ -28,7 +28,7 @@ public:
     bool ReadChunkSync(ChunkId chunkId, void* dst, size_t dstSize) const;
     bool ReadChunkSync(const ChunkLocation& location, void* dst, uint32_t dstSize) const;
 
-    IOHandle ReadChunkAsync(const ChunkLocation& location, void* dst, uint32_t dstSize, IORequestPriority priority, uint64_t cancelTag, core::TaskSystem* taskSystem, IOResult& result);
+    PackReadHandle ReadChunkAsync(const ChunkLocation& location, void* dst, uint32_t dstSize, core::TaskSystem* taskSystem);
 
     uint32_t GetMountedPackCount() const;
 private:

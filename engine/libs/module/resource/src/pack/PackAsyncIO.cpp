@@ -2,7 +2,7 @@
 
 namespace slug::resource
 {
-IOHandle PackAsyncIO::ReadAsync(const IORequest& request, core::TaskSystem* taskSystem, IOResult& result)
+PackReadHandle PackAsyncIO::ReadAsync(const IORequest& request, core::TaskSystem* taskSystem)
 {
     if (!request.file
         || !request.file->IsValid()
@@ -11,24 +11,23 @@ IOHandle PackAsyncIO::ReadAsync(const IORequest& request, core::TaskSystem* task
         || request.dstSize < request.size
         || taskSystem == nullptr)
     {
-        return s_InvalidIOHandle;
+        return {};
     }
 
-    const IOHandle handle = m_nextHandle.fetch_add(1, core::MemoryOrderRelaxed);
-    core::TaskHandle taskHandle = taskSystem->Launch([handle, request, &result ]{
-        result.handle = handle;
+    IOResultPtr resultPtr = core::MakeReference<IOResultBox>();
 
+    core::TaskHandle taskHandle = taskSystem->Launch([request, resultPtr]{
         if (!request.file->ReadAt(request.offset, request.dst, request.dstSize))
         {
-            result.status = IOStatus::Failed;
-            result.bytesRead = 0;
+            resultPtr->result.status = IOStatus::Failed;
+            resultPtr->result.bytesRead = 0;
             return;
         }
 
-        result.status = IOStatus::Completed;
-        result.bytesRead = request.size;
+        resultPtr->result.status = IOStatus::Completed;
+        resultPtr->result.bytesRead = request.size;
     });
-    return handle;
-}
-}
 
+    return PackReadHandle{ taskHandle, resultPtr };
+}
+}

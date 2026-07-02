@@ -268,21 +268,21 @@ bool PackFileSystem::ReadChunkSync(const ChunkLocation& location, void* dst, uin
     return location.file->ReadAt(location.fileOffset, dst, location.compressedSize);
 }
 
-IOHandle PackFileSystem::ReadChunkAsync(const ChunkLocation& location, void* dst, uint32_t dstSize, IORequestPriority priority, uint64_t cancelTag, core::TaskSystem* taskSystem, IOResult& result)
+PackReadHandle PackFileSystem::ReadChunkAsync(const ChunkLocation& location, void* dst, uint32_t dstSize, core::TaskSystem* taskSystem)
 {
     if (!location.file || !location.file->IsValid())
     {
-        return s_InvalidIOHandle;
+        return {};
     }
 
     if (dst == nullptr)
     {
-        return s_InvalidIOHandle;
+        return {};
     }
 
     if (dstSize < location.compressedSize)
     {
-        return s_InvalidIOHandle;
+        return {};
     }
 
     IORequest request = {};
@@ -291,9 +291,7 @@ IOHandle PackFileSystem::ReadChunkAsync(const ChunkLocation& location, void* dst
     request.size = location.compressedSize;
     request.dst = dst;
     request.dstSize = dstSize;
-    request.priority = priority;
-    request.cancelTag = cancelTag;
-    return m_asyncIO.ReadAsync(request, taskSystem, result);
+    return m_asyncIO.ReadAsync(request, taskSystem);
 }
 
 uint32_t PackFileSystem::GetMountedPackCount() const
