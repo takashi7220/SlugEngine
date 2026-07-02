@@ -64,6 +64,7 @@ struct TaskHandle
 struct ParallelForOptions
 {
     size_t grain = 0;
+    TaskPriority priority = TaskPriority::Normal;
 
     ParallelForOptions()
     {
@@ -98,7 +99,8 @@ public:
     void Wait(const TaskHandle& task);
     bool Cancel(const TaskHandle& task);
 
-    TaskHandle Launch(Task::Func func, std::span<const TaskHandle> prerequisites = {});
+    TaskHandle Launch(Task::Func func, std::span<const TaskHandle> prerequisites = {},
+        TaskPriority priority = TaskPriority::Normal);
     void Enqueue(const TReferencePtr<Task>& t);
     void OnTaskFinished() noexcept;
 
@@ -118,7 +120,7 @@ public:
         const size_t numChunks = (count + grain - 1) / grain;
 
         // 実行完了待ちのタスクを生成
-        TReferencePtr<Task> joinTask(NewObject<Task>());
+        TReferencePtr<Task> joinTask(NewObject<Task>(options.priority));
         joinTask->pending.store(static_cast<int32_t>(numChunks), core::MemoryOrderRelaxed);
         core::TFuture<void> future = joinTask->done.get_future();
 
@@ -134,7 +136,7 @@ public:
                  {
                      body(i);
                  }
-            });
+            }, options.priority);
 
             t->TryAddDependent(joinTask);
             t->pending.store(0, core::MemoryOrderRelaxed);

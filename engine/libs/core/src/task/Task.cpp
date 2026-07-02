@@ -7,18 +7,25 @@
 namespace slug::core
 {
 
-Task::Task()
+Task::Task(TaskPriority _priority)
+    : priority(_priority)
 {
 }
 
-Task::Task(Func f)
+Task::Task(Func f, TaskPriority _priority)
     : func(std::move(f))
+    , priority(_priority)
 {
 }
 
 core::TFuture<void> Task::GetFuture()
 {
     return done.get_future();
+}
+
+TaskPriority Task::GetPriority() const noexcept
+{
+    return priority;
 }
 
 bool Task::IsFinished() const noexcept

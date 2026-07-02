@@ -73,9 +73,9 @@ bool TaskSystem::Cancel(const TaskHandle& task)
     return task.Cancel();
 }
 
-TaskHandle TaskSystem::Launch(Task::Func func, std::span<const TaskHandle> prerequisites)
+TaskHandle TaskSystem::Launch(Task::Func func, std::span<const TaskHandle> prerequisites, TaskPriority priority)
 {
-    TReferencePtr<Task> newTask = TReferencePtr<Task>(NewObject<Task>(func));
+    TReferencePtr<Task> newTask = TReferencePtr<Task>(NewObject<Task>(func, priority));
     newTask->pending.store(static_cast<int32_t>(prerequisites.size()), core::MemoryOrderRelease);
     bool shouldCancel = false;
 
