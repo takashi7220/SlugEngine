@@ -1,4 +1,4 @@
-# SlugEngine — Codex向けプロジェクト情報
+# SlugEngine — Claude Code向けプロジェクト情報
 
 詳細なコーディング規約は [document/1_coding_style.md](document/1_coding_style.md)、設計思想は [document/2_project_design.md](document/2_project_design.md) を参照。以下はその要約。
 ---
