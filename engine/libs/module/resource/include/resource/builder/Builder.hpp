@@ -27,7 +27,6 @@ struct BuilderAssetDesc
     core::TVector<AssetId> dependencies;
 };
 
-// PackFileSystem がマウントできる TOC ファイルとデータファイルの組を書き出すオフラインビルダー。
 class Builder
 {
 public:

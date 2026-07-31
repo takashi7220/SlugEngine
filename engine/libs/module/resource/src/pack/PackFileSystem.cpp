@@ -307,13 +307,7 @@ uint32_t PackFileSystem::GetMountedPackCount() const
 
 bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
 {
-    auto tocFile = core::FileSystem::Open({
-             .path = path,
-             .async = false,
-             .sequential = true,
-             .randomAccess = true,
-         });
-
+    core::FileHandlePtr tocFile = core::FileSystem::Open({.path = path, .async = false, .sequential = true, .randomAccess = true,});
     if (!tocFile || !tocFile->IsValid())
     {
         return false;
@@ -334,32 +328,17 @@ bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
 
     out.tocHeader = header;
 
-    if (!ReadTable(
-        tocFile,
-        header.assetTableOffset,
-        header.assetCount,
-        header.assetRecordSize,
-        out.assets))
+    if (!ReadTable(tocFile, header.assetTableOffset, header.assetCount, header.assetRecordSize, out.assets))
     {
         return false;
     }
 
-    if (!ReadTable(
-        tocFile,
-        header.chunkTableOffset,
-        header.chunkCount,
-        header.chunkRecordSize,
-        out.chunks))
+    if (!ReadTable(tocFile, header.chunkTableOffset, header.chunkCount, header.chunkRecordSize, out.chunks))
     {
         return false;
     }
 
-    if (!ReadTable(
-        tocFile,
-        header.dependencyTableOffset,
-        header.dependencyCount,
-        header.dependencyRecordSize,
-        out.dependencies))
+    if (!ReadTable(tocFile, header.dependencyTableOffset, header.dependencyCount, header.dependencyRecordSize, out.dependencies))
     {
         return false;
     }
@@ -368,10 +347,7 @@ bool PackFileSystem::LoadToc(core::StringView path, MountedPack& out)
     {
         out.stringTable.resize(header.stringTableSize);
 
-        if (!tocFile->ReadAt(
-            header.stringTableOffset,
-            out.stringTable.data(),
-            header.stringTableSize))
+        if (!tocFile->ReadAt(header.stringTableOffset, out.stringTable.data(), header.stringTableSize))
         {
             return false;
         }
@@ -491,12 +467,8 @@ bool PackFileSystem::BuildIndex(MountedPack& pack)
 
 void PackFileSystem::SortByPriority(core::TVector<MountedPackPtr>& packs)
 {
-    std::sort(
-        packs.begin(),
-        packs.end(),
-        [](const auto& a, const auto& b)
-        {
-            return a->priority > b->priority;
-        });
+    std::sort(packs.begin(), packs.end(), [](const auto& a, const auto& b) {
+        return a->priority > b->priority;
+    });
 }
 }
