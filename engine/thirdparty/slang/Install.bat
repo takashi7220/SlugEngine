@@ -52,9 +52,13 @@ for %%C in (%SLUG_THIRDPARTY_BUILD_CONFIGURATIONS%) do (
           -DSLANG_ENABLE_SPIRV_TOOLS_MIMALLOC=OFF ^
           -DSLANG_ENABLE_DXIL=ON ^
           -DSLANG_LIB_TYPE=SHARED
+    if errorlevel 1 exit /b 1
 
     cmake --build "!BUILD_DIR!" --config %%C --parallel
+    if errorlevel 1 exit /b 1
+
     cmake --install "!BUILD_DIR!" --config %%C
+    if errorlevel 1 exit /b 1
 )
 
 endlocal
