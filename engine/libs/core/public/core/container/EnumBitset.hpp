@@ -42,7 +42,7 @@ concept EnumWithCount = std::is_enum_v<T> && requires
 };
 
 template<EnumWithCount T>
-class TEnumBitset 
+class TEnumBitset
 {
 public:
     using BitsetType = TBitset<static_cast<size_t>(T::Count)>;

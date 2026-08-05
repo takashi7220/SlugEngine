@@ -1,6 +1,6 @@
 set(SOURCE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH}/public ${SOURCE_ROOT_PATH}/private)
-set(PROJECT_NAME shader)
+set(PROJECT_NAME geometry)
 
 project(${PROJECT_NAME})
 
@@ -15,7 +15,7 @@ add_library(${PROJECT_NAME} STATIC ${COMPILE_TARGET_FILE_LIST})
 target_include_directories(${PROJECT_NAME} PUBLIC ${SOURCE_ROOT_PATH}/public)
 target_include_directories(${PROJECT_NAME} PRIVATE ${SOURCE_ROOT_PATH}/private)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER libs/graphics/)
+set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER libs/module)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC core)
 
