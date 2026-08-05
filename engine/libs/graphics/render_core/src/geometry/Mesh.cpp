@@ -139,7 +139,7 @@ rhi::BufferPtr Mesh::CreateBuffer(RenderService& service, size_t size, bool useV
     desc.debugName = name;
     desc.initialState = rhi::ResourceStates::CopyDest;
 
-    uint64_t key = core::HashUtility::ConvertStringToHash64(name);
+    uint64_t key = core::HashUtility::CreateHash64(name);
 
     rhi::BufferPtr buffer = nullptr;
     if (service.GetResourcePool().GetBufferPool()->Get(key, buffer))

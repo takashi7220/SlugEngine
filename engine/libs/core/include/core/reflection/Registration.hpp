@@ -14,7 +14,7 @@ public:
     template<typename T>
     Type& RegisterType(core::StringView name)
     {
-        TypeId id = core::HashUtility::ConvertStringToHash64(name);
+        TypeId id = core::HashUtility::CreateHash64(name);
         auto itr = m_types.find(id);
         if (itr != m_types.end())
         {
@@ -46,7 +46,7 @@ public:
 
     const Type* FindType(const char* name) const
     {
-        return FindType(core::HashUtility::ConvertStringToHash64(name));
+        return FindType(core::HashUtility::CreateHash64(name));
     }
 
     void Clear()

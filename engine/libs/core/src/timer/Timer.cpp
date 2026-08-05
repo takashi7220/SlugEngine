@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-namespace
+namespace timer_internal
 {
 using Clock = std::chrono::steady_clock;
 
@@ -46,7 +46,7 @@ Timer::~Timer() = default;
 
 void Timer::Reset()
 {
-    const int64_t now = GetNowNanoseconds();
+    const int64_t now = timer_internal::GetNowNanoseconds();
 
     m_startNanoseconds = now;
     m_lastNanoseconds = now;
@@ -54,61 +54,82 @@ void Timer::Reset()
 
 double Timer::ElapsedSeconds() const
 {
-    return NanosecondsToSeconds(GetNowNanoseconds() - m_startNanoseconds);
+    return timer_internal::NanosecondsToSeconds(timer_internal::GetNowNanoseconds() - m_startNanoseconds);
 }
 
 double Timer::ElapsedMilliseconds() const
 {
-    return NanosecondsToMilliseconds(GetNowNanoseconds() - m_startNanoseconds);
+    return timer_internal::NanosecondsToMilliseconds(timer_internal::GetNowNanoseconds() - m_startNanoseconds);
 }
 
 double Timer::ElapsedMicroseconds() const
 {
-    return NanosecondsToMicroseconds(GetNowNanoseconds() - m_startNanoseconds);
+    return timer_internal::NanosecondsToMicroseconds(timer_internal::GetNowNanoseconds() - m_startNanoseconds);
 }
 
 double Timer::ElapsedNanoseconds() const
 {
-    return NanosecondsToNanoseconds(GetNowNanoseconds() - m_startNanoseconds);
+    return timer_internal::NanosecondsToNanoseconds(timer_internal::GetNowNanoseconds() - m_startNanoseconds);
 }
 
 double Timer::LapSeconds()
 {
-    const int64_t now = GetNowNanoseconds();
+    const int64_t now = timer_internal::GetNowNanoseconds();
     const int64_t elapsed = now - m_lastNanoseconds;
 
     m_lastNanoseconds = now;
 
-    return NanosecondsToSeconds(elapsed);
+    return timer_internal::NanosecondsToSeconds(elapsed);
 }
 
 double Timer::LapMilliseconds()
 {
-    const int64_t now = GetNowNanoseconds();
+    const int64_t now = timer_internal::GetNowNanoseconds();
     const int64_t elapsed = now - m_lastNanoseconds;
 
     m_lastNanoseconds = now;
 
-    return NanosecondsToMilliseconds(elapsed);
+    return timer_internal::NanosecondsToMilliseconds(elapsed);
 }
 
 double Timer::LapMicroseconds()
 {
-    const int64_t now = GetNowNanoseconds();
+    const int64_t now = timer_internal::GetNowNanoseconds();
     const int64_t elapsed = now - m_lastNanoseconds;
 
     m_lastNanoseconds = now;
 
-    return NanosecondsToMicroseconds(elapsed);
+    return timer_internal::NanosecondsToMicroseconds(elapsed);
 }
 
 double Timer::LapNanoseconds()
 {
-    const int64_t now = GetNowNanoseconds();
+    const int64_t now = timer_internal::GetNowNanoseconds();
     const int64_t elapsed = now - m_lastNanoseconds;
 
     m_lastNanoseconds = now;
 
-    return NanosecondsToNanoseconds(elapsed);
+    return timer_internal::NanosecondsToNanoseconds(elapsed);
 }
+
+double Timer::GetNowSeconds()
+{
+    return timer_internal::NanosecondsToSeconds(timer_internal::GetNowNanoseconds());
+}
+
+double Timer::GetNowMiliseconds()
+{
+    return timer_internal::NanosecondsToMilliseconds(timer_internal::GetNowNanoseconds());
+}
+
+double Timer::GetNowMicroseconds()
+{
+    return timer_internal::NanosecondsToMicroseconds(timer_internal::GetNowNanoseconds());
+}
+
+double Timer::GetNowNanoseconds()
+{
+    return timer_internal::NanosecondsToNanoseconds(timer_internal::GetNowNanoseconds());
+}
+
 }

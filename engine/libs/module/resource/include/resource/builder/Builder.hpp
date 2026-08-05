@@ -8,15 +8,6 @@
 namespace slug::resource
 {
 
-struct BuilderChunkDesc
-{
-    ChunkId chunkId = s_InvalidChunkId;
-    const void* data = nullptr;
-    uint32_t size = 0;
-    CompressionType compression = CompressionType::None;
-    uint32_t alignment = 1;
-};
-
 struct BuilderAssetDesc
 {
     AssetId assetId = s_InvalidAssetId;
@@ -27,11 +18,20 @@ struct BuilderAssetDesc
     core::TVector<AssetId> dependencies;
 };
 
+struct BuilderChunkDesc
+{
+    ChunkId chunkId = s_InvalidChunkId;
+    const void* data = nullptr;
+    uint32_t size = 0;
+    CompressionType compression = CompressionType::None;
+    uint32_t alignment = 1;
+};
+
 class Builder
 {
 public:
-    bool AddChunk(const BuilderChunkDesc& desc);
     bool AddAsset(const BuilderAssetDesc& desc);
+    bool AddChunk(const BuilderChunkDesc& desc);
 
     bool Build(core::TVector<uint8_t>& outToc, core::TVector<uint8_t>& outData) const;
     bool Build(core::StringView tocPath, core::StringView dataPath) const;

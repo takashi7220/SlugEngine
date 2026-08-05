@@ -84,7 +84,7 @@ rhi::TexturePtr Texture::CreateTexture(RenderService& service, const TextureInfo
     desc.renderTarget = textureInfo.useRenderTarget;
 
     TexturePoolPtr& resourcePool = service.GetResourcePool().GetTexturePool();
-    uint64_t key = core::HashUtility::ConvertStringToHash64(textureInfo.name);
+    uint64_t key = core::HashUtility::CreateHash64(textureInfo.name);
     rhi::TexturePtr texture = nullptr;
     if (resourcePool->Get(key, texture))
     {

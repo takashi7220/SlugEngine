@@ -152,7 +152,7 @@ const rhi::BindingSetPtr& ShaderParameter::GetBindingSet() const
 
 void ShaderParameter::UpdateBindingResource(RenderService& service, const ConstantParameter& constantParameter)
 {
-    uint64_t key = core::HashUtility::ConvertStringToHash64(this->GetName());
+    uint64_t key = core::HashUtility::CreateHash64(this->GetName());
     m_constantBuffer = nullptr;
     service.GetResourcePool().GetBufferPool()->Get(key, m_constantBuffer);
 

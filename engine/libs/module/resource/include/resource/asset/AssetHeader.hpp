@@ -14,7 +14,7 @@ struct AssetHeader
 {
     AssetId assetId = s_InvalidAssetId;
     AssetTypeId typeId = 0;
-    uint32_t version = 0;
+    uint16_t version = 0;
 };
 
 class AssetHeaderUtility

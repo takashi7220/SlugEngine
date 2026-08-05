@@ -46,7 +46,10 @@ struct Vector3
 
     bool operator==(const Vector3& v0) const
     {
-        return x == v0.x && y == v0.y && z == v0.z;
+        bool nearX = math::TEqual(x, v0.x);
+        bool nearY = math::TEqual(y, v0.y);
+        bool nearZ = math::TEqual(z, v0.z);
+        return nearX && nearY && nearZ;
     }
 
     Vector3 operator+(const Vector3& v0) const

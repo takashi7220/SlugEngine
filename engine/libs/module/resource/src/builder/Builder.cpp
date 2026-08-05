@@ -13,7 +13,7 @@ namespace
 
 void ComputeHash128(core::StringView view, uint8_t out[16])
 {
-    const uint64_t first = core::HashUtility::ConvertStringToHash64(view);
+    const uint64_t first = core::HashUtility::CreateHash64(view);
 
     size_t seed = static_cast<size_t>(first);
     core::HashUtility::HashCombine(seed, view.size());

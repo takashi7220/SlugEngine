@@ -44,10 +44,10 @@ TEST(StringUtilityTest, ToStringConvertsPrimitiveValues)
     EXPECT_EQ(StringUtility::ToString(1.5f), "1.500000");
 }
 
-TEST(HashUtilityTest, ConvertStringToHash64UsesFnv1A)
+TEST(HashUtilityTest, CreateHash64UsesFnv1A)
 {
-    EXPECT_EQ(HashUtility::ConvertStringToHash64(""), 14695981039346656037ull);
-    EXPECT_EQ(HashUtility::ConvertStringToHash64("slug"), 7696373693962291038ull);
+    EXPECT_EQ(HashUtility::CreateHash64(""), 14695981039346656037ull);
+    EXPECT_EQ(HashUtility::CreateHash64("slug"), 7696373693962291038ull);
 }
 
 TEST(HashUtilityTest, HashCombineChangesSeedAndIsDeterministic)

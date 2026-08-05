@@ -8,7 +8,7 @@ namespace slug::resource
 
 AssetTypeId AssetHeaderUtility::MakeTypeId(core::StringView typeName)
 {
-    return core::HashUtility::ConvertStringToHash64(typeName);
+    return core::HashUtility::CreateHash64(typeName);
 }
 
 bool AssetHeaderUtility::Serialize(

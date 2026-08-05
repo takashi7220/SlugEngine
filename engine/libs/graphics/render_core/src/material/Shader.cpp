@@ -183,7 +183,7 @@ bool Shader::RegistShader(render_core::RenderService& service, const SetupParam&
     for (auto& item : param.items)
     {
         core::String shaderName = core::StringUtility::Snprintf("%s|%s", param.shaderName.data(), VariationsToString(item.variations).c_str());
-        uint64_t key = core::HashUtility::ConvertStringToHash64(shaderName.c_str());
+        uint64_t key = core::HashUtility::CreateHash64(shaderName.c_str());
 
         rhi::ShaderPtr shader = nullptr;
         if (!shaderPool->Get(key, shader))

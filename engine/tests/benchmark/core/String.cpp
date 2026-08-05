@@ -50,7 +50,7 @@ SLUG_BENCHMARK_TEST(CoreString, HashUtility)
 
     for (auto _ : state)
     {
-        result = slug::core::HashUtility::ConvertStringToHash64(text);
+        result = slug::core::HashUtility::CreateHash64(text);
 
         benchmark::DoNotOptimize(result);
         benchmark::ClobberMemory();

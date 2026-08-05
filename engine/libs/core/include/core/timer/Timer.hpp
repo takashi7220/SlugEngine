@@ -29,6 +29,11 @@ public:
     double LapMicroseconds();
     double LapNanoseconds();
 
+    static double GetNowSeconds();
+    static double GetNowMiliseconds();
+    static double GetNowMicroseconds();
+    static double GetNowNanoseconds();
+
 private:
     int64_t m_startNanoseconds = 0;
     int64_t m_lastNanoseconds = 0;
