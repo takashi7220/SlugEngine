@@ -1,6 +1,5 @@
 set(SOURCE_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH}/include ${SOURCE_ROOT_PATH}/src)
-set(INCLUDE_PATH_LIST ${SOURCE_ROOT_PATH}/include/)
+set(SOURCE_PATH_LIST ${SOURCE_ROOT_PATH}/public ${SOURCE_ROOT_PATH}/private)
 set(PROJECT_NAME shaderc)
 
 project(${PROJECT_NAME})
@@ -13,7 +12,9 @@ endforeach()
 
 add_library(${PROJECT_NAME} STATIC ${COMPILE_TARGET_FILE_LIST})
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_PATH_LIST})
+target_include_directories(${PROJECT_NAME} PUBLIC ${SOURCE_ROOT_PATH}/public)
+target_include_directories(${PROJECT_NAME} PRIVATE ${SOURCE_ROOT_PATH}/private)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER libs/module)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC core)
