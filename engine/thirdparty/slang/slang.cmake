@@ -1,15 +1,20 @@
-set(SLANG_ROOT "${CMAKE_CURRENT_LIST_DIR}/.tmp/")
+set(SLANG_ROOT "${CMAKE_CURRENT_LIST_DIR}/.tmp/install")
+set(SLUNG_INCLUDE_DIR "${SLANG_ROOT}/Release/include")
+set(SLUNG_DEBUG_LIB_DIR "${SLANG_ROOT}/Debug/lib")
+set(SLUNG_DEBUG_BIN_DIR "${SLANG_ROOT}/Debug/bin")
+set(SLUNG_RELEASE_LIB_DIR "${SLANG_ROOT}/Release/lib")
+set(SLUNG_RELEASE_BIN_DIR "${SLANG_ROOT}/Release/bin")
 
 add_library(slang SHARED IMPORTED GLOBAL)
 set_target_properties(slang PROPERTIES 
-    INTERFACE_INCLUDE_DIRECTORIES "${SLANG_ROOT}/include"
+    INTERFACE_INCLUDE_DIRECTORIES "${SLUNG_INCLUDE_DIR}"
     IMPORTED_CONFIGURATIONS "Debug;Release"
 
-    IMPORTED_IMPLIB_DEBUG "${SLANG_ROOT}/lib/Debug/slang.lib"
-    IMPORTED_LOCATION_DEBUG "${SLANG_ROOT}/bin/Debug/slang.dll"
+    IMPORTED_IMPLIB_DEBUG "${SLUNG_DEBUG_LIB_DIR}/slang.lib"
+    IMPORTED_LOCATION_DEBUG "${SLUNG_DEBUG_BIN_DIR}/slang.dll"
 
-    IMPORTED_IMPLIB_RELEASE "${SLANG_ROOT}/lib/Release/slang.lib"
-    IMPORTED_LOCATION_RELEASE "${SLANG_ROOT}/bin/Release/slang.dll"
+    IMPORTED_IMPLIB_RELEASE "${SLUNG_RELEASE_LIB_DIR}/slang.lib"
+    IMPORTED_LOCATION_RELEASE "${SLUNG_RELEASE_BIN_DIR}/slang.dll"
 
     MAP_IMPORTED_CONFIG_DEVELOP Debug
     MAP_IMPORTED_CONFIG_PROFILE Release
@@ -21,14 +26,14 @@ set_target_properties(slang PROPERTIES
 
 add_library(slang_compiler SHARED IMPORTED GLOBAL)
 set_target_properties(slang_compiler PROPERTIES 
-    INTERFACE_INCLUDE_DIRECTORIES "${SLANG_ROOT}/include"
+    INTERFACE_INCLUDE_DIRECTORIES "${SLUNG_INCLUDE_DIR}"
     IMPORTED_CONFIGURATIONS "Debug;Release"
 
-    IMPORTED_IMPLIB_DEBUG "${SLANG_ROOT}/lib/Debug/slang-compiler.lib"
-    IMPORTED_LOCATION_DEBUG "${SLANG_ROOT}/bin/Debug/slang-compiler.dll"
+    IMPORTED_IMPLIB_DEBUG "${SLUNG_DEBUG_LIB_DIR}/slang-compiler.lib"
+    IMPORTED_LOCATION_DEBUG "${SLUNG_DEBUG_BIN_DIR}/slang-compiler.dll"
 
-    IMPORTED_IMPLIB_RELEASE "${SLANG_ROOT}/lib/Release/slang-compiler.lib"
-    IMPORTED_LOCATION_RELEASE "${SLANG_ROOT}/bin/Release/slang-compiler.dll"
+    IMPORTED_IMPLIB_RELEASE "${SLUNG_RELEASE_LIB_DIR}/slang-compiler.lib"
+    IMPORTED_LOCATION_RELEASE "${SLUNG_RELEASE_BIN_DIR}/slang-compiler.dll"
 
     MAP_IMPORTED_CONFIG_DEVELOP Release
     MAP_IMPORTED_CONFIG_PROFILE Release
@@ -43,11 +48,11 @@ set_target_properties(slang_rt PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES "${SLANG_ROOT}/include"
     IMPORTED_CONFIGURATIONS "Debug;Release"
 
-    IMPORTED_IMPLIB_DEBUG "${SLANG_ROOT}/lib/Debug/slang-rt.lib"
-    IMPORTED_LOCATION_DEBUG "${SLANG_ROOT}/bin/Debug/slang-rt.dll"
+    IMPORTED_IMPLIB_DEBUG "${SLUNG_DEBUG_LIB_DIR}/slang-rt.lib"
+    IMPORTED_LOCATION_DEBUG "${SLUNG_DEBUG_BIN_DIR}/slang-rt.dll"
 
-    IMPORTED_IMPLIB_RELEASE "${SLANG_ROOT}/lib/Release/slang-rt.lib"
-    IMPORTED_LOCATION_RELEASE "${SLANG_ROOT}/bin/Release/slang-rt.dll"
+    IMPORTED_IMPLIB_RELEASE "${SLUNG_RELEASE_LIB_DIR}/slang-rt.lib"
+    IMPORTED_LOCATION_RELEASE "${SLUNG_RELEASE_BIN_DIR}/slang-rt.dll"
 
     MAP_IMPORTED_CONFIG_DEVELOP Release
     MAP_IMPORTED_CONFIG_PROFILE Release

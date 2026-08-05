@@ -5,24 +5,17 @@ setlocal enabledelayedexpansion
 set CURRENT_DIR=%~dp0
 set TMP_DIR=%CURRENT_DIR%.tmp/
 set SOURCE_DIR=%CURRENT_DIR%source
-set CACHE_FILE=%TMP_DIR%/cache.txt
 
-set GENERATOR=Visual Studio 18 2026
-set ARCH=x64
-set TOOL_CHAIN=v145
+call %CURRENT_DIR%../SetupThirdpartyBuild.bat
 
-set BUILD_ROOT=%TMP_DIR%_workspace/build/
-set INSTALL_ROOT=%TMP_DIR%_workspace/install/
+set BUILD_ROOT=%TMP_DIR%/build/
+set INSTALL_ROOT=%TMP_DIR%/install/
 
 set LIB_TYPE=SHARED
-set CONFIGURATIONS=Debug Release
 
-if exist %CACHE_FILE% (
-    echo slang installed
-    exit /b 0
-)
+echo "========= Build And Install Slang ========"
 
-for %%C in (%CONFIGURATIONS%) do (
+for %%C in (%SLUG_THIRDPARTY_BUILD_CONFIGURATIONS%) do (
     if /I "%%C"=="Debug" (
         set MSVC_RUNTIME=MultiThreadedDebug
     ) else (
@@ -34,9 +27,9 @@ for %%C in (%CONFIGURATIONS%) do (
 
     cmake -S "%SOURCE_DIR%" ^
           -B "!BUILD_DIR!" ^
-          -G "%GENERATOR%" ^
-          -A %ARCH% ^
-          -T %TOOL_CHAIN% ^
+          -G "%SLUG_THIRDPARTY_BUILD_GENERATOR%" ^
+          -A %SLUG_THIRDPARTY_BUILD_ARCH% ^
+          -T %SLUG_THIRDPARTY_BUILD_TOOL_CHAIN% ^
           -DCMAKE_C_FLAGS="/utf-8" ^
           -DCMAKE_CXX_FLAGS="/utf-8" ^
           -DCMAKE_INSTALL_PREFIX="!INSTALL_DIR!" ^
@@ -63,12 +56,6 @@ for %%C in (%CONFIGURATIONS%) do (
     cmake --build "!BUILD_DIR!" --config %%C --parallel
     cmake --install "!BUILD_DIR!" --config %%C
 )
-
-robocopy %INSTALL_ROOT%Debug/lib %TMP_DIR%lib/Debug  /E /R:1 /W:1
-robocopy %INSTALL_ROOT%Release/lib %TMP_DIR%lib/Release  /E /R:1 /W:1
-robocopy %INSTALL_ROOT%Release/include %TMP_DIR%include/slang  /E /R:1 /W:1
-robocopy %INSTALL_ROOT%Release/bin %TMP_DIR%bin  /E /R:1 /W:1
-echo slang installed > %CACHE_FILE%
 
 endlocal
 popd
