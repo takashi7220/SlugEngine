@@ -1,5 +1,3 @@
-#pragma once
-
 #if false
 #define SLUG_ENABLE_CPP14 __cplusplus >= 201402L
 #define SLUG_ENABLE_CPP17 __cplusplus >= 201703L

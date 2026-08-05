@@ -26,7 +26,7 @@ public:
     ~Window();
 
     String GetTitle() const override;
-    void SetTitle(StringView title);
+    void SetTitle(StringView title) override;
 
     core::WindowRect ClientRect() const override;
     core::WindowRect WindowRect() const override;

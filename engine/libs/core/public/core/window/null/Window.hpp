@@ -33,7 +33,7 @@ public:
         return m_desc.title.c_str();
     }
 
-    void SetTitle(StringView title)
+    void SetTitle(StringView title) override
     {
         m_desc.title = title.data();
     }

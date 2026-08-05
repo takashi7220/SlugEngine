@@ -38,6 +38,15 @@ struct alignas(16) Vector4
         : value(v0.value)
     {}
 
+    Vector4& operator=(const Vector4& v0)
+    {
+        if (this != &v0)
+        {
+            value = v0.value;
+        }
+        return *this;
+    }
+
     Vector4(const Vector3& v0)
         : x(v0.x), y(v0.y), z(v0.z), w(1.0f)
     {

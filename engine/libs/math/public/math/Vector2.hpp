@@ -28,6 +28,16 @@ struct Vector2
         y = v0.y;
     }
 
+    Vector2& operator=(const Vector2& v0)
+    {
+        if (this != &v0)
+        {
+            x = v0.x;
+            y = v0.y;
+        }
+        return *this;
+    }
+
     static Vector2 Zero()
     {
         return Vector2(0, 0);

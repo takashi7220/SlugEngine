@@ -48,6 +48,15 @@ struct alignas(16) Matrix4x4
         : value(other.value)
     {}
 
+    Matrix4x4& operator=(const Matrix4x4& other)
+    {
+        if (this != &other)
+        {
+            value = other.value;
+        }
+        return *this;
+    }
+
     ValueType& at(size_t row, size_t col)
     {
         return m[col * 4 + row];

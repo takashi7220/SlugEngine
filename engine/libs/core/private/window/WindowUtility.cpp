@@ -1,5 +1,3 @@
-#pragma once
-
 #include "core/window/WindowUtility.hpp"
 #include "core/window/null/WindowService.hpp"
 

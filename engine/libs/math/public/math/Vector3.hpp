@@ -27,6 +27,17 @@ struct Vector3
     {
     }
 
+    Vector3& operator=(const Vector3& v0)
+    {
+        if (this != &v0)
+        {
+            x = v0.x;
+            y = v0.y;
+            z = v0.z;
+        }
+        return *this;
+    }
+
     Vector3(const SimdVector& v)
     {
         x = simd_vector::GetX(v);

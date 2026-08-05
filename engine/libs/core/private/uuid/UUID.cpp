@@ -1,5 +1,3 @@
-#pragma once
-
 #include "core/uuid/UUID.hpp"
 #include <random>
 

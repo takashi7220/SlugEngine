@@ -48,6 +48,18 @@ struct Matrix2x2
         }
     }
 
+    Matrix2x2& operator=(const Matrix2x2& m0)
+    {
+        if (this != &m0)
+        {
+            for (size_t i = 0; i < 4; i++)
+            {
+                this->m[i] = m0.m[i];
+            }
+        }
+        return *this;
+    }
+
     // 列優先アクセス: (row, col) -> m[col*2 + row]
     ValueType& at(size_t row, size_t col)
     {

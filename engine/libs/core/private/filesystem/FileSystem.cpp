@@ -1,5 +1,3 @@
-#pragma once
-
 #include "core/filesystem/FileSystem.hpp"
 #include "core/memory/UniquePtr.hpp"
 

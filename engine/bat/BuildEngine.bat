@@ -6,5 +6,9 @@ if not defined SLUG_INITIALIZED_ENVIRONMENT (
      call %~dp0../../SetupEnvironment.bat
 )
 
+call MakeEngine.bat
+
+
+
 popd
 endlocal

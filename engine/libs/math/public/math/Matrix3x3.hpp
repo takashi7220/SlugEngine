@@ -45,6 +45,18 @@ struct Matrix3x3
         }
     }
 
+    Matrix3x3& operator=(const Matrix3x3& other)
+    {
+        if (this != &other)
+        {
+            for (size_t i = 0; i < 9; ++i)
+            {
+                m[i] = other.m[i];
+            }
+        }
+        return *this;
+    }
+
     ValueType& at(size_t i, size_t j)
     {
         return m[j * 3 + i];

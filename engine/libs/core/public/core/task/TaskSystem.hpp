@@ -85,10 +85,10 @@ public:
     constexpr static uint32_t GRAIN_BIAS_RATE = 4;
     struct Desc
     {
-        uint32_t workerCount = 0;
+        uint32_t workerCount = 4;
     };
 
-    explicit TaskSystem(const Desc& desc = {});
+    explicit TaskSystem(const Desc& desc);
     ~TaskSystem();
 
     TaskSystem(const TaskSystem&) = delete;

@@ -1,5 +1,3 @@
-#pragma once
-
 #if defined(PLATFORM_WINDOWS)
 #include "core/filesystem/win/FileSystemController.hpp"
 #include "core/filesystem/win/FileHandle.hpp"
