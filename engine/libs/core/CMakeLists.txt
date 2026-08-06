@@ -19,7 +19,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER libs/)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC math)
 if(SLUG_USE_MIMALLOC)
-    target_link_libraries(${PROJECT_NAME} PUBLIC mimalloc-static)
+    target_link_libraries(${PROJECT_NAME} PUBLIC mimalloc)
 endif()
 
 create_source_group(${SOURCE_ROOT_PATH})
