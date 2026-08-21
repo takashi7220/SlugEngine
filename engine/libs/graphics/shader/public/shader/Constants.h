@@ -41,4 +41,4 @@ SLUG_CBUFFER(ObjectConstants, SLUG_SHADER_REGISTER_OBJECT_CB)
 
 #if !defined(SLUG_SHADER_COMPILE)
 }
-#endif !defined(SLUG_SHADER_COMPILE)
+#endif //!defined(SLUG_SHADER_COMPILE)

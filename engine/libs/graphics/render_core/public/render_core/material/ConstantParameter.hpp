@@ -14,14 +14,14 @@ namespace slug::render_core
 {
 enum class ParameterType : uint8_t
 {
-    Bool = shader::ParameterType::Bool,
-    Float = shader::ParameterType::Float,
-    Float2 = shader::ParameterType::Float2,
-    Float3 = shader::ParameterType::Float3,
-    Float4 = shader::ParameterType::Float4,
-    Float3x3 = shader::ParameterType::Float3x3,
-    Float4x4 = shader::ParameterType::Float4x4,
-    FloatArray = shader::ParameterType::FloatArray,
+    Bool = static_cast<uint8_t>(shader::ParameterType::Bool),
+    Float = static_cast<uint8_t>(shader::ParameterType::Float),
+    Float2 = static_cast<uint8_t>(shader::ParameterType::Float2),
+    Float3 = static_cast<uint8_t>(shader::ParameterType::Float3),
+    Float4 = static_cast<uint8_t>(shader::ParameterType::Float4),
+    Float3x3 = static_cast<uint8_t>(shader::ParameterType::Float3x3),
+    Float4x4 = static_cast<uint8_t>(shader::ParameterType::Float4x4),
+    FloatArray = static_cast<uint8_t>(shader::ParameterType::FloatArray),
 };
 
 struct ParameterAccessor

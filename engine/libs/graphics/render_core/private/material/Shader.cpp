@@ -210,7 +210,7 @@ bool Shader::RegistShader(render_core::RenderService& service, const SetupParam&
 
 bool Shader::GetShader(const ShaderVariation::Key& key, const ShaderVariation& shaderVariation, rhi::ShaderPtr& shader)
 {
-    if (key >= 0 && key < shaderVariation.shaderItems.size())
+    if (key >= 0 && key < static_cast<int32_t>(shaderVariation.shaderItems.size()))
     {
         shader = shaderVariation.shaderItems[key].shader;
         return true;
@@ -220,7 +220,7 @@ bool Shader::GetShader(const ShaderVariation::Key& key, const ShaderVariation& s
 
 bool Shader::HasShader(const ShaderVariation::Key& key, const ShaderVariation& shaderVariation)
 {
-    if (key >= 0 && key < shaderVariation.shaderItems.size())
+    if (key >= 0 && key < static_cast<int32_t>(shaderVariation.shaderItems.size()))
     {
         return true;
     }

@@ -4,7 +4,7 @@
 #include "rhi/Rhi.hpp"
 #include "render_core/material/DrawSettings.hpp"
 #include "render_core/material/ShaderParameter.hpp"
-#include "algorithm/primitive/AABB.hpp"
+#include "algorithm/primitive/Aabb.hpp"
 
 namespace slug::render_core
 {

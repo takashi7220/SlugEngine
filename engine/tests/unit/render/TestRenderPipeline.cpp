@@ -1,5 +1,3 @@
-#pragma once
-
 #include "TestRenderPipeline.hpp"
 
 namespace slug::render_unit
