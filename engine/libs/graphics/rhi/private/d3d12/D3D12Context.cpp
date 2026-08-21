@@ -42,8 +42,8 @@ private:
     core::TVector<rhi::TexturePtr> m_rhiSwapChainBuffers = {};
     core::TVector<HANDLE> m_frameFenceEvents = {};
     uint32_t m_frameCount = 0;
-    bool m_tearingSupport = true;
-    bool m_vcync = true;
+    [[maybe_unused]] bool m_tearingSupport = true;
+    [[maybe_unused]] bool m_vcync = true;
     HWND m_windowHandle = {};
 };
 using SwapChainD3D12Ptr = core::TReferencePtr<SwapChainD3D12>;

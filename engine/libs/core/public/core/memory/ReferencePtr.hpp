@@ -40,15 +40,20 @@ struct InternalObject
     {
     };
 
-    InternalObject(void* p)
+    explicit InternalObject(void* p)
         : pointer(p)
     {
     };
 
-    template<typename T>
-    operator T* () const
+    InternalObject(std::nullptr_t)
+        : pointer(nullptr)
     {
-        return static_cast<T*>(pointer);
+    };
+
+    template<typename T>
+    operator const T* () const
+    {
+        return static_cast<const T*>(pointer);
     }
 };
 

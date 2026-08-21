@@ -1292,6 +1292,11 @@ core::TReferencePtr<ID3D12PipelineState> Device::CreatePipelineState(const Graph
     case PrimitiveType::PatchList:
         d3d12Desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_PATCH;
         break;
+    case PrimitiveType::TriangleFan:
+    case PrimitiveType::TriangleListWithAdjacency:
+    case PrimitiveType::TriangleStripWithAdjacency:
+    default:
+        break;
     }
 
     d3d12Desc.DSVFormat = D3D12Utility::GetDxgiFormatMapping(fbinfo.depthFormat).rtvFormat;

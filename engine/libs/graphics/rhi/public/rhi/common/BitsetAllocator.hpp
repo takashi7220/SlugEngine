@@ -2,6 +2,7 @@
 
 #include "core/container/Vector.hpp"
 #include "core/thread/Mutex.hpp"
+#include "math/Math.hpp"
 
 namespace slug::rhi
 {
@@ -54,7 +55,7 @@ public:
             }
 
             m_allocated[index] = false;
-            m_nextAvailable = (m_nextAvailable, index);
+            m_nextAvailable = math::TMin(m_nextAvailable, index);
 
             if (m_multiThreaded) 
             {

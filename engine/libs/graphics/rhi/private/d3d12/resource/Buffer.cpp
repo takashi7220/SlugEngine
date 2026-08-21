@@ -33,7 +33,7 @@ const BufferDesc& Buffer::GetDesc() const
     return desc;
 }
 
-Object Buffer::GetNativeObject(ObjectType objectType) const
+Object Buffer::GetNativeObject(ObjectType objectType)
 {
     switch (objectType) 
     {

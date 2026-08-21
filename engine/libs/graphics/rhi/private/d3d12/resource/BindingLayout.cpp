@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rhi/d3d12/resource/BindingLayout.hpp"
 #include "rhi/common/Utility.hpp"
 #include "rhi/d3d12/D3D12Utility.hpp"

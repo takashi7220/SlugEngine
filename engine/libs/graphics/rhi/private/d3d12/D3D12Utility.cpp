@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rhi/d3d12/D3D12Utility.hpp"
 #include "rhi/common/Utility.hpp"
 

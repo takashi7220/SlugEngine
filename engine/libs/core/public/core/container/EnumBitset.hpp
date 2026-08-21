@@ -106,9 +106,9 @@ public:
         return m_bits;
     }
 
-    core::StringView ToString() const 
+    core::String ToString() const
     {
-        return m_bits.to_string().c_str();
+        return core::String(m_bits.to_string().c_str());
     }
 
     constexpr bool operator==(const TEnumBitset& v0) const

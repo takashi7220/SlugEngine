@@ -49,7 +49,7 @@ public:
     uint32_t version = 0;
 
 private:
-    const Context& m_context;
+    [[maybe_unused]] const Context& m_context;
 };
 
 

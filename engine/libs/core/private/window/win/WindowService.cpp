@@ -131,7 +131,8 @@ void WindowService::SetAppUserAttention(bool flag)
     LockGuard<std::mutex> lock(m_mutex);
     for (auto& window : m_windows)
     {
-        FLASHWINFO f { sizeof(FLASHWINFO) };
+        FLASHWINFO f = {};
+        f.cbSize = sizeof(FLASHWINFO);
         NativeWindowHandlePtr handle = window.second->GetNativeHandle();
         f.hwnd = (HWND)handle->GetHandle();
         f.dwFlags = FLASHW_TRAY | FLASHW_TIMERNOFG;

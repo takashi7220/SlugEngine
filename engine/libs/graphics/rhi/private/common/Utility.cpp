@@ -568,16 +568,16 @@ bool Utility::AreResourceTypesCompatible(ResourceType a, ResourceType b)
     a = GetNormalizedResourceType(a);
     b = GetNormalizedResourceType(b);
 
-    if (a == ResourceType::TypedBuffer_SRV && b == ResourceType::Texture_SRV ||
-        b == ResourceType::TypedBuffer_SRV && a == ResourceType::Texture_SRV ||
-        a == ResourceType::TypedBuffer_SRV && b == ResourceType::RayTracingAccelStruct ||
-        a == ResourceType::Texture_SRV && b == ResourceType::RayTracingAccelStruct ||
-        b == ResourceType::TypedBuffer_SRV && a == ResourceType::RayTracingAccelStruct ||
-        b == ResourceType::Texture_SRV && a == ResourceType::RayTracingAccelStruct)
+    if ((a == ResourceType::TypedBuffer_SRV && b == ResourceType::Texture_SRV) ||
+        (b == ResourceType::TypedBuffer_SRV && a == ResourceType::Texture_SRV) ||
+        (a == ResourceType::TypedBuffer_SRV && b == ResourceType::RayTracingAccelStruct) ||
+        (a == ResourceType::Texture_SRV && b == ResourceType::RayTracingAccelStruct) ||
+        (b == ResourceType::TypedBuffer_SRV && a == ResourceType::RayTracingAccelStruct) ||
+        (b == ResourceType::Texture_SRV && a == ResourceType::RayTracingAccelStruct))
         return true;
 
-    if (a == ResourceType::TypedBuffer_UAV && b == ResourceType::Texture_UAV ||
-        b == ResourceType::TypedBuffer_UAV && a == ResourceType::Texture_UAV)
+    if ((a == ResourceType::TypedBuffer_UAV && b == ResourceType::Texture_UAV) ||
+        (b == ResourceType::TypedBuffer_UAV && a == ResourceType::Texture_UAV))
         return true;
 
     return false;

@@ -25,7 +25,7 @@ public:
     bool compacted = false;
 
 private:
-    const Context& m_context;
+    [[maybe_unused]] const Context& m_context;
 };
 
 }

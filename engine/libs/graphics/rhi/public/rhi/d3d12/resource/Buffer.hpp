@@ -18,7 +18,7 @@ public:
     Buffer(const Context& context, DeviceResources& resources, BufferDesc desc);
     virtual ~Buffer() override;
     const BufferDesc& GetDesc() const override;
-    Object GetNativeObject(ObjectType objectType) const;
+    virtual Object GetNativeObject(ObjectType objectType) override;
     void PostCreate();
     DescriptorIndex GetClearUAV();
     void CreateCBV(size_t descriptor, BufferRange range) const;

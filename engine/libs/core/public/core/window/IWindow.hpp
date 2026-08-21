@@ -53,6 +53,7 @@ struct MonitorInfo
 
     MonitorInfo() = default;
     MonitorInfo(const MonitorInfo&) = default;
+    MonitorInfo& operator=(const MonitorInfo&) = default;
 };
 
 struct MonitorDetailInfo : public MonitorInfo

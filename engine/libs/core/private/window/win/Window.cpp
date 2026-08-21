@@ -162,7 +162,8 @@ void Window::SetCursorMode(CursorMode mode)
 void Window::SetCursorVisible(bool flag)
 {
     m_cursorVisible = flag;
-    CURSORINFO ci { sizeof(CURSORINFO) };
+    CURSORINFO ci = {};
+    ci.cbSize = sizeof(CURSORINFO);
     GetCursorInfo(&ci);
     bool shown = (ci.flags & CURSOR_SHOWING) != 0;
     if (flag != shown)

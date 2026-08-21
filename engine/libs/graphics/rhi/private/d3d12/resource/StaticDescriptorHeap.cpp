@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rhi/d3d12/D3D12.hpp"
 #include "rhi/d3d12/resource/StaticDescriptorHeap.hpp"
 #include "rhi/d3d12/resource/Context.hpp"

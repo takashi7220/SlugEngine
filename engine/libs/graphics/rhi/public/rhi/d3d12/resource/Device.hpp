@@ -91,7 +91,7 @@ public:
 
     // ComputePipeline
     ComputePipelinePtr CreateComputePipeline(const ComputePipelineDesc& desc) override;
-    ComputePipelinePtr CreateComputePipelineFromCache(const PipelineCache& pipelineCache, ComputePipelineDesc& outDesc);
+    ComputePipelinePtr CreateComputePipelineFromCache(const PipelineCache& pipelineCache, ComputePipelineDesc& outDesc) override;
 
     // MeshletPipeline
     MeshletPipelinePtr CreateMeshletPipeline(const MeshletPipelineDesc& desc, IFrameBuffer* fb) override;

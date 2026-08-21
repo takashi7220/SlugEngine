@@ -41,14 +41,26 @@ struct is_string<core::String> : std::true_type
 template<typename T>
 inline constexpr bool is_string_v = is_string<T>::value;
 
-
 namespace StringUtility
 {
-template<size_t Size = 512, class... Args>
+
+template<typename T>
+concept PrintfArgument = std::is_arithmetic_v<std::remove_cvref_t<T>> || std::is_pointer_v<std::remove_cvref_t<T>>;
+
+template<size_t Size = 512, PrintfArgument... Args>
 inline void Snprintf(core::String& msg, const char* fmt, Args&&... args) noexcept
 {
     char buf[Size];
-    const int n = std::snprintf(buf, Size, fmt, std::forward<Args>(args)...);
+    int n = 0;
+    if constexpr (sizeof...(Args) == 0)
+    {
+        n = std::snprintf(buf, Size, "%s", fmt);
+    }
+    else
+    {
+        n = std::snprintf(buf, Size, fmt, std::forward<Args>(args)...);
+    }
+
     if (n <= 0 || static_cast<size_t>(n) >= Size)
     {
         return;
@@ -60,7 +72,22 @@ template<size_t Size = 512, class... Args>
 inline core::String Snprintf(const char* fmt, Args&&... args) noexcept
 {
     core::String msg;
-    Snprintf<Size>(msg, fmt, std::forward<Args>(args)...);
+    char buf[Size];
+    int n = 0;
+    if constexpr (sizeof...(Args) == 0)
+    {
+        n = std::snprintf(buf, Size, "%s", fmt);
+    }
+    else
+    {
+        n = std::snprintf(buf, Size, fmt, std::forward<Args>(args)...);
+    }
+
+    if (n <= 0 || static_cast<size_t>(n) >= Size)
+    {
+        return msg;
+    }
+    msg.append(buf, static_cast<size_t>(n));
     return msg;
 }
 

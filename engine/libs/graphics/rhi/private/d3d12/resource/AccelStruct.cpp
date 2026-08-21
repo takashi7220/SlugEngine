@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rhi/d3d12/resource/AccelStruct.hpp"
 
 namespace slug::rhi::d3d12

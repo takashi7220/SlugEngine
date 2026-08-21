@@ -32,6 +32,8 @@ public:
     }
 
     TStaticVector(const TStaticVector& other) = default;
+    TStaticVector(TStaticVector&& other) noexcept = default;
+    TStaticVector& operator=(const TStaticVector& other) = default;
 
     TStaticVector(std::initializer_list<T> il)
     {

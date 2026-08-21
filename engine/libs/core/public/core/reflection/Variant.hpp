@@ -20,8 +20,8 @@ public:
 
     template<typename T, typename U = remove_cvref_t<T>, typename = std::enable_if_t<!std::is_same_v<U, Variant>>>
     Variant(T&& value)
-        : m_ptr(core::MakeReference<Model<U>>(std::forward<T>(value)))
-        , m_typeId(TypeOf<U>().GetId())
+        : m_typeId(TypeOf<U>().GetId())
+        , m_ptr(core::MakeReference<Model<U>>(std::forward<T>(value)))
     {
     }
 

@@ -143,10 +143,10 @@ bool UploadManager::SuballocateBuffer(uint64_t size, ID3D12GraphicsCommandList* 
                         uint64_t candidateInstance = VersionGetInstance(candidateChunk->version);
                         uint64_t bestInstance = VersionGetInstance(bestChunk->version);
 
-                        if (candidateSubmitted && !bestSubmitted ||
-                            candidateSubmitted == bestSubmitted && candidateInstance < bestInstance ||
-                            candidateSubmitted == bestSubmitted && candidateInstance == bestInstance
-                            && candidateChunk->bufferSize > bestChunk->bufferSize)
+                        if ((candidateSubmitted && !bestSubmitted) ||
+                            (candidateSubmitted == bestSubmitted && candidateInstance < bestInstance) ||
+                            (candidateSubmitted == bestSubmitted && candidateInstance == bestInstance
+                             && candidateChunk->bufferSize > bestChunk->bufferSize))
                         {
                             bestChunk = candidateChunk;
                         }
@@ -366,7 +366,7 @@ Object CommandList::GetNativeObject(ObjectType objectType)
             return nullptr;
         }
     case object_types::rhi_D3D12_CommandList:
-        return this;
+        return Object(this);
 
     default:
         return nullptr;

@@ -24,8 +24,8 @@ public:
         , m_returnType(returnType)
         , m_paramTypes(std::move(paramTypes))
         , m_isConst(isConst)
-        , m_invoke(std::move(invoke))
         , m_constInvoke(nullptr)
+        , m_invoke(std::move(invoke))
     {
     }
 
@@ -36,8 +36,8 @@ public:
         , m_returnType(returnType)
         , m_paramTypes(std::move(paramTypes))
         , m_isConst(isConst)
-        , m_invoke(nullptr)
         , m_constInvoke(std::move(invoke))
+        , m_invoke(nullptr)
     {
     }
 

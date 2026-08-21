@@ -1,5 +1,3 @@
-#pragma once
-
 #include "rhi/common/StateTracking.hpp"
 #include "rhi/Rhi.hpp"
 namespace slug::rhi
@@ -403,8 +401,8 @@ bool CommandListResourceStateTracker::VerifyPermanentResourceState(ResourceState
     {
         core::String msg = {};
         core::StringUtility::Snprintf(msg, "Permanent %s, %s", isTexture ? "texture" : "buffer", debugName.c_str());
-        core::StringUtility::Snprintf(msg, "doesn't have the right state bits. Required: %s", requiredState.ToString());
-        core::StringUtility::Snprintf(msg, ", present: %s", permanentState.ToString());
+        core::StringUtility::Snprintf(msg, "doesn't have the right state bits. Required: %s", requiredState.ToString().c_str());
+        core::StringUtility::Snprintf(msg, ", present: %s", permanentState.ToString().c_str());
         SLUG_LOG(RHILogCategory, core::LogType::Error, msg.c_str());
         return false;
     }
