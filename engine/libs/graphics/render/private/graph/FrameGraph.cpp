@@ -81,7 +81,7 @@ void FrameGraph::Execute(render_core::RenderService& service)
         currentGraph->pass->Prepare(currentGraph->pipelineInfo);
         currentGraph->pass->Draw(service, currentGraph->pipelineInfo);
         int32_t nextIndex = currentGraph->nexts.at(0);
-        if (nextIndex < m_graphNodes.size() && nextIndex >= 0)
+        if (nextIndex < static_cast<int32_t>(m_graphNodes.size()) && nextIndex >= 0)
         {
             currentGraph = m_graphNodes.at(nextIndex);
         }
