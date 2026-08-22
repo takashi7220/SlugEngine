@@ -1,6 +1,7 @@
 #include "resource/pack/PackFileSystem.hpp"
 #include "core/filesystem/FileSystem.hpp"
 #include <algorithm>
+#include <cstring>
 #include <limits>
 
 namespace slug::resource
@@ -10,7 +11,7 @@ namespace
 
 bool IsValidMagic(const char magic[4])
 {
-    return core::StringUtility::IsEqual(magic, s_ExpectedPackMagic);
+    return std::memcmp(magic, s_ExpectedPackMagic, sizeof(s_ExpectedPackMagic)) == 0;
 }
 
 template<class T>

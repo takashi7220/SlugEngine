@@ -188,16 +188,17 @@ void FileSystem::UnbindController()
 FileSystem::Registry& FileSystem::GetRegistry()
 {
     static Registry registry;
-    if (registry.controller == nullptr)
-    {
-        BindControllerInternal();
-    }
     return registry;
 }
 
 IFileSystemController* FileSystem::GetController()
 {
-    return GetRegistry().controller;
+    Registry& registry = GetRegistry();
+    if (registry.controller == nullptr)
+    {
+        BindControllerInternal();
+    }
+    return registry.controller;
 }
 
 void FileSystem::BindControllerInternal()

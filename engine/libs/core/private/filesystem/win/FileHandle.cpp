@@ -69,7 +69,16 @@ bool FileHandle::ReadAt(uint64_t offset, void* dst, uint32_t size)
 
     if (!result)
     {
-        return false;
+        const DWORD error = ::GetLastError();
+        if (error != ERROR_IO_PENDING)
+        {
+            return false;
+        }
+
+        if (!::GetOverlappedResult(m_handle, &overlapped, &bytesRead, TRUE))
+        {
+            return false;
+        }
     }
 
     return bytesRead == size;
