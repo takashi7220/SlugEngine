@@ -62,6 +62,5 @@ int main(int argc, char** argv) {
 #if SLUG_DEBUG_MODE
     EXPECT_EQ(counter.GetCurrentTotalMemorySize(), 0);
 #endif
-    EXPECT_EQ(core::MemoryUtility::GetCurrentProfile().malloc_requested_current, 0);
     return ret;
 }

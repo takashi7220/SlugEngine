@@ -382,16 +382,25 @@ TEST(TaskSystem, PriorityStarvationQuotaPromotesLowPriorityTask)
     {
         TaskSystem sys({ .workerCount = 1 });
         std::atomic<bool> releaseBlocker { false };
+        std::atomic<bool> blockerEntered { false };
         TVector<String> order;
         Mutex m;
 
         auto blocker = sys.Launch([&]
         {
+            blockerEntered.store(true, std::memory_order_release);
             while (!releaseBlocker.load(std::memory_order_acquire))
             {
                 std::this_thread::yield();
             }
         });
+
+        // blockerがキューから取り出される前にLowを積むと、blockerのPopがLowのスキップ数を
+        // 1つ余分に加算してしまい、割り込み位置がずれる。先にblockerの実行開始を待つ。
+        while (!blockerEntered.load(std::memory_order_acquire))
+        {
+            std::this_thread::yield();
+        }
 
         // Criticalを溜め続けてもLowが飢餓しないことを確認する。
         const size_t criticalCount = static_cast<size_t>(TaskQueueStarvationQuota) * 3;

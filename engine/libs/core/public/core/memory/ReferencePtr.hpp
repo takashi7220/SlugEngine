@@ -142,9 +142,8 @@ public:
             cb->alive.store(false, core::MemoryOrderRelease);
             cb->ClearObjectPtr();
 
+            // ControlBlock が保持する初期弱参照の解放は ~ReferenceObject が行うため、ここでは触れない。
             delete this;
-
-            cb->ReleaseWeak();
             return 0;
         }
         return m_control->strong.load(core::MemoryOrderRelaxed);

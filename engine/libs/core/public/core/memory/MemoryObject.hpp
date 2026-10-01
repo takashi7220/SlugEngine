@@ -19,12 +19,12 @@ public:
 
     void* operator new  (size_t size, std::align_val_t align) noexcept
     {
-        return Allocate(size);
+        return Allocate(size, align);
     }
 
     void* operator new[](size_t size, std::align_val_t align) noexcept
     {
-        return Allocate(size);
+        return Allocate(size, align);
     }
 
     void operator delete(void* p) noexcept

@@ -32,7 +32,7 @@ TEST(StringUtilityTest, SnprintfAppendsFormattedText)
 {
     String text = "value=";
 
-    StringUtility::Snprintf(text, "%d:%s", 42, "ok");
+    text += StringUtility::Snprintf("%d:%s", 42, "ok");
 
     EXPECT_EQ(text, "value=42:ok");
 }

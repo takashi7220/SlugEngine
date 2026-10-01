@@ -97,6 +97,12 @@ size_t WorkQueue::Size()
 
 void WorkQueue::NotifyAll()
 {
+    // stopFlag は m_mutex の外で更新されるため、通知前に必ず m_mutex を取得する。
+    // これを行わないと、待機側が述語評価を終えてから wait に入るまでの間に通知が消失し、
+    // ワーカーが起床できずに Terminate の join が返らなくなる。
+    {
+        ScopedLock lock(m_mutex);
+    }
     m_conditionVariable.notify_all();
 }
 }

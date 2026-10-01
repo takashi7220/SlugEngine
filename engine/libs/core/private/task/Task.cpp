@@ -64,9 +64,10 @@ bool Task::Cancel()
         return IsCanceled();
     }
 
+    // Wait() は done の完了で復帰するため、状態フラグは set_value より先に確定させる。
     canceled.store(true, core::MemoryOrderRelease);
-    done.set_value();
     finished.store(true, core::MemoryOrderRelease);
+    done.set_value();
 
     CancelDependents();
     return true;
@@ -139,14 +140,16 @@ void Task::Run(TaskSystem& sys)
         {
             func();
         }
+        // Wait() は done の完了で復帰するため、finished は set_value より先に確定させる。
+        finished.store(true, core::MemoryOrderRelease);
         done.set_value();
     }
     catch (...)
     {
+        finished.store(true, core::MemoryOrderRelease);
         done.set_exception(std::current_exception());
     }
 
-    finished.store(true, core::MemoryOrderRelease);
     ScheduleDependents(sys);
 
     sys.OnTaskFinished();

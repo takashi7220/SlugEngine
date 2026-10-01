@@ -7,6 +7,8 @@
 #include <mimalloc-stats.h>
 #endif
 
+#define SLUG_ENABLE_MEMORY_LABEL SLUG_DEBUG_MODE
+
 namespace slug::core
 {
 
@@ -46,12 +48,23 @@ inline void free_aligned_inernal(void* p, size_t align)
 #endif
 }
 
+// アライン指定確保では、利用者ポインタが align を満たすようにヘッダ領域を切り上げる。
+inline size_t HeaderSize(size_t align)
+{
+    if (align <= alignof(MemoryHeader))
+    {
+        return sizeof(MemoryHeader);
+    }
+    return (sizeof(MemoryHeader) + align - 1) / align * align;
+}
+
 void* MemoryUtility::Allocate(size_t size)
 {
-#if SLUG_DEBUG_MODE
+#if SLUG_ENABLE_MEMORY_LABEL
     size_t totalSize = size + sizeof(MemoryHeader);
     void* raw = new_internal(totalSize);
     MemoryHeader* header = static_cast<MemoryHeader*>(raw);
+    header->offset = sizeof(MemoryHeader);
     header->size = size;
     header->label = MemoryLabelScope::Current();
     header->subLabel = MemorySubLabelScope::Current();
@@ -64,15 +77,18 @@ void* MemoryUtility::Allocate(size_t size)
 
 void* MemoryUtility::Allocate(size_t size, size_t align)
 {
-#if SLUG_DEBUG_MODE
-    size_t totalSize = size + sizeof(MemoryHeader);
+#if SLUG_ENABLE_MEMORY_LABEL
+    size_t headerSize = HeaderSize(align);
+    size_t totalSize = size + headerSize;
     void* raw = new_aligned_internal(totalSize, align);
-    MemoryHeader* header = static_cast<MemoryHeader*>(raw);
+    void* userPtr = static_cast<uint8_t*>(raw) + headerSize;
+    MemoryHeader* header = reinterpret_cast<MemoryHeader*>(userPtr) - 1;
+    header->offset = headerSize;
     header->size = size;
-    header->label = MemoryLabel(MemoryLabelScope::Current());
-    header->subLabel = MemoryLabel(MemorySubLabelScope::Current());
+    header->label = MemoryLabelScope::Current();
+    header->subLabel = MemorySubLabelScope::Current();
     MemoryDebugUtility::RecordAllocate(raw, *header);
-    return reinterpret_cast<void*>(header + 1);
+    return userPtr;
 #else
     return new_aligned_internal(size, align);
 #endif
@@ -84,10 +100,11 @@ void MemoryUtility::Deallocate(void* p)
     {
         return;
     }
-#if SLUG_DEBUG_MODE
+#if SLUG_ENABLE_MEMORY_LABEL
     MemoryHeader* header = reinterpret_cast<MemoryHeader*>(p) - 1;
-    MemoryDebugUtility::RecordDeallocate(p, *header);
-    free_internal(header);
+    void* raw = static_cast<uint8_t*>(p) - header->offset;
+    MemoryDebugUtility::RecordDeallocate(raw, *header);
+    free_internal(raw);
 #else
     free_internal(p);
 #endif
@@ -99,10 +116,11 @@ void MemoryUtility::Deallocate(void* p, size_t align)
     {
         return;
     }
-#if SLUG_DEBUG_MODE
+#if SLUG_ENABLE_MEMORY_LABEL
     MemoryHeader* header = reinterpret_cast<MemoryHeader*>(p) - 1;
-    MemoryDebugUtility::RecordDeallocate(p, *header);
-    free_aligned_inernal(header, align);
+    void* raw = static_cast<uint8_t*>(p) - header->offset;
+    MemoryDebugUtility::RecordDeallocate(raw, *header);
+    free_aligned_inernal(raw, align);
 #else
     free_aligned_inernal(p, align);
 #endif
