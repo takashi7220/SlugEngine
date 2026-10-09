@@ -438,3 +438,126 @@ TEST(TaskSystem, PriorityStarvationQuotaPromotesLowPriorityTask)
         EXPECT_EQ(lowIndex, static_cast<size_t>(TaskQueueStarvationQuota));
     }
 }
+
+//------------------------------------------------------------------------------
+// Wait から復帰した時点でタスク状態が確定していること。
+// done.set_value() が finished より先だと、待機側が未完了を観測する。
+//------------------------------------------------------------------------------
+TEST(TaskSystem, StateIsSettledWhenWaitReturns)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 2 });
+
+        for (int i = 0; i < 200; ++i)
+        {
+            auto h = sys.Launch([] {});
+            sys.Wait(h);
+            ASSERT_TRUE(h.Completed()) << "iteration=" << i;
+            ASSERT_FALSE(h.Canceled()) << "iteration=" << i;
+        }
+    }
+}
+
+TEST(TaskSystem, CanceledStateIsSettledWhenWaitReturns)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TaskSystem sys({ .workerCount = 2 });
+        std::atomic<bool> releaseBlocker { false };
+        std::atomic<bool> blockerEntered { false };
+
+        // ワーカーを塞いでおき、キュー上のタスクを実行前にキャンセルする。
+        auto blocker = sys.Launch([&]
+        {
+            blockerEntered.store(true, std::memory_order_release);
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+        auto other = sys.Launch([&]
+        {
+            while (!releaseBlocker.load(std::memory_order_acquire))
+            {
+                std::this_thread::yield();
+            }
+        });
+
+        while (!blockerEntered.load(std::memory_order_acquire))
+        {
+            std::this_thread::yield();
+        }
+
+        auto target = sys.Launch([] {});
+        EXPECT_TRUE(target.Cancel());
+
+        // キャンセルが成立した時点で Canceled / Completed の両方が確定している。
+        EXPECT_TRUE(target.Canceled());
+        EXPECT_TRUE(target.Completed());
+        EXPECT_NO_THROW(sys.Wait(target));
+
+        releaseBlocker.store(true, std::memory_order_release);
+        sys.Wait(blocker);
+        sys.Wait(other);
+    }
+}
+
+// 生成と破棄を繰り返しても Terminate の join が返らなくならないこと。
+// WorkQueue::NotifyAll が待機側のミューテックスと同期しないと通知が消失し、
+// ワーカーが起床できずにここでハングする。
+TEST(TaskSystem, RepeatedConstructionAndDestructionTerminatesCleanly)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        for (int i = 0; i < 200; ++i)
+        {
+            TaskSystem sys({ .workerCount = 4 });
+            std::atomic<int> executed { 0 };
+
+            auto h = sys.Launch([&executed]
+            {
+                executed.fetch_add(1, std::memory_order_relaxed);
+            });
+            sys.Wait(h);
+
+            ASSERT_EQ(executed.load(std::memory_order_relaxed), 1) << "iteration=" << i;
+        }
+    }
+}
+
+// タスクを一度も積まずに破棄してもワーカーが確実に終了すること。
+TEST(TaskSystem, DestructionWithoutAnyTaskTerminatesCleanly)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        for (int i = 0; i < 200; ++i)
+        {
+            TaskSystem sys({ .workerCount = 4 });
+            (void)sys;
+        }
+    }
+}
+
+// Terminate は実行中のタスクが完了するまで待つ。
+TEST(TaskSystem, TerminateWaitsForInflightTasks)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        std::atomic<int> completed { 0 };
+        constexpr int taskCount = 32;
+        {
+            TaskSystem sys({ .workerCount = 4 });
+            for (int i = 0; i < taskCount; ++i)
+            {
+                sys.Launch([&completed]
+                {
+                    std::this_thread::yield();
+                    completed.fetch_add(1, std::memory_order_relaxed);
+                });
+            }
+            // デストラクタの Terminate で全タスクの完了を待つ。
+        }
+        EXPECT_EQ(completed.load(std::memory_order_relaxed), taskCount);
+    }
+}

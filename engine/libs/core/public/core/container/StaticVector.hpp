@@ -74,7 +74,7 @@ public:
 
     const_iterator end() const noexcept
     {
-        return base::cend();
+        return cend();
     }
 
     const_iterator cend() const noexcept
@@ -105,7 +105,7 @@ public:
 
     void swap(TStaticVector& other) noexcept
     {
-        base::swap(*this);
+        base::swap(other);
         std::swap(m_current_size, other.m_current_size);
     }
 

@@ -105,12 +105,12 @@ public:
     void OnTaskFinished() noexcept;
 
     template<typename FuncType>
-    core::TFuture<void> ParallelForAsync(size_t begin, size_t end, const ParallelForOptions& options, FuncType body)
+    core::TSharedFuture<void> ParallelForAsync(size_t begin, size_t end, const ParallelForOptions& options, FuncType body)
     {
         if (begin >= end)
         {
             core::TPromise<void> p;
-            auto f = p.get_future();
+            core::TSharedFuture<void> f = p.get_future();
             p.set_value();
             return f;
         }
@@ -122,7 +122,7 @@ public:
         // 実行完了待ちのタスクを生成
         TReferencePtr<Task> joinTask(NewObject<Task>(options.priority));
         joinTask->pending.store(static_cast<int32_t>(numChunks), core::MemoryOrderRelaxed);
-        core::TFuture<void> future = joinTask->done.get_future();
+        core::TSharedFuture<void> future = joinTask->GetFuture();
 
         // 実行完了待ちタスクを実行タスクに依存させる。
         // 実行タスクが全て実行されれば、実行完了待ちタスクが実行されWaitが解除される。
@@ -148,7 +148,7 @@ public:
     template<typename FuncType>
     void ParallelFor(size_t begin, size_t end, const ParallelForOptions& options, FuncType body)
     {
-        core::TFuture<void> future = ParallelForAsync(begin, end, options, body);
+        core::TSharedFuture<void> future = ParallelForAsync(begin, end, options, body);
         future.get();
     }
 

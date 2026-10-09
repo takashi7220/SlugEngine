@@ -59,7 +59,7 @@ FileBlobPtr FileSystemController::Read(core::StringView filePath)
 
     FileBlobPtr ret = NewObject<FileBlob>();
     ret->GetData().resize(fileSize);
-    if (Read(filePath, fileSize, ret->GetData().data()))
+    if (!Read(filePath, fileSize, ret->GetData().data()))
     {
         return nullptr;
     }

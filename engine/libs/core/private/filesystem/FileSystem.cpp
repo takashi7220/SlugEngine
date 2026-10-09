@@ -122,7 +122,7 @@ bool FileSystem::MakeDirectory(core::StringView directoryPath)
 
 bool FileSystem::CheckFileExists(core::StringView filePath)
 {
-    return GetController()->CheckDirectoryExists(filePath);
+    return GetController()->CheckFileExists(filePath);
 }
 
 bool FileSystem::CheckDirectoryExists(core::StringView directoryPath) 

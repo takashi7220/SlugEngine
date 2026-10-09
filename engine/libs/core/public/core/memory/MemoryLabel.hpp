@@ -14,7 +14,7 @@ struct MemoryLabel
         StringUtility::Strncpy(name, str, SLUG_MEMORY_LABEL_LENGTH);
     }
 
-    bool operator ==(const MemoryLabel& v)
+    bool operator ==(const MemoryLabel& v) const
     {
         return StringUtility::IsEqual(name, v.name);
     }

@@ -415,3 +415,142 @@ TEST(TickManagerTest, CleanGroupPreservesNonEmptyGroup)
         EXPECT_TRUE(manager.HasGroup(SLUG_NAMEOF(SystemTickGroupType::Default)));
     }
 }
+
+//------------------------------------------------------------------------------
+// 既存グループへの追加登録
+//------------------------------------------------------------------------------
+// Register の「既存グループあり」経路はローカルコピーに push すると
+// 2つ目以降の関数が捨てられ、Tick が呼ばれなくなる。
+TEST(TickManagerTest, RegisterSecondFunctionIntoExistingGroup)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        auto sys = MakeTaskSystem();
+        TickManager manager(sys.get());
+
+        TestTickObject first;
+        TestTickObject second;
+
+        manager.Register(first.GetPrimaryTickFunction());
+        manager.Register(second.GetPrimaryTickFunction());
+
+        auto param = MakeParam(sys);
+        manager.Execute(param);
+
+        EXPECT_EQ(first.tickCount, 1);
+        EXPECT_EQ(second.tickCount, 1);
+    }
+}
+
+TEST(TickManagerTest, RegisterManyFunctionsIntoSameGroup)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        auto sys = MakeTaskSystem();
+        TickManager manager(sys.get());
+
+        std::vector<std::unique_ptr<TestTickObject>> objects;
+        for (int i = 0; i < 32; ++i)
+        {
+            objects.emplace_back(std::make_unique<TestTickObject>());
+            manager.Register(objects.back()->GetPrimaryTickFunction());
+        }
+
+        auto param = MakeParam(sys);
+        manager.Execute(param);
+
+        for (size_t i = 0; i < objects.size(); ++i)
+        {
+            EXPECT_EQ(objects[i]->tickCount, 1) << "index=" << i;
+        }
+    }
+}
+
+// 同一グループに複数登録しても、重複登録は1回に抑えられること。
+TEST(TickManagerTest, DuplicateRegisterIntoExistingGroupIsIgnored)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        auto sys = MakeTaskSystem();
+        TickManager manager(sys.get());
+
+        TestTickObject first;
+        TestTickObject second;
+
+        manager.Register(first.GetPrimaryTickFunction());
+        manager.Register(second.GetPrimaryTickFunction());
+        manager.Register(second.GetPrimaryTickFunction());
+
+        auto param = MakeParam(sys);
+        manager.Execute(param);
+
+        EXPECT_EQ(first.tickCount, 1);
+        EXPECT_EQ(second.tickCount, 1);
+    }
+}
+
+TEST(TickManagerTest, RegisterNullptrIsIgnored)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        auto sys = MakeTaskSystem();
+        TickManager manager(sys.get());
+
+        manager.Register(nullptr);
+
+        EXPECT_FALSE(manager.HasGroup(SLUG_NAMEOF(SystemTickGroupType::Default)));
+    }
+}
+
+// TickParam を値で捕まえるとタスクが TaskSystem への強参照を持ち、
+// TaskSystem -> WorkQueue -> Task -> ラムダ -> TaskSystem の所有サイクルになる。
+// 呼び出し側が参照を手放しても TaskSystem がワーカー上で生き残るため、
+// スコープを抜けた時点で解放が終わっていない。
+TEST(TickManagerTest, ExecuteDoesNotLeaveTaskSystemReferencesBehind)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        for (int i = 0; i < 200; ++i)
+        {
+            auto sys = MakeTaskSystem();
+            TickManager manager(sys.get());
+            TestTickObject obj;
+            manager.Register(obj.GetPrimaryTickFunction());
+
+            auto param = MakeParam(sys);
+            manager.Execute(param);
+
+            ASSERT_EQ(obj.tickCount, 1) << "iteration=" << i;
+
+            // Execute から戻った時点で TaskSystem を掴んでいるのは
+            // sys / param.taskSystem / manager.m_taskSystem の3つだけであること。
+            // タスク側に強参照が残っていればこれより多くなる。
+            ASSERT_EQ(sys->GetReferenceCount(), 3u) << "iteration=" << i;
+        }
+    }
+}
+
+TEST(TickManagerTest, RepeatedExecuteIsStable)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        auto sys = MakeTaskSystem();
+        TickManager manager(sys.get());
+
+        TestTickObject first;
+        TestTickObject second;
+        manager.Register(first.GetPrimaryTickFunction());
+        manager.Register(second.GetPrimaryTickFunction());
+
+        auto param = MakeParam(sys);
+        for (int i = 0; i < 100; ++i)
+        {
+            // CheckAndUpdateInterval が毎回経過したと判定するよう時刻を進める。
+            param.crrentTime = static_cast<double>(i + 1);
+            manager.Execute(param);
+        }
+
+        EXPECT_EQ(first.tickCount, 100);
+        EXPECT_EQ(second.tickCount, 100);
+    }
+}

@@ -41,7 +41,10 @@ public:
     bool IsCanceled() const noexcept;
     bool Cancel();
     bool TryAddDependent(const core::TReferencePtr<Task>& task);
-    core::TFuture<void> GetFuture();
+
+    // done の future は生成時に一度だけ取得して共有する。
+    // 待機側が set_value と並行して get_future を呼ぶと promise が壊れるため。
+    SLUG_NODISCARD core::TSharedFuture<void> GetFuture() const noexcept;
     SLUG_NODISCARD TaskPriority GetPriority() const noexcept;
 
 private:
@@ -52,6 +55,7 @@ private:
 private:
     Func func;
     core::TPromise<void> done;
+    core::TSharedFuture<void> doneFuture;
     core::TAtomic<int32_t> pending { 0 };
     core::TAtomic<bool> finished { false };
     core::TAtomic<bool> canceled { false };

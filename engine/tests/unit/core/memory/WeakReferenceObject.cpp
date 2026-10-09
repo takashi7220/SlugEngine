@@ -279,3 +279,75 @@ TEST(TWeakReferencePtrTest, ConstructWeakFromRawPointer)
     }
 }
 }
+
+//------------------------------------------------------------------------------
+// 弱参照が1つだけの場合でも ControlBlock が早期破棄されないこと。
+// Release() と ~ReferenceObject が初期弱参照を二重に解放すると、
+// 生存中の弱参照が解放済みメモリを読んでしまう。
+//------------------------------------------------------------------------------
+TEST(TWeakReferencePtrTest, SingleWeakReferenceOutlivesObjectSafely)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TestObject::ResetCounters();
+
+        TWeakReferencePtr<TestObject> weak;
+        {
+            TReferencePtr<TestObject> strong(new TestObject());
+            weak = strong;
+            EXPECT_FALSE(weak.expired());
+        }
+
+        EXPECT_EQ(TestObject::Destructed(), 1);
+
+        // ControlBlock は weak が生きている間だけ保持されるため、
+        // ここでの各操作は解放済みメモリに触れてはならない。
+        EXPECT_TRUE(weak.expired());
+        EXPECT_EQ(weak.get_unsafe(), nullptr);
+        EXPECT_EQ(weak.lock().get(), nullptr);
+
+        weak.reset();
+        EXPECT_TRUE(weak.expired());
+    }
+}
+
+// 弱参照を複数回 lock / expired しても参照数が壊れないこと。
+TEST(TWeakReferencePtrTest, RepeatedQueryAfterExpiryIsStable)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TWeakReferencePtr<TestObject> weak;
+        {
+            TReferencePtr<TestObject> strong(new TestObject());
+            weak = strong;
+        }
+
+        for (int i = 0; i < 16; ++i)
+        {
+            EXPECT_TRUE(weak.expired());
+            EXPECT_EQ(weak.lock().get(), nullptr);
+        }
+    }
+}
+
+// 強参照が生きている間に弱参照だけを作っては捨てる操作を繰り返しても破綻しないこと。
+TEST(TWeakReferencePtrTest, WeakReferenceChurnWhileStrongAlive)
+{
+    SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
+    {
+        TestObject::ResetCounters();
+        {
+            TReferencePtr<TestObject> strong(new TestObject());
+
+            for (int i = 0; i < 64; ++i)
+            {
+                TWeakReferencePtr<TestObject> weak(strong);
+                EXPECT_FALSE(weak.expired());
+                EXPECT_EQ(weak.lock().get(), strong.get());
+            }
+
+            EXPECT_EQ(TestObject::Destructed(), 0);
+        }
+        EXPECT_EQ(TestObject::Destructed(), 1);
+    }
+}

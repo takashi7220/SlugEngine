@@ -67,19 +67,22 @@ struct ControlBlock : public MemoryObject
     explicit ControlBlock(void* obj) : object_ptr(obj)
     {}
 
-    void AddWeak() noexcept
+    unsigned long AddWeak() noexcept
     {
-        weak.fetch_add(1, core::MemoryOrderRelaxed);
+        return weak.fetch_add(1, core::MemoryOrderRelaxed) + 1;
     }
 
     unsigned long ReleaseWeak() noexcept
     {
-        if (weak.fetch_sub(1, core::MemoryOrderAcqRel) == 1)
+        // 減算後の this は他スレッドが破棄している可能性があるため、
+        // 残数は fetch_sub の戻り値から求める。
+        const unsigned long previous = weak.fetch_sub(1, core::MemoryOrderAcqRel);
+        if (previous == 1)
         {
             delete this;
             return 0;
         }
-        return weak.load(core::MemoryOrderRelaxed);
+        return previous - 1;
     }
 
     bool TryIncStrongFromWeak() noexcept
@@ -129,16 +132,17 @@ public:
 
     virtual unsigned long AddWeakRef() noexcept
     {
-        m_control->AddWeak();
-        return m_control->weak.load(core::MemoryOrderRelaxed);
+        return m_control->AddWeak();
     }
 
     virtual unsigned long Release() noexcept
     {
-        if (m_control->strong.fetch_sub(1, core::MemoryOrderAcqRel) == 1)
+        // 減算後の this / m_control は他スレッドが破棄している可能性があるため、
+        // 残数は fetch_sub の戻り値から求め、減算後に再参照しない。
+        ControlBlock* cb = m_control;
+        const unsigned long previous = cb->strong.fetch_sub(1, core::MemoryOrderAcqRel);
+        if (previous == 1)
         {
-            ControlBlock* cb = m_control;
-
             cb->alive.store(false, core::MemoryOrderRelease);
             cb->ClearObjectPtr();
 
@@ -146,12 +150,13 @@ public:
             delete this;
             return 0;
         }
-        return m_control->strong.load(core::MemoryOrderRelaxed);
+        return previous - 1;
     }
 
     virtual unsigned long ReleaseWeak() noexcept
     {
-        return m_control->ReleaseWeak();
+        ControlBlock* cb = m_control;
+        return cb->ReleaseWeak();
     }
 
     bool TryAddRefFromWeak() noexcept

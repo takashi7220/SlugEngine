@@ -17,9 +17,9 @@ inline TUniquePtr<T> MakeUnique()
 }
 
 template<typename T, typename... Args>
-TUniquePtr<T> MakeUnique(Args&... args)
+TUniquePtr<T> MakeUnique(Args&&... args)
 {
-    return std::make_unique<T>(args ...);
+    return std::make_unique<T>(std::forward<Args>(args)...);
 }
 
 #endif

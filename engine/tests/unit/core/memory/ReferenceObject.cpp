@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 #include "core/memory/ReferencePtr.hpp"
+#include "core/memory/WeakReferencePtr.hpp"
+#include "core/container/Vector.hpp"
+#include "core/thread/Thread.hpp"
 
 using namespace slug::core;
 
@@ -235,4 +238,124 @@ TEST_F(ReferencePtrFixture, AddressHelpers)
         EXPECT_EQ(TestObject::destroyed_count, 2);
     }
 }
+}
+
+//------------------------------------------------------------------------------
+// 並行した参照の増減
+//------------------------------------------------------------------------------
+// Release() が減算後に m_control を再参照すると、別スレッドが先に
+// delete を完了した場合に解放済みメモリへのアクセスになる。
+TEST_F(ReferencePtrFixture, ConcurrentReleaseDoesNotTouchFreedObject)
+{
+    constexpr int threadCount = 8;
+    constexpr int iterations = 2000;
+
+    for (int round = 0; round < 50; ++round)
+    {
+        TestObject::destroyed_count = 0;
+
+        {
+            TReferencePtr<TestObject> owner(new TestObject(round));
+
+            TVector<Thread> threads;
+            threads.reserve(threadCount);
+            for (int t = 0; t < threadCount; ++t)
+            {
+                threads.emplace_back([&owner]()
+                {
+                    for (int i = 0; i < iterations; ++i)
+                    {
+                        // コピーで AddRef、スコープ終了で Release を並行させる。
+                        TReferencePtr<TestObject> copy(owner);
+                        EXPECT_NE(copy.get(), nullptr);
+                    }
+                });
+            }
+
+            for (auto& th : threads)
+            {
+                th.join();
+            }
+
+            // 最後の1本は owner が保持しているので、まだ破棄されていない。
+            EXPECT_EQ(TestObject::destroyed_count, 0);
+            EXPECT_EQ(owner->GetReferenceCount(), 1u);
+        }
+
+        ASSERT_EQ(TestObject::destroyed_count, 1) << "round=" << round;
+    }
+}
+
+// 最後の参照がどのスレッドで落ちても、破棄はちょうど1回だけ起きる。
+TEST_F(ReferencePtrFixture, LastReferenceReleasedFromAnyThreadDestroysOnce)
+{
+    constexpr int threadCount = 8;
+
+    for (int round = 0; round < 200; ++round)
+    {
+        TestObject::destroyed_count = 0;
+
+        TVector<TReferencePtr<TestObject>> holders;
+        holders.reserve(threadCount);
+        {
+            TReferencePtr<TestObject> owner(new TestObject(round));
+            for (int t = 0; t < threadCount; ++t)
+            {
+                holders.push_back(owner);
+            }
+        }
+
+        // 全スレッドが同時に最後の参照を手放す。
+        TVector<Thread> threads;
+        threads.reserve(threadCount);
+        for (int t = 0; t < threadCount; ++t)
+        {
+            threads.emplace_back([&holders, t]()
+            {
+                holders[static_cast<size_t>(t)] = nullptr;
+            });
+        }
+        for (auto& th : threads)
+        {
+            th.join();
+        }
+
+        ASSERT_EQ(TestObject::destroyed_count, 1) << "round=" << round;
+    }
+}
+
+// 弱参照の増減も同様に、減算後の ControlBlock 再参照で壊れてはならない。
+TEST_F(ReferencePtrFixture, ConcurrentWeakReferenceChurnIsSafe)
+{
+    constexpr int threadCount = 8;
+    constexpr int iterations = 2000;
+
+    for (int round = 0; round < 20; ++round)
+    {
+        TestObject::destroyed_count = 0;
+        {
+            TReferencePtr<TestObject> owner(new TestObject(round));
+
+            TVector<Thread> threads;
+            threads.reserve(threadCount);
+            for (int t = 0; t < threadCount; ++t)
+            {
+                threads.emplace_back([&owner]()
+                {
+                    for (int i = 0; i < iterations; ++i)
+                    {
+                        TWeakReferencePtr<TestObject> weak(owner);
+                        EXPECT_FALSE(weak.expired());
+                        EXPECT_EQ(weak.lock().get(), owner.get());
+                    }
+                });
+            }
+            for (auto& th : threads)
+            {
+                th.join();
+            }
+            EXPECT_EQ(TestObject::destroyed_count, 0);
+        }
+        ASSERT_EQ(TestObject::destroyed_count, 1) << "round=" << round;
+    }
 }

@@ -10,33 +10,34 @@ TickManager::TickManager(core::TaskSystem* taskSystem)
 
 void TickManager::Register(TickFunction* function)
 {
-    if (function)
+    if (!function)
     {
-        if (function->parent)
-        {
-            function->parent->DeleteDependency(function->uuid);
-        }
+        return;
+    }
 
-        if (!HasGroup(function->type))
+    if (function->parent)
+    {
+        function->parent->DeleteDependency(function->uuid);
+    }
+
+    core::UniqueLock lock(m_groupMutex);
+
+    // 既存グループは必ず参照で取り出す。コピーに追加すると登録が破棄される。
+    for (auto& group : m_groups)
+    {
+        if (group.type == function->type)
         {
-            core::UniqueLock lock(m_groupMutex);
-            TickGroup& group = m_groups.emplace_back();
-            group.type = function->type;
-            group.functions.push_back(function);
-        }
-        else
-        {
-            TickGroup group;
-            if (TryGetGroup(function->type, group))
+            if (!group.HasFunction(function->uuid))
             {
-                core::UniqueLock lock(m_groupMutex);
-                if (!group.HasFunction(function->uuid))
-                {
-                    group.functions.push_back(function);
-                }
+                group.functions.push_back(function);
             }
+            return;
         }
     }
+
+    TickGroup& newGroup = m_groups.emplace_back();
+    newGroup.type = function->type;
+    newGroup.functions.push_back(function);
 }
 
 void TickManager::Execute(TickParam& param)
@@ -50,7 +51,11 @@ void TickManager::Execute(TickParam& param)
         size_t count = group.functions.size();
         if (count > 0)
         {
-            param.taskSystem->ParallelFor(0, count, ParallelForOptions(), [&group, param](size_t index)
+            // param を値で捕まえると TickParam::taskSystem のコピーがタスク側に残り、
+            // TaskSystem -> WorkQueue -> Task -> ラムダ -> TaskSystem の所有サイクルになる。
+            // ParallelFor はタスクの実行完了までは待つがタスクの破棄までは待たないため、
+            // 呼び出し側が参照を手放しても TaskSystem がワーカー上で生き続けてしまう。
+            param.taskSystem->ParallelFor(0, count, ParallelForOptions(), [&group, &param](size_t index)
             {
                 group.functions.at(index)->Execute(param);
             });
