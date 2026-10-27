@@ -19,13 +19,13 @@ void TickFunction::Execute(const TickParam& param)
 
 void TickFunction::AddDependency(TickFunction* function)
 {
-    if (function && !function->HasDependency(function->uuid))
+    if (function && !function->HasDependency(function->id))
     {
         if (this->type == function->type)
         {
             if (function->parent)
             {
-                function->parent->DeleteDependency(function->uuid);
+                function->parent->DeleteDependency(function->id);
             }
             function->parent = this;
             dependents.push_back(function);
@@ -37,12 +37,12 @@ void TickFunction::AddDependency(TickFunction* function)
     }
 }
 
-void TickFunction::DeleteDependency(UUID _uuid)
+void TickFunction::DeleteDependency(RuntimeID id)
 {
     auto itr = dependents.begin();
     while (itr != dependents.end())
     {
-        if ((*itr)->uuid == _uuid)
+        if ((*itr)->id == id)
         {
             (*itr)->parent = nullptr;
             itr = dependents.erase(itr);
@@ -55,11 +55,11 @@ void TickFunction::DeleteDependency(UUID _uuid)
     }
 }
 
-bool TickFunction::HasDependency(UUID _uuid)
+bool TickFunction::HasDependency(RuntimeID id)
 {
     for (auto& itr : dependents)
     {
-        if (itr->uuid == _uuid)
+        if (itr->id == id)
         {
             return true;
         }

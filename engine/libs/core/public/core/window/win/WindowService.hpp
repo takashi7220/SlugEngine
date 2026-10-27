@@ -25,7 +25,7 @@ public:
 
     bool TryEnumerateMonitors(core::TVector<MonitorInfo>& monitors) const override;
     bool TryEnumerateMonitorDetails(core::TVector<MonitorDetailInfo>& monitors) const override;
-    std::optional<MonitorInfo> GetMonitorFromWindow(UUID id) const override;
+    std::optional<MonitorInfo> GetMonitorFromWindow(WindowID id) const override;
     std::optional<MonitorInfo> GetPrimaryMonitor() const override;
 
     void SetAppUserAttention(bool flag) override;

@@ -44,7 +44,7 @@ tick/
 
 | メンバ | 役割 |
 |---|---|
-| `uuid` | 依存関係の登録・解除に使う一意識別子 |
+| `id` | 依存関係の登録・解除に使う `RuntimeID`（実行中の64bit連番） |
 | `type` | 所属グループ名（`FixedString<32>`） |
 | `target` | Tick を呼び出す対象の `TickObject`（非所有ポインタ） |
 | `parent` | 自分を dependents に持つ親 `TickFunction`（非所有ポインタ） |

@@ -77,7 +77,7 @@
 | ウィンドウ | `IWindow`, `IWindowManager`（Windows実装と Null実装を提供） |
 | サービスプロバイダ | `ServiceProvider`（DI コンテナ相当） |
 | デバッグ | `Logger`, `Assert`, `MemoryCounter`（メモリリーク検出） |
-| UUID | `UUID`, `NameID`（オブジェクト識別子） |
+| ID | `RuntimeID`（実行中の64bit連番）、`UUID`（保存用128bit識別子）、`NameID`（名前の識別子）。詳細は [ID設計](core/5_identifiers.md) |
 | タイマー / Tick | `Timer`, `TickManager`（フレーム進行管理） |
 | カラー | `Color`, `Spectrum`, `ColorSpaceUtility` |
 | パターン | `Singleton`, `ResourcePool`, `Closure`, `NotifyPropertyChanged` |

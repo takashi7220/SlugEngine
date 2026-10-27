@@ -44,7 +44,7 @@ public:
     virtual WindowPtr RegisterWindow(const IWindow::Desc& desc) = 0;
     virtual bool TryEnumerateMonitors(core::TVector<MonitorInfo>& monitors) const = 0;
     virtual bool TryEnumerateMonitorDetails(core::TVector<MonitorDetailInfo>& monitors) const = 0;
-    virtual std::optional<MonitorInfo> GetMonitorFromWindow(UUID id) const = 0;
+    virtual std::optional<MonitorInfo> GetMonitorFromWindow(WindowID id) const = 0;
     virtual std::optional<MonitorInfo> GetPrimaryMonitor() const = 0;
 
     virtual void SetAppUserAttention(bool flag) = 0;
@@ -123,7 +123,7 @@ public:
 protected:
 
     core::Mutex m_mutex;
-    core::TUnorderedMap<core::WindowID, WindowPtr, UUIDHash> m_windows = {};
+    core::TUnorderedMap<core::WindowID, WindowPtr, RuntimeIDHash> m_windows = {};
     DpiAwareness m_dpiAwareness = DpiAwareness::PerMonitorAware;
     core::WindowEventListner m_listner;
 };

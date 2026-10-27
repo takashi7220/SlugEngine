@@ -1,57 +1,72 @@
+
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+
+#include "core/Define.hpp"
+#include "core/container/Array.hpp"
 #include "core/container/String.hpp"
-#include "core/container/UnorderedMap.hpp"
-#include "core/utility/Hash.hpp"
 
 namespace slug::core
 {
 class UUID
 {
 public:
-    bool operator==(const UUID& v) const
+    using Bytes = TArray<uint8_t, 16>;
+
+    constexpr UUID() noexcept = default;
+    explicit constexpr UUID(const Bytes& bytes) noexcept
+        : m_bytes(bytes)
     {
-        return this->value[0] == v.value[0] && this->value[1] == v.value[1];
     }
 
-    UUID()
+    UUID(const UUID&) noexcept = default;
+    UUID(UUID&&) noexcept = default;
+    UUID& operator=(const UUID&) noexcept = default;
+    UUID& operator=(UUID&&) noexcept = default;
+
+    SLUG_NODISCARD static UUID Generate() noexcept;
+
+    SLUG_NODISCARD bool operator==(const UUID& other) const noexcept
     {
-        InternalID id = GenerateInternal();
-        value[0] = id.value[0];
-        value[1] = id.value[1];
+        return m_bytes == other.m_bytes;
     }
 
-    size_t GetHash() const
+    SLUG_NODISCARD bool IsValid() const noexcept;
+
+    SLUG_NODISCARD size_t GetHash() const noexcept
     {
-        size_t seed = 0;
-        HashUtility::HashCombine(seed, value[0]);
-        HashUtility::HashCombine(seed, value[1]);
-        return seed;
+        return StringUtility::Hash(Get());
     }
 
-    core::StringView Get() const
+    // バイナリ表現は RFC 9562 のバイト順で保持する。
+    SLUG_NODISCARD StringView Get() const noexcept
     {
-        return core::StringView(str, sizeof(str));
+        return StringView(reinterpret_cast<const char*>(m_bytes.data()), m_bytes.size());
     }
+
+    SLUG_NODISCARD const Bytes& GetBytes() const noexcept
+    {
+        return m_bytes;
+    }
+
+    void SetBytes(const Bytes& bytes) noexcept
+    {
+        m_bytes = bytes;
+    }
+
+    SLUG_NODISCARD bool TrySetBytes(StringView bytes) noexcept;
+    SLUG_NODISCARD String ToString() const noexcept;
+    SLUG_NODISCARD bool TrySetString(StringView text) noexcept;
+
 private:
-
-    struct InternalID
-    {
-        uint64_t value[2];
-    };
-
-    static InternalID GenerateInternal();
-
-    union
-    {
-        uint64_t value[2];
-        char str[16];
-    };
+    Bytes m_bytes = {};
 };
 
 struct UUIDHash
 {
-    size_t operator()(const UUID& uuid) const
+    SLUG_NODISCARD size_t operator()(const UUID& uuid) const noexcept
     {
         return uuid.GetHash();
     }

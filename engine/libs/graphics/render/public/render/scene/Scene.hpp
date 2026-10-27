@@ -5,7 +5,7 @@
 #include "core/container/String.hpp"
 #include "core/container/UnorderedMap.hpp"
 #include "core/container/Vector.hpp"
-#include "core/uuid/UUID.hpp"
+#include "core/uuid/RuntimeID.hpp"
 
 namespace slug::render
 {
@@ -34,7 +34,7 @@ private:
 
 private:
     render_core::PrimitiveDrawObjectPtr m_primitiveDrawObject = nullptr;
-    core::TUnorderedMap<render_core::DrawObjectID, render_core::DrawObjectPtr, core::UUIDHash> m_drawObjects;
+    core::TUnorderedMap<render_core::DrawObjectID, render_core::DrawObjectPtr, core::RuntimeIDHash> m_drawObjects;
     core::TVector<render_core::DrawObjectID> m_drawObjectOrder;
     bool requireRebuild = false;
 };

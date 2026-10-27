@@ -17,7 +17,7 @@ void TickManager::Register(TickFunction* function)
 
     if (function->parent)
     {
-        function->parent->DeleteDependency(function->uuid);
+        function->parent->DeleteDependency(function->id);
     }
 
     core::UniqueLock lock(m_groupMutex);
@@ -27,7 +27,7 @@ void TickManager::Register(TickFunction* function)
     {
         if (group.type == function->type)
         {
-            if (!group.HasFunction(function->uuid))
+            if (!group.HasFunction(function->id))
             {
                 group.functions.push_back(function);
             }
@@ -74,7 +74,7 @@ void TickManager::CleanFunction(TickGroup& group)
         }
         else if ((*itr)->parent)
         {
-            (*itr)->parent->DeleteDependency((*itr)->uuid);
+            (*itr)->parent->DeleteDependency((*itr)->id);
             (*itr)->parent = nullptr;
         }
         else

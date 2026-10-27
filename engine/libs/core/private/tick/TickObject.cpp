@@ -4,10 +4,13 @@
 namespace slug::core
 {
 
-TickObject::TickObject(UUID uuid)
+TickObject::TickObject(RuntimeID id)
 {
     m_primaryTickFunction.reset(NewObject<TickFunction>());
-    m_primaryTickFunction->uuid = uuid;
+    if (id.IsValid())
+    {
+        m_primaryTickFunction->id = id;
+    }
     m_primaryTickFunction->target = this;
 }
 
@@ -19,14 +22,14 @@ void TickObject::AddPrimaryTickDependency(TickObject* object)
     }
 }
 
-void TickObject::DeletePrimaryTickDependency(UUID uuid)
+void TickObject::DeletePrimaryTickDependency(RuntimeID id)
 {
-    m_primaryTickFunction->DeleteDependency(uuid);
+    m_primaryTickFunction->DeleteDependency(id);
 }
 
-bool TickObject::HasPrimaryTickDependency(UUID uuid)
+bool TickObject::HasPrimaryTickDependency(RuntimeID id)
 {
-    return m_primaryTickFunction->HasDependency(uuid);
+    return m_primaryTickFunction->HasDependency(id);
 }
 
 const TickFunctionPtr& TickObject::GetPrimaryTickFunction()

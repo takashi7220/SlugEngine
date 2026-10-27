@@ -52,7 +52,7 @@ public:
         return false;
     }
 
-    std::optional<MonitorInfo> GetMonitorFromWindow(UUID id) const override
+    std::optional<MonitorInfo> GetMonitorFromWindow(WindowID id) const override
     {
         return std::nullopt;
     }

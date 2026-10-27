@@ -2,6 +2,7 @@
 #include <optional>
 #include "math/Vector2.hpp"
 #include "core/object/SObject.hpp"
+#include "core/uuid/RuntimeID.hpp"
 #include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
 #include "core/Function.hpp"
@@ -9,7 +10,7 @@
 
 namespace slug::core
 {
-using WindowID = core::UUID;
+using WindowID = core::RuntimeID;
 
 enum class WindowMode
 {
@@ -367,13 +368,13 @@ public:
         return m_name.data();
     }
 
-    const WindowID& GetWindowID()
+    SLUG_NODISCARD const WindowID& GetWindowID() const noexcept
     {
         return m_uuid;
     }
 
 protected:
-    core::WindowID m_uuid;
+    core::WindowID m_uuid = WindowID::Generate();
     core::FixedString<128> m_name;
     IWindow() = default;
 };

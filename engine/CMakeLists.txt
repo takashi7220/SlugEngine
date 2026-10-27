@@ -26,7 +26,7 @@ set(TEST_APP_OUTPUT_DIR_PATH ${WORKSPACE_DIR_PATH}/tests)
 # options
 option(SLUG_USE_MIMALLOC "use mimmaloc" ON)
 option(SLUG_BUILD_TEST "build test" ON)
-option(SLUG_BUILD_SHADER "build shader" ON)
+option(SLUG_BUILD_SHADER "build shader" OFF)
 
 # プリプロセッサマクロを設定
 set(COMPILE_DEFINITIONS_ALL PLATFORM_WINDOWS SLUG_USE_STL SLUG_USE_SIMD SLUG_OVERRIDE_NEW_DELETE CONFIGURATION="$(Configuration)")

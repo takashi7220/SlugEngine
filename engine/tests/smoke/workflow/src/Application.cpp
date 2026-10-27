@@ -95,7 +95,7 @@ void Application::AddWindowEventListner()
         if (std::holds_alternative<core::WindowCloseEvent>(e))
         {
             const core::WindowCloseEvent& closeEvent = std::get<core::WindowCloseEvent>(e);
-            if (m_mainWindow->GetUUID() == closeEvent.id)
+            if (m_mainWindow->GetWindowID() == closeEvent.id)
             {
                 m_shouldExit = true;
             }

@@ -1,136 +1,85 @@
 #pragma once
+
+#include "engine_core/component/IComponent.hpp"
+#include "core/object/SObject.hpp"
 #include "core/container/List.hpp"
-#include "core/tick/TickObject.hpp"
-#include "engine_core/actor/ActorComponent.hpp"
-#include "engine_core/actor/SceneComponent.hpp"
-#include "engine_core/actor/ActorUtility.hpp"
-#include "engine_core/actor/SpawnParameter.hpp"
-
-#define SLUG_ACTOR_REGISTER(type)                                                                       \
-namespace                                                                                               \
-{                                                                                                       \
-struct AutoRegisterGenerator_##type                                                                     \
-{                                                                                                       \
-    AutoRegisterGenerator_##type()                                                                      \
-    {                                                                                                   \
-        slug::engine_core::ActorUtility::RegisterGenerator(&type::GetStaticActorTypeId, &type::Create);   \
-    }                                                                                                   \
-} autoRegisterGenerator_##type;                                                                           \
-}                                                                                                       \
-
-#define SLUG_ACTOR_MEMBER(type)                                                                         \
-static engine_core::ActorTypeID GetStaticActorTypeId()                                                  \
-{                                                                                                       \
-    return engine_core::ActorTypeID(#type);                                                             \
-}                                                                                                       \
-static void GatherAncestorTypes(core::TVector<engine_core::ActorTypeID>& types)                         \
-{                                                                                                       \
-                                                                                                        \
-}                                                                                                       \
-static core::TVector<engine_core::ActorTypeID> GetStaticAncestorActorTypeIds()                          \
-{                                                                                                       \
-    core::TVector<engine_core::ActorTypeID> ret;                                                        \
-    return ret;                                                                                         \
-}                                                                                                       \
-static Actor* Create(const engine_core::ActorTypeID& actorTypeID)                                       \
-{                                                                                                       \
-    type* actor(new type());                                                                            \
-    actor->SetActorTypeID(type::GetStaticActorTypeId());                                                \
-    actor->SetAncestorActorTypeIDs(type::GetStaticAncestorActorTypeIds());                              \
-    actor->SetName(type::GetStaticActorTypeId().GetName());                                             \
-    actor->Initialize();                                                                                \
-    return core::MemoryUtility::CheckedCast<engine_core::Actor*, type*>(actor);                       \
-}                                                                                                       \
-
 
 namespace slug::engine_core
 {
 
-class Level;
-class IWorld;
-class Actor;
-
-using ActorPtr = core::TReferencePtr<Actor>;
-
-class Actor : public core::TickObject, public core::SObject, public core::ReflectionClass
+class Actor : public core::SObject
 {
 public:
-    Actor();
+    SLUG_DECLARE_SOBJECT_TYPEINFO(Actor, core::SObject);
 
-    virtual void Initialize() = 0;
-    virtual void Start() = 0;
-    virtual void Tick(const core::TickParam& tickParam) override;
-    virtual void End() = 0;
-
-    // parent actor
-    void SetParentActor(Actor* parent);
-    Actor* GetParentActor();
-
-    // world
-    IWorld* GetWorld();
-    void SetWorld(IWorld* world);
-
-    // level
-    Level* GetLevel();
-    void SetLevel(Level* level);
-
-    // child
-    void AddChild(Actor* child);
-    void DeleteChild(core::UUID uuid);
-    bool HasChild(core::UUID uuid);
-    Actor* GetChild(core::UUID uuid);
-    void GetChildren(core::TVector<Actor*>& children, bool recursive  = false);
-
-    // root component
-    void SetRootComponent(SceneComponent* component);
-    SceneComponent* GetRootComponent();
-
-    // actor component
-    ActorComponent* AddActorComponent(ComponentTypeID type);
-    void AddActorComponent(ActorComponent* component);
-    void DeleteActorComponent(core::UUID uuid);
-    bool HasActorComponent(core::UUID uuid);
-    void GetActorComponents(ComponentTypeID type, core::TVector<ActorComponent*>& components);
-    ActorComponent* GetActorComponent(core::UUID uuid);
-
-    // actor type id
-    void SetActorTypeID(const ActorTypeID type);
-    ActorTypeID GetActorTypeID();
-
-public:
-    template<ActorComponentType T>
-    ActorComponentPtr AddComponent()
+    Actor(World* world, Level* owner)
+        : m_world(world)
+        , m_ownerLevel(owner)
+        , m_parent(nullptr)
+        , m_components()
     {
-        return AddComponent(T::GetStaticComponentTypeId());
     }
 
-    template<ActorComponentType T>
-    void DeleteComponent()
+    virtual ~Actor() = default;
+    SLUG_COPY_DEFAULT(Actor);
+
+    virtual void Initialize(const IProperty* property) = 0;
+    virtual void UpdateProperties(const IProperty* property) = 0;
+    virtual void Terminate() = 0;
+    virtual void Resolve() = 0;
+
+    template<typename T>
+    T* AddComponent()
     {
-        DeleteComponent(T::GetStaticComponentTypeId());
+        return core::SObjectUtility::CheckedCast<T>(AddComponent(T::GetStaticComponentType()));
     }
 
-    template<ActorComponentType T>
-    bool HasComponent()
+    IComponent* AddComponent(ComponentType type)
     {
-        return HasComponent(T::GetStaticComponentTypeId());
+
     }
 
-    template<ActorComponentType T>
-    void GetComponents(core::TVector<ActorComponent*>& components)
+    bool RemoveComponent(IComponent* component)
     {
-        GetComponents(T::GetStaticComponentTypeId(), components);
+        if (component != nullptr)
+        {
+            RemoveComponent(component->GetComponentInfo().id);
+        }
+        return false;
     }
+
+    bool RemoveComponent(ComponentID componentId)
+    {
+        auto itr = m_components.begin();
+        while (itr != m_components.end())
+        {
+            ComponentPtr& component = (*itr);
+            if (component != nullptr && component->GetComponentInfo().id == componentId)
+            {
+                itr = m_components.erase(itr);
+            }
+            else
+            {
+                itr++;
+            }
+        }
+    }
+
+    template<typename T>
+    T* GetComponent(ComponentID id);
+    IComponent* GetComponent(ComponentID id);
+
+    template<typename T>
+    core::TVector<T*> GetComponents();
+    core::TVector<IComponent*> GetComponents(ComponentType type);
+
+    bool HasComponent(ComponentID componentId);
 
 private:
-    IWorld* m_world;
-    Level* m_level;
+    World* m_world;
+    Level* m_ownerLevel;
     Actor* m_parent;
-    SceneComponentPtr m_rootComponent;
-    core::TList<ActorPtr> m_children;
-    core::TList<ActorComponentPtr> m_actorComponents;
-    ActorTypeID m_actorTypeId;
-    core::TVector<ActorTypeID> m_ancestorActorTypeIds;
+    core::TList<ComponentPtr> m_components;
 };
 
 }

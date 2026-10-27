@@ -12,11 +12,11 @@ struct TickGroup
     TickGroupType type = {};
     core::TVector<TickFunctionPtr> functions = {};
 
-    bool HasFunction(UUID uuid)
+    bool HasFunction(RuntimeID id)
     {
         for (auto& function : functions)
         {
-            if (function->uuid == uuid)
+            if (function->id == id)
             {
                 return true;
             }

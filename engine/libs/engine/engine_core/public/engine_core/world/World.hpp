@@ -8,14 +8,10 @@ namespace slug::engine_core
 class World : public IWorld
 {
 public:
-    LevelPtr GetPersistantLevel();
-    void SetPersistantLevel(const LevelPtr& level);
-
-    void SpawnActor(core::UUID levelID, const SpawnParameter& spawnParameter);
-
+    SLUG_DECLARE_SOBJECT_TYPEINFO(World, IWorld)
 
 private:
-    LevelPtr m_persistentLevel;
+
 };
 
 }

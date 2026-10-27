@@ -106,7 +106,7 @@ bool WindowService::TryEnumerateMonitorDetails(core::TVector<MonitorDetailInfo>&
 }
 
 
-std::optional<MonitorInfo> WindowService::GetMonitorFromWindow(UUID id) const
+std::optional<MonitorInfo> WindowService::GetMonitorFromWindow(WindowID id) const
 {
     auto itr = m_windows.find(id);
     if (itr != m_windows.end())

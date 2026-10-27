@@ -3,14 +3,14 @@
 #include "render_core/geometry/Mesh.hpp"
 #include "render_core/Define.hpp"
 #include "core/memory/ReferencePtr.hpp"
-#include "core/uuid/UUID.hpp"
+#include "core/uuid/RuntimeID.hpp"
 
 namespace slug::render_core
 {
 class DrawObject;
 using DrawObjectPtr = core::TReferencePtr<DrawObject>;
 
-using DrawObjectID = core::UUID;
+using DrawObjectID = core::RuntimeID;
 
 class DrawObject : public RenderResource
 {
@@ -35,7 +35,7 @@ public:
     SLUG_NODISCARD const DrawObjectID& GetDrawObjectID() const noexcept;
 
 private:
-    DrawObjectID m_id = {};
+    DrawObjectID m_id = DrawObjectID::Generate();
     MeshPtr m_mesh = nullptr;
     ShaderParameterPtr m_shaderParameter = nullptr;
     MaterialPtr m_material = nullptr;

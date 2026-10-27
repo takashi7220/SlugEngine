@@ -11,7 +11,7 @@ WindowEventListner::WindowEventListner()
 
 WindowCallbackID WindowEventListner::RegisterCallback(const RegisterParam& param)
 {
-    WindowCallbackID id = {};
+    WindowCallbackID id = WindowCallbackID::Generate();
     CallbackMapPerEvent& callbackMapPerEvent = m_callbacks[param.targetWindow][param.type];
     if (callbackMapPerEvent.find(id) == callbackMapPerEvent.end())
     {

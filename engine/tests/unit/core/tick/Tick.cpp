@@ -23,18 +23,18 @@ public:
 class OrderTickObject : public TickObject
 {
 public:
-    OrderTickObject(std::vector<UUID>& order)
+    OrderTickObject(std::vector<RuntimeID>& order)
         : TickObject()
         , m_order(order)
     {}
 
     void Tick(const TickParam&) override
     {
-        m_order.push_back(m_primaryTickFunction->uuid);
+        m_order.push_back(m_primaryTickFunction->id);
     }
 
 private:
-    std::vector<UUID>& m_order;
+    std::vector<RuntimeID>& m_order;
 };
 
 class AtomicTickObject : public TickObject
@@ -84,7 +84,7 @@ TEST(TickFunctionTest, AddDependency)
 
         parent.AddPrimaryTickDependency(&child);
 
-        EXPECT_TRUE(parent.HasPrimaryTickDependency(child.GetPrimaryTickFunction()->uuid));
+        EXPECT_TRUE(parent.HasPrimaryTickDependency(child.GetPrimaryTickFunction()->id));
     }
 }
 
@@ -94,13 +94,13 @@ TEST(TickFunctionTest, DeleteDependency)
     {
         TestTickObject parent;
         TestTickObject child;
-        UUID childUUID = child.GetPrimaryTickFunction()->uuid;
+        RuntimeID childRuntimeID = child.GetPrimaryTickFunction()->id;
 
         parent.AddPrimaryTickDependency(&child);
-        EXPECT_TRUE(parent.HasPrimaryTickDependency(childUUID));
+        EXPECT_TRUE(parent.HasPrimaryTickDependency(childRuntimeID));
 
-        parent.DeletePrimaryTickDependency(childUUID);
-        EXPECT_FALSE(parent.HasPrimaryTickDependency(childUUID));
+        parent.DeletePrimaryTickDependency(childRuntimeID);
+        EXPECT_FALSE(parent.HasPrimaryTickDependency(childRuntimeID));
     }
 }
 
@@ -140,19 +140,19 @@ TEST(TickFunctionTest, DependencyExecutionOrder)
     SLUG_MEMORY_LEACK_CHECK_SCOPE(Debug, Default)
     {
         auto sys = MakeTaskSystem();
-        std::vector<UUID> order;
+        std::vector<RuntimeID> order;
         OrderTickObject parent(order);
         OrderTickObject child(order);
-        UUID parentUUID = parent.GetPrimaryTickFunction()->uuid;
-        UUID childUUID = child.GetPrimaryTickFunction()->uuid;
+        RuntimeID parentRuntimeID = parent.GetPrimaryTickFunction()->id;
+        RuntimeID childRuntimeID = child.GetPrimaryTickFunction()->id;
 
         parent.AddPrimaryTickDependency(&child);
         auto param = MakeParam(sys);
         parent.GetPrimaryTickFunction()->Execute(param);
 
         ASSERT_EQ(order.size(), 2u);
-        EXPECT_EQ(order[0], parentUUID);
-        EXPECT_EQ(order[1], childUUID);
+        EXPECT_EQ(order[0], parentRuntimeID);
+        EXPECT_EQ(order[1], childRuntimeID);
     }
 }
 
@@ -218,14 +218,14 @@ TEST(TickFunctionTest, ReparentingDependency)
         TestTickObject parent1;
         TestTickObject parent2;
         TestTickObject child;
-        UUID childUUID = child.GetPrimaryTickFunction()->uuid;
+        RuntimeID childRuntimeID = child.GetPrimaryTickFunction()->id;
 
         parent1.AddPrimaryTickDependency(&child);
-        EXPECT_TRUE(parent1.HasPrimaryTickDependency(childUUID));
+        EXPECT_TRUE(parent1.HasPrimaryTickDependency(childRuntimeID));
 
         parent2.AddPrimaryTickDependency(&child);
-        EXPECT_FALSE(parent1.HasPrimaryTickDependency(childUUID));
-        EXPECT_TRUE(parent2.HasPrimaryTickDependency(childUUID));
+        EXPECT_FALSE(parent1.HasPrimaryTickDependency(childRuntimeID));
+        EXPECT_TRUE(parent2.HasPrimaryTickDependency(childRuntimeID));
     }
 }
 
@@ -235,18 +235,18 @@ TEST(TickFunctionTest, CleanRemovesExpiredDependents)
     {
         auto sys = MakeTaskSystem();
         TestTickObject parent;
-        UUID childUUID;
+        RuntimeID childRuntimeID;
 
         {
             TestTickObject child;
-            childUUID = child.GetPrimaryTickFunction()->uuid;
+            childRuntimeID = child.GetPrimaryTickFunction()->id;
             parent.AddPrimaryTickDependency(&child);
         }
 
         auto param = MakeParam(sys);
         parent.GetPrimaryTickFunction()->Execute(param);
 
-        EXPECT_FALSE(parent.HasPrimaryTickDependency(childUUID));
+        EXPECT_FALSE(parent.HasPrimaryTickDependency(childRuntimeID));
     }
 }
 

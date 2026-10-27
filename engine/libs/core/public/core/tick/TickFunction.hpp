@@ -1,6 +1,7 @@
 #pragma once
 
-#include "core/uuid/UUID.hpp"
+#include "core/uuid/RuntimeID.hpp"
+#include "core/container/String.hpp"
 #include "core/container/Vector.hpp"
 #include "core/thread/Atomic.hpp"
 #include "core/task/TaskSystem.hpp"
@@ -35,7 +36,7 @@ using TickFunctionPtr = core::TReferencePtr<TickFunction>;
 class TickFunction : public core::ReferenceObject
 {
 public:
-    UUID uuid = {};
+    RuntimeID id = RuntimeID::Generate();
     TickGroupType type = SLUG_NAMEOF(SystemTickGroupType::Default);
     TickFunction* parent = nullptr;
     TickObject* target = nullptr;
@@ -46,8 +47,8 @@ public:
 
     virtual void Execute(const TickParam& param);
     void AddDependency(TickFunction* function);
-    void DeleteDependency(UUID _uuid);
-    bool HasDependency(UUID _uuid);
+    void DeleteDependency(RuntimeID id);
+    bool HasDependency(RuntimeID id);
 
 private:
     void ExecuteDependents(const TickParam& param);

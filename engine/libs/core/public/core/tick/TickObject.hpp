@@ -9,12 +9,12 @@ namespace slug::core
 class TickObject
 {
 public:
-    TickObject(UUID uuid = {});
+    TickObject(RuntimeID id = {});
     virtual ~TickObject() = default;
     virtual void Tick(const TickParam& tickParam) = 0;
     void AddPrimaryTickDependency(TickObject* object);
-    void DeletePrimaryTickDependency(UUID uuid);
-    bool HasPrimaryTickDependency(UUID uuid);
+    void DeletePrimaryTickDependency(RuntimeID id);
+    bool HasPrimaryTickDependency(RuntimeID id);
     const TickFunctionPtr& GetPrimaryTickFunction();
 protected:
     TickFunctionPtr m_primaryTickFunction = {};

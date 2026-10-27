@@ -23,3 +23,11 @@
 
 #define SLUG_DEBUG_MODE DEBUG_MODE
 #define SLUG_ENABLE_MEMORY_COUNTER SLUG_DEBUG_MODE
+
+#define SLUG_COPY_DELETE(className) \
+    className(const className&) = delete; \
+    className& operator=(const className&) = delete;
+
+#define SLUG_COPY_DEFAULT(className) \
+    className(const className&) = default; \
+    className& operator=(const className&) = default;

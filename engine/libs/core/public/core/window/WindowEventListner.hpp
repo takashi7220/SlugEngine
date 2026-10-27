@@ -1,11 +1,12 @@
 #pragma once
 
 #include "core/window/IWindow.hpp"
+#include "core/container/UnorderedMap.hpp"
 #include "core/thread/Mutex.hpp"
 
 namespace slug::core
 {
-using WindowCallbackID = UUID;
+using WindowCallbackID = RuntimeID;
 
 class WindowEventListner
 {
@@ -25,10 +26,10 @@ public:
     void SendEvent(const core::WindowEventBase* event) const;
 
 private:
-    using CallbackMapPerEvent = core::TUnorderedMap<WindowCallbackID, IWindow::EventCallback, UUIDHash>;
+    using CallbackMapPerEvent = core::TUnorderedMap<WindowCallbackID, IWindow::EventCallback, RuntimeIDHash>;
     using CallbackMapPerWindow = core::TUnorderedMap<WindowEventType, CallbackMapPerEvent>;
 
 private:
-    core::TUnorderedMap<WindowID, CallbackMapPerWindow, UUIDHash> m_callbacks;
+    core::TUnorderedMap<WindowID, CallbackMapPerWindow, RuntimeIDHash> m_callbacks;
 };
 }
