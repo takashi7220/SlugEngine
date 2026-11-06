@@ -36,6 +36,8 @@ struct TestCommandAOptions : TCommandOptionsBase<TestCommandAOptions>
 class TestCommandA : public CommandBase<TestCommandAOptions>
 {
 public:
+    SLUG_DECLARE_COMMAND(TestCommandA)
+
     bool Execute(ServiceProvider& serviceProvider, const TestCommandAOptions& options) override
     {
         return true;
@@ -45,7 +47,6 @@ public:
     {
     }
 };
-SLUG_AUTO_REGISTER_COMMAND(TestCommandA)
 
 struct TestCommandBOptions : TCommandOptionsBase<TestCommandBOptions>
 {
@@ -66,6 +67,8 @@ struct TestCommandBOptions : TCommandOptionsBase<TestCommandBOptions>
 class TestCommandB : public CommandBase<TestCommandBOptions>
 {
 public:
+    SLUG_DECLARE_COMMAND(TestCommandB);
+
     bool Execute(ServiceProvider& serviceProvider, const TestCommandBOptions& options) override
     {
         return true;
@@ -75,7 +78,6 @@ public:
     {
     }
 };
-SLUG_AUTO_REGISTER_COMMAND(TestCommandB)
 
 // 手動登録テスト用。自動登録しない。
 class TestCommandC : public CommandBase<TestCommandBOptions>
@@ -91,9 +93,8 @@ public:
     }
 };
 
-// -------------------------------------------------------------------
-// ヘルパー
-// -------------------------------------------------------------------
+SLUG_REGISTER_COMMAND(TestCommandA);
+SLUG_REGISTER_COMMAND(TestCommandB);
 
 namespace
 {
@@ -198,7 +199,7 @@ TEST(CommandService, GetRegisteredCommandNames_ContainsAutoRegistered)
 {
     auto service = MakeCommandService();
     TVector<String> names;
-    service->GetRegisteredCommandNames(names);
+    service->GetCommandNames(names);
 
     auto contains = [&](const char* name)
     {
@@ -217,7 +218,7 @@ TEST(CommandService, GetRegisteredCommandNames_AfterManualRegister)
     service->RegisterCommand("TestCommandC", MakeReference<TestCommandC>());
 
     TVector<String> names;
-    service->GetRegisteredCommandNames(names);
+    service->GetCommandNames(names);
 
     bool found = false;
     for (const auto& n : names)
