@@ -13,6 +13,21 @@ public:
         Node* next = nullptr;
         Node* prev = nullptr;
         T* data = nullptr;
+
+        Node()
+            : next(nullptr), prev(nullptr), data(nullptr)
+        {
+        }
+
+        Node(T* dataPtr)
+            : next(nullptr), prev(nullptr), data(dataPtr)
+        {
+        }
+
+        Node(Node* nextNode, Node* prevNode, T* dataPtr)
+            : next(nextNode), prev(prevNode), data(dataPtr)
+        {
+        }
     };
 
     IntrusiveLinkedList()
@@ -110,6 +125,11 @@ public:
             func(current->data);
             current = current->prev;
         }
+    }
+
+    Node* GetHead()
+    {
+        return head;
     }
 
 private:
