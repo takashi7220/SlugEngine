@@ -16,6 +16,10 @@
     {                                                                               \
         return Class::GetStaticTypeID();                                            \
     }                                                                               \
+    virtual bool IsA(slug::core::SObjectTypeID typeID) const override               \
+    {                                                                               \
+        return Class::GetStaticTypeID() == typeID;                                  \
+    }                                                                               \
     virtual bool IsAncestorType(slug::core::SObjectTypeID typeID) const override    \
     {                                                                               \
         return typeID == GetStaticTypeID() || BaseClass::IsAncestorType(typeID);    \
@@ -39,6 +43,17 @@ public:
     virtual bool IsAncestorType(SObjectTypeID typeID) const
     {
         return typeID == GetStaticTypeID();
+    }
+
+    virtual bool IsA(SObjectTypeID typeID) const
+    {
+        return GetStaticTypeID() == typeID;
+    }
+
+    template<typename T>
+    bool IsA() const
+    {
+        return IsA(T::GetStaticTypeID());
     }
 };
 
