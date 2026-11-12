@@ -1,21 +1,90 @@
 #pragma once
 
 #include "core/container/String.hpp"
+#include "core/container/Vector.hpp"
+#include "core/object/SObject.hpp"
+
+/*
+* ex.
+* SLUG_ATTRIBUTE(slug::core::PropertyDescriptor(slug::core::PropertyEditType::Editable, "Category", "Display Name", "Tooltip", "Group Name"))
+*/
+#define SLUG_ATTRIBUTE(x)
 
 namespace slug::core
 {
 
 using TypeId = uint64_t;
 
-SLUG_PROPERTY()
+class IAttribute : public SObject
+{
+public:
+    SLUG_DECLARE_SOBJECT_TYPEINFO(IAttribute, SObject)
+};
+using IAttributePtr = core::TReferencePtr<IAttribute>;
+
+class CustomAttributeList
+{
+public:
+    CustomAttributeList() = default;
+
+    template<typename T>
+    CustomAttributeList& AddAttribute(const T& attribute)
+    {
+        attributes.push_back(core::MakeReference<T>(attribute));
+        return *this;
+    }
+
+    CustomAttributeList& AddAttribute(const IAttributePtr& attribute)
+    {
+        attributes.push_back(attribute);
+        return *this;
+    }
+
+    template<typename T>
+    T* GetAttribute()
+    {
+        for (const auto& attr : attributes)
+        {
+            if (attr->IsA<T>())
+            {
+                return core::SObjectUtility::CheckedCast<T>(attr);
+            }
+        }
+        return nullptr;
+    }
+
+    template<typename T>
+    bool HasAttribute() const
+    {
+        for (const auto& attr : attributes)
+        {
+            if (attr->IsA<T>())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const core::TVector<IAttributePtr>& GetAttributes() const
+    {
+        return attributes;
+    }
+private:
+    core::TVector<IAttributePtr> attributes;
+};
+
 enum class PropertyEditType : uint8_t
 {
     Editable,
     Readonly
 };
 
-struct PropertyDescriptor
+class PropertyDescriptor : public IAttribute
 {
+public:
+    SLUG_DECLARE_SOBJECT_TYPEINFO(PropertyDescriptor, IAttribute)
+
     PropertyEditType type;
     core::FixedString<64> category;
     core::FixedString<64> displayName;

@@ -18,7 +18,6 @@
 #define SLUG_MAYBE_UNUSED [[maybe_unused]]
 #define SLUG_NODISCARD [[nodiscard]]
 
-#define SLUG_PROPERTY(...)
 #define SLUG_NAMEOF(x) #x
 
 #define SLUG_DEBUG_MODE DEBUG_MODE

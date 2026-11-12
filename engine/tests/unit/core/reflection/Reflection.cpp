@@ -6,8 +6,11 @@ namespace slug::test::reflection
 
 struct Vec2
 {
+    SLUG_DECLARE_REFLECTION(Vec2)
+
     Vec2() = default;
     Vec2(float _x, float _y) : x(_x), y(_y) {}
+
     float x = 0.0f;
     float y = 0.0f;
 };
@@ -15,6 +18,8 @@ struct Vec2
 class Counter
 {
 public:
+    SLUG_DECLARE_REFLECTION(Counter)
+
     Counter() = default;
 
     int m_direct = 0;
@@ -31,12 +36,16 @@ private:
 class Animal
 {
 public:
+    SLUG_DECLARE_REFLECTION(Animal)
+
     int m_legCount = 4;
 };
 
 class Dog : public Animal
 {
 public:
+    SLUG_DECLARE_REFLECTION(Dog)
+
     int m_tailCount = 1;
 };
 

@@ -84,7 +84,7 @@ public:
     }
 
     template<typename MemberT>
-    TypeRegister& property(const char* name, MemberT T::* member, const PropertyDescriptor& descriptor = {})
+    TypeRegister& property(const char* name, MemberT T::* member, const CustomAttributeList& attributeList = {})
     {
         PropertyPtr p = core::MakeReference<Property>(
             name,
@@ -116,14 +116,14 @@ public:
                 obj->*member = value.Get<MemberT>();
                 return true;
             },
-            descriptor);
+            attributeList);
 
         m_type.AddProperty(p);
         return *this;
     }
 
     template<typename Getter, typename Setter>
-    TypeRegister& property(const char* name, Getter getter, Setter setter, const PropertyDescriptor& descriptor = {})
+    TypeRegister& property(const char* name, Getter getter, Setter setter, const CustomAttributeList& attributeList = {})
     {
         using GetterTraits = GetterTraitsImpl<Getter>;
         using SetterTraits = SetterTraitsImpl<Setter>;
@@ -166,14 +166,14 @@ public:
                 (obj->*setter)(value.Get<RawT>());
                 return true;
             },
-            descriptor);
+            attributeList);
 
         m_type.AddProperty(p);
         return *this;
     }
 
     template<typename Getter>
-    TypeRegister& property_readonly(const char* name, Getter getter, const PropertyDescriptor& descriptor = {})
+    TypeRegister& property_readonly(const char* name, Getter getter, const CustomAttributeList& attributeList = {})
     {
         using GetterTraits = GetterTraitsImpl<Getter>;
         using ValueT = typename GetterTraits::ReturnType;
@@ -194,7 +194,7 @@ public:
                 return Variant((obj->*getter)());
             },
             nullptr,
-            descriptor);
+            attributeList);
 
         m_type.AddProperty(p);
         return *this;

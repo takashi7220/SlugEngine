@@ -20,7 +20,7 @@ public:
 
     Property() = default;
 
-    Property(core::StringView name, const Type* ownerType, const Type* valueType, bool readable, bool writable, GetterFn getter, SetterFn setter, const PropertyDescriptor& descriptor)
+    Property(core::StringView name, const Type* ownerType, const Type* valueType, bool readable, bool writable, GetterFn getter, SetterFn setter, const CustomAttributeList& attributeList)
         : m_name(std::move(name))
         , m_ownerType(ownerType)
         , m_valueType(valueType)
@@ -28,7 +28,7 @@ public:
         , m_writable(writable)
         , m_getter(std::move(getter))
         , m_setter(std::move(setter))
-        , m_descriptor(descriptor)
+        , m_attributeList(attributeList)
     {
     }
 
@@ -75,6 +75,11 @@ public:
         return m_setter(instance, value);
     }
 
+    const CustomAttributeList& GetAttributes() const
+    {
+        return m_attributeList;
+    }
+
 private:
     core::String m_name;
     const Type* m_ownerType = nullptr;
@@ -83,6 +88,6 @@ private:
     bool m_writable = false;
     GetterFn m_getter;
     SetterFn m_setter;
-    PropertyDescriptor m_descriptor;
+    CustomAttributeList m_attributeList;
 };
 }
