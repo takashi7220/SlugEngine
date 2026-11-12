@@ -7,8 +7,13 @@
 
 #define SLUG_DECLARE_COMPONENT(className)                                       \
     static const slug::engine_core::ComponentType& GetStaticComponentType() {   \
-        return className;                                                       \
-    }                                                                           \ 
+        return slug::engine_core::ComponentType(#className);                    \
+    }                                                                           \
+    static slug::engine_core::IComponent* Create(                               \
+        slug::engine_core::Actor* owner,                                        \
+        const slug::engine_core::ComponentInfo& info) {                         \
+        return slug::core::NewObject<className>(owner, info);                   \
+    }                                                                           \
 
 namespace slug::engine_core
 {
@@ -28,20 +33,9 @@ class IComponent : public core::SObject
 {
 public:
     SLUG_DECLARE_SOBJECT_TYPEINFO(IComponent, core::SObject);
-    IComponent(Actor* owner, ComponentInfo info, ComponentKind kind)
-        : m_owner(owner)
-        , m_info(info)
-        , m_kind(kind)
-    {
-    }
 
     virtual ~IComponent() = default;
     SLUG_COPY_DEFAULT(IComponent);
-
-    virtual void Initialize(const IProperty* property) = 0;
-    virtual void UpdateProperties(const IProperty* property) = 0;
-    virtual void Terminate() = 0;
-    virtual void Resolve(World* world) = 0;
 
     const ComponentInfo& GetComponentInfo() const
     {
@@ -57,9 +51,20 @@ public:
     {
         return m_handle;
     }
+protected:
+    IComponent(Actor* owner, const engine_core::ComponentInfo& info, ComponentKind kind)
+        : m_owner(owner)
+        , m_info(info)
+        , m_kind(kind)
+    {
+    }
 
-private:
     friend class ComponentManager;
+
+    virtual void Initialize(const IProperty* property) = 0;
+    virtual void UpdateProperties(const IProperty* property) = 0;
+    virtual void Terminate() = 0;
+    virtual void Resolve(World* world) = 0;
 
     void SetComponentHandle(const ComponentHandle& handle)
     {

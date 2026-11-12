@@ -33,6 +33,6 @@ public:
 
 private:
     ComponentID m_componentId;
-    ComponentHandle m_handle;
+    ComponentHandle* m_handle;
 };
 }

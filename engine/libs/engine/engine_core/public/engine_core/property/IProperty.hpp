@@ -1,9 +1,13 @@
 #pragma once
 
+#include "core/object/SObject.hpp"
+
 namespace slug::engine_core
 {
 
-struct IProperty
+class IProperty : public core::SObject
 {
+public:
+    SLUG_DECLARE_SOBJECT_TYPEINFO(IProperty, core::SObject);
 };
 }

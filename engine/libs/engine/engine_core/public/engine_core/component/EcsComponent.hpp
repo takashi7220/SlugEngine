@@ -14,23 +14,24 @@ class EcsComponent : public IComponent
 {
 public:
     SLUG_DECLARE_SOBJECT_TYPEINFO(EcsComponent, IComponent);
-
-    EcsComponent(Actor* owner, ComponentInfo info, uint64_t entityId)
-        : IComponent(owner, info, ComponentKind::Ecs)
-        , m_entityId(entityId)
-    {
-    }
-
     SLUG_COPY_DEFAULT(EcsComponent);
 
     virtual ~EcsComponent() = default;
 
+    uint64_t GetEntityId()
+    {
+        return m_info.entityId;
+    }
+
+protected:
+    EcsComponent(Actor* owner, const engine_core::ComponentInfo& info)
+        : IComponent(owner, info, ComponentKind::Ecs)
+    {
+    }
+private:
     virtual void Initialize(const IProperty* property) override = 0;
     virtual void UpdateProperties(const IProperty* property) override = 0;
     virtual void Terminate() override = 0;
-
-private:
-    uint64_t m_entityId;
 };
 
 }
