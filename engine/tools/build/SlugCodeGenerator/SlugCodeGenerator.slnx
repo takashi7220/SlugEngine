@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Snail/">
+    <Project Path="../Snail/Slug.Clang/Snail.Clang.csproj" Id="579f7e84-d675-4c44-931c-5321a61cc72e" />
+    <Project Path="../Snail/Snail.Core/Snail.Core.csproj" />
+  </Folder>
+  <Project Path="SlugCodeGenerator.csproj" />
+</Solution>
